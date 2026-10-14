@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PINTAR - Parent Registration</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: color 0.2s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--brand-blue);
+        }
+
+        :root {
+            --brand-blue: #273894;
+            --brand-blue-hover: #1e2b73;
+            --brand-pink: #3b4ca6;
+            --brand-pink-hover: #3b4ca6;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --bg-light: #f1f5f9;
+            --border-color: #cbd5e1;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 15px;
+        }
+
+        /* FLOATING BOX CONTAINER */
+        .register-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 680px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(9, 19, 112, 0.12);
+            padding: 40px 48px;
+            position: relative;
+            animation: floatUp 0.4s ease-out;
+        }
+
+        @keyframes floatUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            color: var(--brand-blue);
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* FORM STYLING */
+        .form-section-title {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--brand-pink);
+            margin: 24px 0 14px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #e2e8f0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 14px;
+            color: var(--text-muted);
+            font-size: 15px;
+            pointer-events: none;
+        }
+
+        .input-wrapper input,
+        .input-wrapper select {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14px;
+            color: var(--text-dark);
+            background-color: #f8fafc;
+            outline: none;
+            transition: all 0.2s ease;
+            appearance: none;
+        }
+
+        .input-wrapper select {
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px top 50%;
+            background-size: 10px auto;
+            padding-right: 32px;
+        }
+
+        .input-wrapper input:focus,
+        .input-wrapper select:focus {
+            border-color: var(--brand-blue);
+            background-color: var(--white);
+            box-shadow: 0 0 0 3px rgba(39, 56, 148, 0.1);
+        }
+
+        .input-wrapper input:read-only,
+        .input-wrapper select:disabled {
+            background-color: #e2e8f0;
+            color: #64748b;
+            cursor: not-allowed;
+            border-color: #cbd5e1;
+        }
+
+        /* T-SHIRT IMAGE HOLDER */
+        .size-chart-holder {
+            width: 100%;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            background-color: #f8fafc;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .size-chart-holder img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .size-chart-placeholder {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* CHECKBOX STYLING FOR STUDENT ASNAF */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 6px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--brand-blue);
+            cursor: pointer;
+        }
+
+        .checkbox-container span {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* DIRECT PAYMENT PAGE BUTTONS */
+        .payment-nav-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .pay-page-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 16px;
+            background-color: #f8fafc;
+            border: 2px solid var(--brand-blue);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--brand-blue);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .pay-page-btn:hover {
+            background-color: var(--brand-blue);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(39, 56, 148, 0.25);
+        }
+
+        /* UPLOAD PROOF BUTTON */
+        .file-upload-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .file-upload-wrapper input[type="file"] {
+            display: none;
+        }
+
+        .file-upload-btn {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: #f8fafc;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .file-upload-btn:hover {
+            border-color: var(--brand-blue);
+            color: var(--brand-blue);
+            background-color: #e0e7ff;
+        }
+
+        .file-name-display {
+            font-size: 12px;
+            color: var(--brand-blue);
+            font-weight: 600;
+            margin-top: 6px;
+            display: block;
+        }
+
+        /* SUBMIT BUTTON & ACTIONS */
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--brand-pink);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 28px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--brand-pink-hover);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.99);
+        }
+
+        .footer-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .footer-link a {
+            color: var(--brand-blue);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .footer-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* REDIRECT POP-UP MODAL STYLING */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-card {
+            background: var(--white);
+            padding: 36px 32px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .popup-overlay.active .popup-card {
+            transform: scale(1);
+        }
+
+        .popup-icon {
+            width: 64px;
+            height: 64px;
+            background-color: #dcfce7;
+            color: #16a34a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin: 0 auto 18px auto;
+        }
+
+        .popup-card h2 {
+            font-size: 20px;
+            color: var(--text-dark);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .popup-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .popup-spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(39, 56, 148, 0.15);
+            border-radius: 50%;
+            border-top-color: var(--brand-blue);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .register-card {
+                padding: 28px 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            .payment-nav-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-card">
+        <a href="index.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Back to Login
+        </a>
+        <div class="header">
+            <h1>Parent Registration</h1>
+            <p>Create an account to monitor your child's progress</p>
+        </div>
+
+        <form id="registerForm">
+
+            <!-- SECTION 1: PARENT DETAILS -->
+            <div class="form-section-title">
+                <i class="fa-solid fa-user-shield"></i> Parent / Guardian Details
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="parentName">Parent / Guardian Name</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="parentName" placeholder="Enter full name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="parentPhone">Phone Number</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-phone"></i>
+                        <input type="tel" id="parentPhone" placeholder="01X-XXXXXXX" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="parentEmail">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="parentEmail" placeholder="name@example.com" required>
+                    </div>
+                </div>
+
+                <!-- PASSWORD & CONFIRM PASSWORD -->
+                <div class="form-group">
+                    <label for="parentPassword">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="parentPassword" placeholder="••••••••" required minlength="6">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-shield-check"></i>
+                        <input type="password" id="confirmPassword" placeholder="••••••••" required minlength="6">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: STUDENT DETAILS -->
+            <div class="form-section-title">
+                <i class="fa-solid fa-graduation-cap"></i> Student Information
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="studentName">Student Name</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-child"></i>
+                        <input type="text" id="studentName" placeholder="Child's full name" required>
+                    </div>
+                </div>
+
+                <!-- STUDENT IC NUMBER -->
+                <div class="form-group">
+                    <label for="studentIc">Student IC Number</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-address-card"></i>
+                        <input type="text" id="studentIc" placeholder="000000-00-0000" required>
+                    </div>
+                </div>
+
+                <!-- RACE / BANGSA DROPDOWN -->
+                <div class="form-group full-width">
+                    <label for="studentRace">Race / Bangsa</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-people-group"></i>
+                        <select id="studentRace" required>
+                            <option value="" disabled selected>Select Race / Bangsa</option>
+                            <option value="Melayu">Melayu</option>
+                            <option value="Cina">Cina</option>
+                            <option value="India">India</option>
+                            <option value="Lain-lain">Lain-lain</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- AUTO-FILLED PINTAR ID -->
+                <div class="form-group full-width">
+                    <label for="pintarId">PINTAR ID</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-id-card"></i>
+                        <input type="text" id="pintarId" value="A1" readonly>
+                    </div>
+                </div>
+
+                <!-- CASCADING DROPDOWNS -->
+                <div class="form-group">
+                    <label for="stateSelect">State</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <select id="stateSelect" required>
+                            <option value="" disabled selected>Select State</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="schoolSelect">School</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-school"></i>
+                        <select id="schoolSelect" disabled required>
+                            <option value="" disabled selected>Select State First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="yearSelect">Year / Form</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <select id="yearSelect" disabled required>
+                            <option value="" disabled selected>Select School First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="classSelect">Class</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-door-open"></i>
+                        <select id="classSelect" disabled required>
+                            <option value="" disabled selected>Select Year First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- T-SHIRT SIZE SECTION WITH IMAGE HOLDER AND DROPDOWN -->
+                <div class="form-group full-width">
+                    <label>T-Shirt Size Chart</label>
+                    <div class="size-chart-holder">
+                        <img src="images/tshirt.jpg" alt="T-Shirt Size Chart">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="tshirtSizeSelect">T-Shirt Size</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-shirt"></i>
+                        <select id="tshirtSizeSelect" required>
+                            <option value="" disabled selected>Select T-Shirt Size</option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                            <option value="XXXL">XXXL</option>
+                            <option value="XXXXL">XXXXL</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: PAYMENT DETAILS -->
+            <div class="form-section-title">
+                <i class="fa-solid fa-credit-card"></i> Payment Details
+            </div>
+
+            <div class="form-grid">
+                <!-- SINGLE BUTTON TO PINTAR APP -->
+                <div class="form-group full-width">
+                    <label><br>Make Payment Via</label>
+                    <div class="payment-nav-buttons">
+                        <button type="button" class="pay-page-btn"
+                            onclick="navigateToPayment('pintar://payment?merchant=PINTAR&amount=15.00')">
+                            <i class="fa-solid fa-mobile-screen-button"></i> Pay via PINTAR app
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Complete Registration <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </form>
+
+        <div class="footer-link">
+            Already have an account? <a href="index.html">Login here</a>
+        </div>
+
+    </div>
+
+    <!-- REDIRECT POP-UP MODAL -->
+    <div class="popup-overlay" id="redirectPopup">
+        <div class="popup-card">
+            <div class="popup-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h2>Registration Successful!</h2>
+            <p>Your parent account has been created. Redirecting you to the login page...</p>
+            <div class="popup-spinner"></div>
+        </div>
+    </div>
+
+    <script>
+        const hardcodedSchoolsData = [
+            { id: 1, name: "SMK Seri Bintang Utara", state: "Kuala Lumpur", type: "SMK" },
+            { id: 2, name: "SMK Victoria Institution", state: "Kuala Lumpur", type: "SMK" },
+            { id: 3, name: "SK Bukit Damansara", state: "Kuala Lumpur", type: "SK" },
+            { id: 4, name: "SJK(Cina) Kuen Cheng 1", state: "Kuala Lumpur", type: "SJK(Cina)" },
+            { id: 5, name: "SJKT Fletcher", state: "Kuala Lumpur", type: "SJKT" },
+            { id: 11, name: "SMK Seafield", state: "Selangor", type: "SMK" },
+            { id: 12, name: "SMK USJ 12", state: "Selangor", type: "SMK" },
+            { id: 13, name: "SK Subang Jaya", state: "Selangor", type: "SK" },
+            { id: 14, name: "SJK(Cina) Lick Hung", state: "Selangor", type: "SJK(Cina)" },
+            { id: 21, name: "SMK Tinggi Melaka", state: "Melaka", type: "SMK" },
+            { id: 22, name: "SMJK Yok Bin", state: "Melaka", type: "SMK" },
+            { id: 23, name: "SK Banda Hilir", state: "Melaka", type: "SK" },
+            { id: 31, name: "SMK Sultan Ismail", state: "Johor", type: "SMK" },
+            { id: 32, name: "SMK Maktab Sultan Abu Bakar", state: "Johor", type: "SMK" },
+            { id: 33, name: "SK Temenggong Abdul Rahman", state: "Johor", type: "SK" },
+            { id: 41, name: "SMK Penang Free School", state: "Penang", type: "SMK" },
+            { id: 42, name: "SMJK Chung Ling", state: "Penang", type: "SMK" },
+            { id: 51, name: "SMK Anderson", state: "Perak", type: "SMK" },
+            { id: 52, name: "SMK St. Michael's Institution", state: "Perak", type: "SMK" },
+            { id: 61, name: "SMK Sultanah Asma", state: "Kedah", type: "SMK" },
+            { id: 71, name: "SMK Sultan Abu Bakar", state: "Pahang", type: "SMK" },
+            { id: 81, name: "SMK King George V", state: "Negeri Sembilan", type: "SMK" },
+            { id: 91, name: "SMK Sultan Sulaiman", state: "Terengganu", type: "SMK" }
+        ];
+
+        const stateSelect = document.getElementById('stateSelect');
+        const schoolSelect = document.getElementById('schoolSelect');
+        const yearSelect = document.getElementById('yearSelect');
+        const classSelect = document.getElementById('classSelect');
+
+        // Populate State Dropdown dynamically
+        const states = [...new Set(hardcodedSchoolsData.map(item => item.state))];
+        states.forEach(state => {
+            const opt = document.createElement('option');
+            opt.value = state;
+            opt.textContent = state;
+            stateSelect.appendChild(opt);
+        });
+
+        // State change -> populate schools
+        stateSelect.addEventListener('change', () => {
+            const selectedState = stateSelect.value;
+            schoolSelect.innerHTML = '<option value="" disabled selected>Select School</option>';
+            yearSelect.innerHTML = '<option value="" disabled selected>Select School First</option>';
+            classSelect.innerHTML = '<option value="" disabled selected>Select Year First</option>';
+
+            schoolSelect.disabled = false;
+            yearSelect.disabled = true;
+            classSelect.disabled = true;
+
+            const filteredSchools = hardcodedSchoolsData.filter(s => s.state === selectedState);
+            filteredSchools.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.id;
+                opt.textContent = s.name;
+                schoolSelect.appendChild(opt);
+            });
+        });
+
+        // School change -> populate years/forms
+        schoolSelect.addEventListener('change', () => {
+            yearSelect.innerHTML = '<option value="" disabled selected>Select Year / Form</option>';
+            classSelect.innerHTML = '<option value="" disabled selected>Select Year First</option>';
+
+            yearSelect.disabled = false;
+            classSelect.disabled = true;
+
+            const years = ["Form 1", "Form 2", "Form 3", "Form 4", "Form 5"];
+            years.forEach(y => {
+                const opt = document.createElement('option');
+                opt.value = y;
+                opt.textContent = y;
+                yearSelect.appendChild(opt);
+            });
+        });
+
+        // Year change -> populate classes
+        yearSelect.addEventListener('change', () => {
+            classSelect.innerHTML = '<option value="" disabled selected>Select Class</option>';
+            classSelect.disabled = false;
+
+            const classes = ["Cemerlang", "Gemilang", "Terbilang", "Bijak", "Amanah"];
+            classes.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c;
+                opt.textContent = c;
+                classSelect.appendChild(opt);
+            });
+        });
+
+        function navigateToPayment() {
+            // 1. Android Chrome Intent URL (Launches app directly if installed)
+            const intentUrl = "intent://payment?merchant=PINTAR&amount=55.00#Intent;scheme=pintar;package=com.example.pintare_wallet;end";
+
+            // 2. Fallback Direct Scheme
+            const customScheme = "pintar://payment?merchant=PINTAR&amount=15.00";
+
+            const isAndroid = /Android/i.test(navigator.userAgent);
+
+            if (isAndroid) {
+                // Force Chrome to execute the intent
+                window.location.href = intentUrl;
+            } else {
+                // Fallback for iOS / Desktop testing
+                window.location.href = customScheme;
+            }
+        }
+
+        // Form Submit Redirect Modal
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const popup = document.getElementById('redirectPopup');
+            popup.classList.add('active');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2500);
+        });
+    </script>
+</body>
+
+</html>

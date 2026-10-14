@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Sekolah - PINTAR STEM</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Google Fonts for Clean Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 60px;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 40px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .navbar nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 6px 0;
+        }
+
+        .navbar nav a.active {
+            position: relative;
+        }
+
+        .navbar nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #3b4ca6;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* --- MAIN LAYOUT & CARD --- */
+        .container {
+            width: 95%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .form-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 35px 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .form-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #03045e;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: #273894;
+            background-color: #eff6ff;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: #dbeafe;
+        }
+
+        /* --- FORM FIELDS --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #03045e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e293b;
+            background-color: #f8fafc;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #273894;
+            background-color: #ffffff;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            background-color: #273894;
+            color: #ffffff;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #1e2b73;
+        }
+
+        /* --- SUCCESS POPUP MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #d1fae5;
+            color: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin: 0 auto 15px auto;
+        }
+
+        .modal-box h2 {
+            font-size: 20px;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .modal-box p {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .modal-btn {
+            background-color: #273894;
+            color: #ffffff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="../images/logo.png" alt="PINTAR Logo">
+        </div>
+        <nav>
+            <a href="dashboard.html">Home</a>
+            <a href="schools.html" class="active">Schools</a>
+            <a href="quizzes.html">Quizzes</a>
+            <a href="reports.html">Reports & Analytics</a>
+        </nav>
+        <div class="right-menu">
+            <div class="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>PINTAR</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN FORM CONTAINER ================= -->
+    <main class="container">
+        <div class="form-card">
+            <div class="form-header">
+                <h1>Register New School</h1>
+                <a href="list-school.html" class="back-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Jadual
+                </a>
+            </div>
+
+            <form id="addSchoolForm">
+                <div class="form-grid">
+
+                    <!-- School Name -->
+                    <div class="form-group full-width">
+                        <label for="schoolName"><i class="fa-solid fa-school"></i> Nama Sekolah / School Name</label>
+                        <input type="text" id="schoolName" placeholder="e.g. SMK CLIFFORD" required>
+                    </div>
+
+                    <!-- District (Daerah) -->
+                    <div class="form-group">
+                        <label for="district"><i class="fa-solid fa-map-pin"></i> Daerah / District</label>
+                        <input type="text" id="district" placeholder="e.g. LIPIS" required>
+                    </div>
+
+                    <!-- Event Date -->
+                    <div class="form-group">
+                        <label for="eventDate"><i class="fa-solid fa-calendar-days"></i> Tarikh Event / Event
+                            Date</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+
+                    <!-- School Address -->
+                    <div class="form-group full-width">
+                        <label for="address"><i class="fa-solid fa-location-dot"></i> Alamat Sekolah / School
+                            Address</label>
+                        <textarea id="address" placeholder="Masukkan alamat lengkap sekolah..." required></textarea>
+                    </div>
+
+                    <!-- Tajaan Industri Asnaf -->
+                    <div class="form-group">
+                        <label for="asnafSponsor"><i class="fa-solid fa-hand-holding-dollar"></i> Tajaan Industri
+                            (Asnaf)</label>
+                        <input type="number" id="asnafSponsor" min="0" placeholder="e.g. 15" required>
+                    </div>
+
+                    <!-- Operator Dropdown -->
+                    <div class="form-group">
+                        <label for="operator"><i class="fa-solid fa-user-gear"></i> Operator</label>
+                        <select id="operator" required>
+                            <option value="" disabled selected>Pilih Operator...</option>
+                            <option value="UMPSA">UMPSA</option>
+                            <option value="NextGen Explorers">NextGen Explorers</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">
+                    <i class="fa-solid fa-plus-circle"></i> Add School
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- ================= SUCCESS POPUP MODAL ================= -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h2>Success!</h2>
+            <p>School added successfully to the schedule.</p>
+            <button class="modal-btn" id="modalCloseBtn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('addSchoolForm');
+        const modal = document.getElementById('successModal');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent standard page reload
+
+            // Show success popup
+            modal.classList.add('active');
+        });
+
+        // Redirect back to main list when clicking OK
+        modalCloseBtn.addEventListener('click', function () {
+            window.location.href = 'list-school.html';
+        });
+    </script>
+</body>
+
+</html>

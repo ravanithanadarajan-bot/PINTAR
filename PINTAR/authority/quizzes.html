@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PINTAR - Quizzes</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 60px;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 40px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .navbar nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-block;
+            position: relative;
+            padding: 6px 0;
+            transition: opacity 0.2s;
+        }
+
+        .navbar nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .navbar .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logout {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #3b4ca6;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        h1.page-title {
+            font-size: 34px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 30px;
+        }
+
+        /* --- ASSIGNMENT CARD --- */
+        .quiz-card {
+            background-color: #dbeafe;
+            border-radius: 16px;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(39, 56, 148, 0.05);
+            max-width: 100%;
+        }
+
+        /* 3D Mock Shapes Decoration Left Side */
+        .quiz-card-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            z-index: 2;
+        }
+
+        .shapes-mock {
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            width: 90px;
+            height: 70px;
+        }
+
+        .shape-cube {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #4f46e5, #3b82f6);
+            border-radius: 6px;
+            transform: rotate(-5deg);
+            box-shadow: -4px 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .shape-sphere {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            margin-left: -15px;
+            margin-bottom: -5px;
+            box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .shape-cone {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 45px solid #f472b6;
+            filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1));
+            transform: rotate(10deg);
+        }
+
+        .quiz-details .lesson-lbl {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 3px;
+        }
+
+        .quiz-details .quiz-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #000000;
+            line-height: 1.2;
+        }
+
+        .quiz-details .subtitle {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-top: 2px;
+        }
+
+        /* Edit Button Style */
+        .btn-edit {
+            background-color: transparent;
+            color: #273894;
+            border: 1.5px solid #273894;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            z-index: 2;
+        }
+
+        .btn-edit:hover {
+            background-color: #273894;
+            color: white;
+        }
+
+        /* Updated for Logo Image Support */
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            /* Perfectly bounds and scales your logo image inside the header */
+            width: auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="logo">
+            <!-- Added ../ to step out of the authority folder -->
+            <img src="../images/logo.png" alt="PINTAR Logo">
+        </div>
+        <nav>
+            <a href="dashboard.html">Home</a>
+            <a href="schools.html">Schools</a>
+            <a href="quizzes.html" class="active">Quizzes</a>
+            <a href="reports.html">Reports & Analytics</a>
+        </nav>
+        <div class="right-menu">
+            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="logout" id="logoutBtn" onclick="window.location.href='../index.html'">LOG OUT</button>
+            <div class="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>PINTAR</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN LAYOUT ================= -->
+    <main class="container">
+        <h1 class="page-title">Assignment</h1>
+
+        <!-- Quiz Item Card Container -->
+        <div class="quiz-card">
+            <div class="quiz-card-left">
+                <!-- Abstract Styled CSS Geometric Blocks to represent 3D Shapes Image safely -->
+                <div class="shapes-mock">
+                    <div class="shape-cone"></div>
+                    <div class="shape-cube"></div>
+                    <div class="shape-sphere"></div>
+                </div>
+                <div class="quiz-details">
+                    <div class="lesson-lbl">Lesson 1</div>
+                    <div class="quiz-title">Student's Digital Skills</div>
+                    <div class="subtitle">Assessment 1</div>
+                </div>
+            </div>
+            <a href="quiz-edit.html" class="btn-edit">
+                <i class="fa-solid fa-pen"></i> Edit
+            </a>
+        </div>
+    </main>
+    <script src="js/navbar.js"></script>
+</body>
+
+</html>

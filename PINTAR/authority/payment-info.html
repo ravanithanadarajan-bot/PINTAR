@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maklumat Pembayaran - PINTAR STEM</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1e293b;
+            padding-bottom: 60px;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 30px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .navbar nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            display: inline-block;
+            position: relative;
+            padding: 6px 0;
+            transition: opacity 0.2s;
+        }
+
+        .navbar nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .navbar .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .navbar .logout {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #3b4ca6;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .hero-text h1 {
+            font-size: 38px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 6px;
+        }
+
+        .hero-text p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #273894;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background-color: #eff6ff;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: #dbeafe;
+        }
+
+        /* --- MULTI-DROPDOWN FILTER CARD --- */
+        .filter-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 20px 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #03045e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1e293b;
+            background-color: #f8fafc;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .filter-group select {
+            cursor: pointer;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: #273894;
+            background-color: #ffffff;
+        }
+
+        .reset-filter-btn {
+            padding: 10px 18px;
+            border: none;
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            font-size: 13px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            height: 41px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .reset-filter-btn:hover {
+            background-color: #e2e8f0;
+            color: #0f172a;
+        }
+
+        /* --- DATA TABLE PANEL --- */
+        .panel {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            overflow-x: auto;
+        }
+
+        .table-header-title {
+            color: #03045e;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge-count {
+            font-size: 12px;
+            background: #eff6ff;
+            color: #273894;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .data-table th {
+            background-color: #273894;
+            color: #ffffff;
+            text-align: left;
+            padding: 14px 18px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table td {
+            padding: 12px 18px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+            color: #0f172a;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+
+        .data-table tfoot tr td {
+            background-color: #f8fafc;
+            font-weight: 800;
+            font-size: 14px;
+            color: #03045e;
+            border-top: 2px solid #cbd5e1;
+            padding: 16px 18px;
+        }
+
+        /* Badges & Tags */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Payment Status */
+        .status-paid {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .status-unpaid {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        /* Attendance Status */
+        .attend-present {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .attend-absent {
+            background-color: #fef3c7;
+            color: #b45309;
+        }
+
+        /* Asnaf Tag */
+        .asnaf-tag {
+            font-size: 10px;
+            background-color: #f3e8ff;
+            color: #6b21a8;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 6px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        /* Buttons */
+        .refund-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #dc2626;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: background 0.2s;
+            box-shadow: 0 2px 5px rgba(220, 38, 38, 0.2);
+        }
+
+        .refund-btn:hover {
+            background-color: #b91c1c;
+        }
+
+        .edit-btn {
+            background-color: #f1f5f9;
+            color: #273894;
+            border: 1px solid #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .edit-btn:hover {
+            background-color: #273894;
+            color: #ffffff;
+            border-color: #273894;
+        }
+
+        .save-btn {
+            background-color: #16a34a;
+            color: #ffffff;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-right: 4px;
+        }
+
+        .save-btn:hover {
+            background-color: #15803d;
+        }
+
+        .cancel-btn {
+            background-color: #64748b;
+            color: #ffffff;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .cancel-btn:hover {
+            background-color: #475569;
+        }
+
+        /* Editable Controls inside Table */
+        .inline-select {
+            padding: 6px 8px;
+            border: 1.5px solid #273894;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #0f172a;
+            background-color: #ffffff;
+            outline: none;
+        }
+
+        .no-data {
+            text-align: center !important;
+            padding: 30px !important;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="../images/logo.png" alt="PINTAR Logo">
+        </div>
+        <nav>
+            <a href="dashboard.html" class="active">Home</a>
+            <a href="schools.html">Schools</a>
+            <a href="quizzes.html">Quizzes</a>
+            <a href="reports.html">Reports & Analytics</a>
+        </nav>
+        <div class="right-menu">
+            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="logout" id="logoutBtn">LOG OUT</button>
+            <div class="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>PINTAR</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="container">
+
+        <!-- Hero Header -->
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Maklumat Pembayaran Pelajar</h1>
+                <p>Pengurusan yuran, status pembayaran, kehadiran dan pemulangan wang (refund)</p>
+            </div>
+            <a href="dashboard.html" class="back-btn">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+            </a>
+        </section>
+
+        <!-- Dynamic Filter Section (Search Bar + 6 Dropdowns) -->
+        <section class="filter-card">
+            <!-- Search Bar Field (Nama, No. IC, ID PINTAR, Jenis Pembayaran) -->
+            <div class="filter-group full-width">
+                <label for="searchInput"><i class="fa-solid fa-magnifying-glass"></i> Cari / Search (Nama, IC, ID
+                    PINTAR, Status Bayaran)</label>
+                <input type="text" id="searchInput"
+                    placeholder="Cari nama pelajar, No. IC, ID PINTAR, atau Jenis Pembayaran...">
+            </div>
+
+            <!-- 1. State Filter -->
+            <div class="filter-group">
+                <label for="stateFilter"><i class="fa-solid fa-map-location-dot"></i> Negeri</label>
+                <select id="stateFilter">
+                    <option value="ALL">Semua Negeri</option>
+                    <option value="Johor">Johor</option>
+                    <option value="Kedah">Kedah</option>
+                    <option value="Kelantan">Kelantan</option>
+                    <option value="Melaka">Melaka</option>
+                    <option value="Negeri Sembilan">Negeri Sembilan</option>
+                    <option value="Pahang">Pahang</option>
+                    <option value="Pulau Pinang">Pulau Pinang</option>
+                    <option value="Perak">Perak</option>
+                    <option value="Perlis">Perlis</option>
+                    <option value="Sabah">Sabah</option>
+                    <option value="Sarawak">Sarawak</option>
+                    <option value="Selangor">Selangor</option>
+                    <option value="Terengganu">Terengganu</option>
+                    <option value="W.P. Kuala Lumpur">W.P. Kuala Lumpur</option>
+                    <option value="W.P. Labuan">W.P. Labuan</option>
+                    <option value="W.P. Putrajaya">W.P. Putrajaya</option>
+                </select>
+            </div>
+
+            <!-- 2. School Filter -->
+            <div class="filter-group">
+                <label for="schoolFilter"><i class="fa-solid fa-school"></i> Sekolah</label>
+                <select id="schoolFilter">
+                    <option value="ALL">Semua Sekolah</option>
+                </select>
+            </div>
+
+            <!-- 3. Year Filter -->
+            <div class="filter-group">
+                <label for="yearFilter"><i class="fa-solid fa-calendar"></i> Tahun/Tingkatan</label>
+                <select id="yearFilter">
+                    <option value="ALL">Semua Tahun</option>
+                    <option value="Tingkatan 1">Tingkatan 1</option>
+                    <option value="Tingkatan 2">Tingkatan 2</option>
+                    <option value="Tingkatan 3">Tingkatan 3</option>
+                    <option value="Tingkatan 4">Tingkatan 4</option>
+                    <option value="Tingkatan 5">Tingkatan 5</option>
+                </select>
+            </div>
+
+            <!-- 4. Class Filter -->
+            <div class="filter-group">
+                <label for="classFilter"><i class="fa-solid fa-users-rectangle"></i> Kelas</label>
+                <select id="classFilter">
+                    <option value="ALL">Semua Kelas</option>
+                    <option value="Cemerlang">Cemerlang</option>
+                    <option value="Bijak">Bijak</option>
+                    <option value="STEM 1">STEM 1</option>
+                    <option value="Amanah">Amanah</option>
+                </select>
+            </div>
+
+            <!-- 5. Payment Status Filter -->
+            <div class="filter-group">
+                <label for="paymentFilter"><i class="fa-solid fa-credit-card"></i> Status Bayaran</label>
+                <select id="paymentFilter">
+                    <option value="ALL">Semua Status Bayaran</option>
+                    <option value="PAID">Paid (Bayar)</option>
+                    <option value="UNPAID">Unpaid (Belum Bayar)</option>
+                </select>
+            </div>
+
+            <!-- 6. Student Asnaf Filter -->
+            <div class="filter-group">
+                <label for="asnafFilter"><i class="fa-solid fa-hand-holding-heart"></i> Status Asnaf</label>
+                <select id="asnafFilter">
+                    <option value="ALL">Semua Pelajar</option>
+                    <option value="ASNAF">Pelajar Asnaf</option>
+                    <option value="NON_ASNAF">Bukan Asnaf</option>
+                </select>
+            </div>
+
+            <!-- Reset Button -->
+            <button class="reset-filter-btn" id="resetBtn">
+                <i class="fa-solid fa-rotate-left"></i> Reset
+            </button>
+        </section>
+
+        <!-- Table Panel -->
+        <div class="panel">
+            <div class="table-header-title">
+                <span>Senarai Rekod Pembayaran Pelajar</span>
+                <span class="badge-count" id="recordCount">0 Record(s)</span>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nama Pelajar</th>
+                        <th>No. Kad Pengenalan (IC)</th>
+                        <th>ID PINTAR</th>
+                        <th>Jenis Pembayaran</th>
+                        <th>Status Kehadiran</th>
+                        <th>Tindakan</th>
+                        <th>Edit Status</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentTableBody">
+                    <!-- JavaScript dynamic rows render here -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" style="text-align: right;">Ringkasan Yuran:</td>
+                        <td id="totalPaidSummary" style="color: #15803d;">Lunas: RM 0.00</td>
+                        <td id="totalUnpaidSummary" style="color: #b91c1c;">Tunggakan: RM 0.00</td>
+                        <td id="refundEligibleSummary" colspan="2" style="color: #b45309;">Refund Layak: 0</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </main>
+
+    <script>
+        // Setup All States & Master Reference
+        const statesList = [
+            "Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan",
+            "Pahang", "Pulau Pinang", "Perak", "Perlis", "Sabah",
+            "Sarawak", "Selangor", "Terengganu", "W.P. Kuala Lumpur",
+            "W.P. Labuan", "W.P. Putrajaya"
+        ];
+
+        const yearsList = ["Tingkatan 1", "Tingkatan 2", "Tingkatan 3", "Tingkatan 4", "Tingkatan 5"];
+        const classesList = ["Cemerlang", "Bijak", "STEM 1", "Amanah"];
+        const paymentTypesList = ["Online Banking (FPX)", "Tunai (Cash)", "Subsidised (PINTAR Fund)", "Sponsor (Zakat/Asnaf)"];
+
+        const MalayNames = [
+            "Ahmad", "Muhammad", "Siti", "Nur", "Amir", "Aisyah", "Chong", "Tan",
+            "Kavitha", "Harish", "Farah", "Daniel", "Luqman", "Zainab", "Ibrahim"
+        ];
+
+        const MalaySurnames = [
+            "Aman", "Zulkifli", "Razak", "Abu", "Raman", "Logan", "Azman", "Wei Ming",
+            "Zhi Hao", "Kassim", "Bakar", "Ismail"
+        ];
+
+        // Generator to create 20 students per class, year & state
+        let studentsData = [];
+        let editingRowId = null; // Track row currently being edited
+        let globalIdCounter = 1;
+
+        statesList.forEach(state => {
+            const schoolName = `SMK ${state.toUpperCase()} UTAMA`;
+
+            yearsList.forEach(yr => {
+                classesList.forEach(cls => {
+                    for (let i = 1; i <= 20; i++) {
+                        const name = `${MalayNames[(i - 1) % MalayNames.length]} ${MalaySurnames[i % MalaySurnames.length]}`;
+                        const pintarId = `PTR-2026-${String(globalIdCounter).padStart(5, '0')}`;
+
+                        const birthYear = 12 - parseInt(yr.replace('Tingkatan ', ''));
+                        const icNo = `${String(birthYear).padStart(2, '0')}0514-08-${String(1000 + i)}`;
+
+                        const isPaid = (i % 4 !== 0);
+                        const isAttended = (i % 3 !== 0);
+                        const isAsnaf = (i % 5 === 0);
+                        const paymentType = isAsnaf ? "Sponsor (Zakat/Asnaf)" : (isPaid ? paymentTypesList[i % 3] : "Belum Bayar");
+
+                        studentsData.push({
+                            id: pintarId,
+                            name: name,
+                            ic: icNo,
+                            state: state,
+                            school: schoolName,
+                            year: yr,
+                            className: `${yr.replace('Tingkatan ', '')} ${cls}`,
+                            pureClass: cls,
+                            paid: isPaid,
+                            paymentType: isPaid ? paymentType : "Belum Bayar",
+                            attended: isAttended,
+                            isAsnaf: isAsnaf,
+                            feeAmount: 50.00
+                        });
+
+                        globalIdCounter++;
+                    }
+                });
+            });
+        });
+
+        // UI Elements
+        const searchInput = document.getElementById('searchInput');
+        const stateFilter = document.getElementById('stateFilter');
+        const schoolFilter = document.getElementById('schoolFilter');
+        const yearFilter = document.getElementById('yearFilter');
+        const classFilter = document.getElementById('classFilter');
+        const paymentFilter = document.getElementById('paymentFilter');
+        const asnafFilter = document.getElementById('asnafFilter');
+        const resetBtn = document.getElementById('resetBtn');
+
+        const tableBody = document.getElementById('paymentTableBody');
+        const recordCountEl = document.getElementById('recordCount');
+
+        // Summary elements
+        const totalPaidSummary = document.getElementById('totalPaidSummary');
+        const totalUnpaidSummary = document.getElementById('totalUnpaidSummary');
+        const refundEligibleSummary = document.getElementById('refundEligibleSummary');
+
+        // Dynamic school dropdown builder
+        function populateSchools() {
+            const selectedState = stateFilter.value;
+            schoolFilter.innerHTML = '<option value="ALL">Semua Sekolah</option>';
+
+            const schoolsInState = [...new Set(
+                studentsData
+                    .filter(s => selectedState === 'ALL' || s.state === selectedState)
+                    .map(s => s.school)
+            )];
+
+            schoolsInState.forEach(sch => {
+                const opt = document.createElement('option');
+                opt.value = sch;
+                opt.textContent = sch;
+                schoolFilter.appendChild(opt);
+            });
+        }
+
+        // Table Render Routine
+        function renderTable() {
+            const searchQuery = searchInput.value.toLowerCase().trim();
+            const selState = stateFilter.value;
+            const selSchool = schoolFilter.value;
+            const selYear = yearFilter.value;
+            const selClass = classFilter.value;
+            const selPayment = paymentFilter.value;
+            const selAsnaf = asnafFilter.value;
+
+            // Apply filters across 6 criteria + search input
+            const filtered = studentsData.filter(item => {
+                const matchState = (selState === 'ALL' || item.state === selState);
+                const matchSchool = (selSchool === 'ALL' || item.school === selSchool);
+                const matchYear = (selYear === 'ALL' || item.year === selYear);
+                const matchClass = (selClass === 'ALL' || item.pureClass === selClass);
+
+                const matchPayment = (selPayment === 'ALL') ||
+                    (selPayment === 'PAID' && item.paid) ||
+                    (selPayment === 'UNPAID' && !item.paid);
+
+                const matchAsnaf = (selAsnaf === 'ALL') ||
+                    (selAsnaf === 'ASNAF' && item.isAsnaf) ||
+                    (selAsnaf === 'NON_ASNAF' && !item.isAsnaf);
+
+                const matchSearch = searchQuery === "" ||
+                    item.name.toLowerCase().includes(searchQuery) ||
+                    item.ic.toLowerCase().includes(searchQuery) ||
+                    item.id.toLowerCase().includes(searchQuery) ||
+                    item.paymentType.toLowerCase().includes(searchQuery);
+
+                return matchState && matchSchool && matchYear && matchClass && matchPayment && matchAsnaf && matchSearch;
+            });
+
+            tableBody.innerHTML = '';
+            let paidSum = 0;
+            let unpaidSum = 0;
+            let refundEligibleCount = 0;
+
+            if (filtered.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="7" class="no-data">Tiada maklumat pembayaran dijumpai mengikut tapisan ini.</td></tr>`;
+            } else {
+                filtered.forEach((item) => {
+                    if (item.paid) {
+                        paidSum += item.feeAmount;
+                    } else {
+                        unpaidSum += item.feeAmount;
+                    }
+
+                    if (!item.attended) {
+                        refundEligibleCount++;
+                    }
+
+                    const tr = document.createElement('tr');
+                    const isEditing = (editingRowId === item.id);
+
+                    if (isEditing) {
+                        // --- EDIT MODE ROW ---
+                        tr.innerHTML = `
+                            <td>
+                                <strong>${item.name}</strong><br>
+                                <select id="editAsnaf_${item.id}" class="inline-select" style="margin-top:4px;">
+                                    <option value="false" ${!item.isAsnaf ? 'selected' : ''}>Bukan Asnaf</option>
+                                    <option value="true" ${item.isAsnaf ? 'selected' : ''}>Asnaf</option>
+                                </select>
+                            </td>
+                            <td>${item.ic}</td>
+                            <td>${item.id}</td>
+                            <td>
+                                <select id="editPayment_${item.id}" class="inline-select">
+                                    <option value="UNPAID" ${!item.paid ? 'selected' : ''}>❌ Unpaid (Belum Bayar)</option>
+                                    <option value="Online Banking (FPX)" ${item.paymentType === 'Online Banking (FPX)' ? 'selected' : ''}>💳 FPX Online Banking</option>
+                                    <option value="Tunai (Cash)" ${item.paymentType === 'Tunai (Cash)' ? 'selected' : ''}>💵 Tunai (Cash)</option>
+                                    <option value="Subsidised (PINTAR Fund)" ${item.paymentType === 'Subsidised (PINTAR Fund)' ? 'selected' : ''}>🎓 Subsidised (PINTAR)</option>
+                                    <option value="Sponsor (Zakat/Asnaf)" ${item.paymentType === 'Sponsor (Zakat/Asnaf)' ? 'selected' : ''}>🤝 Sponsor (Zakat)</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="editAttend_${item.id}" class="inline-select">
+                                    <option value="true" ${item.attended ? 'selected' : ''}>Attended</option>
+                                    <option value="false" ${!item.attended ? 'selected' : ''}>Absent</option>
+                                </select>
+                            </td>
+                            <td><span style="color:#94a3b8; font-size: 12px;">Editing...</span></td>
+                            <td>
+                                <button class="save-btn" onclick="saveRow('${item.id}')"><i class="fa-solid fa-check"></i> Simpan</button>
+                                <button class="cancel-btn" onclick="cancelEdit()"><i class="fa-solid fa-xmark"></i> Batal</button>
+                            </td>
+                        `;
+                    } else {
+                        // --- STANDARD DISPLAY ROW ---
+                        const paymentBadge = item.paid
+                            ? `<span class="badge status-paid"><i class="fa-solid fa-circle-check"></i> Paid (${item.paymentType})</span>`
+                            : `<span class="badge status-unpaid"><i class="fa-solid fa-circle-xmark"></i> Unpaid</span>`;
+
+                        const attendBadge = item.attended
+                            ? `<span class="badge attend-present"><i class="fa-solid fa-user-check"></i> Attended</span>`
+                            : `<span class="badge attend-absent"><i class="fa-solid fa-user-xmark"></i> Absent</span>`;
+
+                        const actionCell = !item.attended
+                            ? `<a href="refund.html?id=${item.id}&ic=${item.ic}&name=${encodeURIComponent(item.name)}" class="refund-btn">
+                                 <i class="fa-solid fa-arrow-rotate-left"></i> Refund
+                               </a>`
+                            : `<span style="color:#94a3b8; font-size: 12px;">N/A</span>`;
+
+                        const asnafBadge = item.isAsnaf ? `<span class="asnaf-tag">Asnaf</span>` : ``;
+
+                        tr.innerHTML = `
+                            <td><strong>${item.name}</strong> ${asnafBadge}</td>
+                            <td>${item.ic}</td>
+                            <td>${item.id}</td>
+                            <td>${paymentBadge}</td>
+                            <td>${attendBadge}</td>
+                            <td>${actionCell}</td>
+                            <td>
+                                <button class="edit-btn" onclick="startEdit('${item.id}')">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                </button>
+                            </td>
+                        `;
+                    }
+
+                    tableBody.appendChild(tr);
+                });
+            }
+
+            // Calculation and summary stats updates
+            recordCountEl.textContent = `${filtered.length} Record(s)`;
+            totalPaidSummary.textContent = `Lunas: RM ${paidSum.toFixed(2)}`;
+            totalUnpaidSummary.textContent = `Tunggakan: RM ${unpaidSum.toFixed(2)}`;
+            refundEligibleSummary.textContent = `Layak Refund: ${refundEligibleCount}`;
+        }
+
+        // Inline Row Edit Handlers
+        function startEdit(id) {
+            editingRowId = id;
+            renderTable();
+        }
+
+        function cancelEdit() {
+            editingRowId = null;
+            renderTable();
+        }
+
+        function saveRow(id) {
+            const student = studentsData.find(s => s.id === id);
+            if (!student) return;
+
+            const paymentVal = document.getElementById(`editPayment_${id}`).value;
+            const attendVal = document.getElementById(`editAttend_${id}`).value;
+            const asnafVal = document.getElementById(`editAsnaf_${id}`).value;
+
+            // Save Payment Status & Method
+            if (paymentVal === 'UNPAID') {
+                student.paid = false;
+                student.paymentType = 'Belum Bayar';
+            } else {
+                student.paid = true;
+                student.paymentType = paymentVal;
+            }
+
+            // Save Attendance
+            student.attended = (attendVal === 'true');
+
+            // Save Asnaf Status
+            student.isAsnaf = (asnafVal === 'true');
+
+            // Reset edit mode and re-render
+            editingRowId = null;
+            renderTable();
+        }
+
+        // Attach Listeners to Dropdowns & Search
+        searchInput.addEventListener('input', renderTable);
+        stateFilter.addEventListener('change', () => {
+            populateSchools();
+            renderTable();
+        });
+        schoolFilter.addEventListener('change', renderTable);
+        yearFilter.addEventListener('change', renderTable);
+        classFilter.addEventListener('change', renderTable);
+        paymentFilter.addEventListener('change', renderTable);
+        asnafFilter.addEventListener('change', renderTable);
+
+        resetBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            stateFilter.value = 'ALL';
+            yearFilter.value = 'ALL';
+            classFilter.value = 'ALL';
+            paymentFilter.value = 'ALL';
+            asnafFilter.value = 'ALL';
+            editingRowId = null;
+            populateSchools();
+            renderTable();
+        });
+
+        // Initialize setup
+        populateSchools();
+        renderTable();
+    </script>
+</body>
+
+</html>

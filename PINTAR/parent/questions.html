@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PINTAR - Questions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 60px;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding-bottom: 5px;
+        }
+
+        .navbar nav a.active {
+            color: white;
+            border-bottom: 3px solid white;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .navbar .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .navbar .logout {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 15px;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .breadcrumb {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .breadcrumb a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+        .breadcrumb span {
+            color: #94a3b8;
+            margin: 0 8px;
+        }
+
+        /* --- LAYOUT GRID --- */
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+        }
+
+        /* --- MAIN QUIZ CARD --- */
+        .quiz-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 520px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .badge-placeholder-small {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            border: 2px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .badge-placeholder-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            opacity: 0.6;
+        }
+
+        .badge-placeholder-small.unlocked {
+            border-color: #10b981;
+        }
+
+        .badge-placeholder-small.unlocked img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .sec-tag {
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .sec-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .sec-desc {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .nav-arrows {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-arrow {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #475569;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .btn-arrow:hover:not(:disabled) {
+            background: #e0e7ff;
+            color: #4338ca;
+            border-color: #c7d2fe;
+        }
+
+        .btn-arrow:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .q-count-top {
+            font-size: 13px;
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        /* --- PROGRESS BAR --- */
+        .progress-box {
+            margin-bottom: 25px;
+        }
+
+        .progress-bar-bg {
+            background-color: #f1f5f9;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar-fill {
+            background-color: #4f46e5;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text-row {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        /* --- QUESTION BOX & OPTIONS --- */
+        .question-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 25px;
+        }
+
+        .question-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .option-item:hover {
+            border-color: #a5b4fc;
+            background: #faf5ff;
+        }
+
+        .option-item.selected {
+            border-color: #4f46e5;
+            background: #eeef2a10;
+            color: #4f46e5;
+            font-weight: 700;
+        }
+
+        .radio-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .option-item.selected .radio-dot {
+            border-color: #4f46e5;
+        }
+
+        .option-item.selected .radio-dot::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #4f46e5;
+            border-radius: 50%;
+        }
+
+        /* --- CARD FOOTER CONTROLS --- */
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-skip {
+            background: none;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-skip:hover {
+            background: #f1f5f9;
+        }
+
+        .btn-next {
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-next:hover {
+            background-color: #4338ca;
+        }
+
+        .btn-submit-card {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-submit-card:hover {
+            background-color: #059669;
+        }
+
+        /* --- SIDEBAR COMPONENTS --- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .side-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .side-card h4 {
+            font-size: 14px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .side-sec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .side-tag {
+            font-size: 11px;
+            font-weight: 700;
+            color: #4338ca;
+            background: #e0e7ff;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .sec-percent-bar {
+            background: #f1f5f9;
+            height: 6px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .sec-percent-fill {
+            background: #4f46e5;
+            height: 100%;
+            width: 0%;
+        }
+
+        .sec-percent-text {
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        .nav-legend {
+            display: flex;
+            gap: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .dot-answered {
+            background: #22c55e;
+        }
+
+        .dot-current {
+            background: #4f46e5;
+        }
+
+        .dot-not {
+            background: #cbd5e1;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .nav-btn {
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #475569;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn.answered {
+            background: #dcfce7;
+            color: #15803d;
+            border-color: #86efac;
+        }
+
+        .nav-btn.current {
+            background: #ffffff;
+            color: #4f46e5;
+            border: 2px solid #4f46e5;
+        }
+
+        .details-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .detail-row span:last-child {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        /* --- BOTTOM NAVIGATION BAR --- */
+        .bottom-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .btn-back-sections {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #4338ca;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tip-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-submit-sec {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-submit-sec:hover {
+            background-color: #059669;
+        }
+
+        /* --- POP-UP MODALS --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 35px 30px;
+            width: 90%;
+            max-width: 440px;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-card h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .modal-badge-img {
+            width: 95px;
+            height: 95px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 15px auto;
+            display: block;
+        }
+
+        .modal-card p {
+            font-size: 14px;
+            color: #475569;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .modal-score {
+            font-size: 16px;
+            font-weight: 800;
+            padding: 6px 16px;
+            background: #f1f5f9;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <img src="../images/logo.png" alt="PINTAR Logo">
+        </div>
+        <nav>
+            <a href="dashboard.html">Home</a>
+            <a href="report.html">Report</a>
+            <a href="assignment.html" class="active">Quest</a>
+        </nav>
+        <div class="right-menu">
+            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="logout" id="logoutBtn" onclick="window.location.href='../index.html'">LOG OUT</button>
+            <div class="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>Rava</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="assignment.html">Assignment</a>
+            <span>&gt;</span>
+            <span id="bcCategory">AI & Logic</span>
+            <span>&gt;</span>
+            <span id="bcQuestion">Question 1 of 8</span>
+        </div>
+
+        <div class="quiz-grid">
+
+            <!-- Left Main Question Section -->
+            <div class="quiz-card">
+                <div>
+                    <div class="section-header">
+                        <div class="header-left">
+                            <div class="badge-placeholder-small" id="secBadgeBox">
+                                <img id="secBadgeImg" src="../images/badge-neural-architect.png" alt="Section Badge">
+                            </div>
+                            <div>
+                                <span class="sec-tag" id="secCategoryTag">AI & Logic</span>
+                                <h2 class="sec-title" id="secTitle">Neural Architect</h2>
+                                <p class="sec-desc" id="secDesc">Outstanding proficiency in AI concepts and logical
+                                    reasoning.</p>
+                            </div>
+                        </div>
+                        <div class="nav-arrows">
+                            <span class="q-count-top" id="topQCount">Question 1 of 8</span>
+                            <button class="btn-arrow" id="prevBtn" onclick="navigateQuestion(-1)"><i
+                                    class="fa-solid fa-chevron-left"></i></button>
+                            <button class="btn-arrow" id="nextBtnTop" onclick="navigateQuestion(1)"><i
+                                    class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="progress-box">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="secProgressBar"></div>
+                        </div>
+                        <div class="progress-text-row">
+                            <span id="answeredSubtext">0 / 8 answered</span>
+                        </div>
+                    </div>
+
+                    <!-- Question Container -->
+                    <div class="question-box">
+                        <div class="question-text" id="questionText">Loading question...</div>
+                        <div class="options-list" id="optionsContainer">
+                            <!-- Dynamic Options Rendered Here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Card Controls -->
+                <div class="card-actions">
+                    <button class="btn-skip" id="skipBtn" onclick="skipQuestion()">SKIP QUESTION</button>
+                    <button class="btn-next" id="mainActionBtn" onclick="handleMainAction()">NEXT QUESTION <i
+                            class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Right Sidebar Navigation -->
+            <div class="sidebar">
+
+                <!-- Section Progress Box -->
+                <div class="side-card">
+                    <div class="side-sec-header">
+                        <h4>Section Progress</h4>
+                        <span class="side-tag" id="sideCategoryTag">AI & Logic</span>
+                    </div>
+                    <div class="sec-percent-bar">
+                        <div class="sec-percent-fill" id="sideProgressBar"></div>
+                    </div>
+                    <div class="sec-percent-text" id="sideProgressRatio">0 / 8 (0%)</div>
+                </div>
+
+                <!-- Question Navigator Grid -->
+                <div class="side-card">
+                    <h4>Question Navigator</h4>
+                    <div class="nav-legend">
+                        <div class="legend-item"><span class="legend-dot dot-answered"></span> Answered</div>
+                        <div class="legend-item"><span class="legend-dot dot-current"></span> Current</div>
+                        <div class="legend-item"><span class="legend-dot dot-not"></span> Not Answered</div>
+                    </div>
+                    <div class="nav-grid" id="questionNavGrid">
+                        <!-- Navigator buttons rendered dynamically -->
+                    </div>
+                </div>
+
+                <!-- Section Details Box -->
+                <div class="side-card">
+                    <h4>Section Details</h4>
+                    <div class="details-list">
+                        <div class="detail-row"><span>Total Questions</span><span>8</span></div>
+                        <div class="detail-row"><span>Answered</span><span id="detAnswered">0</span></div>
+                        <div class="detail-row"><span>Remaining</span><span id="detRemaining">8</span></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="bottom-bar">
+            <a href="assignment.html" class="btn-back-sections"><i class="fa-solid fa-arrow-left"></i> BACK TO
+                SECTIONS</a>
+            <div class="tip-box">
+                <i class="fa-regular fa-lightbulb" style="color: #eab308;"></i> Tip: Read each question carefully and
+                choose the best answer.
+            </div>
+            <button class="btn-submit-sec" onclick="submitSection()">SUBMIT SECTION <i
+                    class="fa-solid fa-paper-plane"></i></button>
+        </div>
+
+    </main>
+
+    <!-- STEP 1: MODULE MODAL -->
+    <div class="modal-overlay" id="sectionModal">
+        <div class="modal-card">
+            <h2 id="modalTitle">Section Completed!</h2>
+            <img id="modalBadgeImg" class="modal-badge-img" src="" alt="Badge" style="display:none;">
+            <p id="modalMessage"></p>
+            <div class="modal-score" id="modalScoreText">Score: 0 / 8</div>
+            <div>
+                <button class="btn-next" id="modalActionBtn" style="margin: 0 auto;"
+                    onclick="returnToDashboard()">Return to Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 2: GRAND INNOVATOR MODAL -->
+    <div class="modal-overlay" id="grandModal">
+        <div class="modal-card">
+            <h2 style="color: #4f46e5;">CONGRATULATIONS CHAMP!</h2>
+            <img class="modal-badge-img" src="../images/badge-pintar-master.png" alt="Grand Innovator Badge">
+            <p>Congrats Champs! You received the PINTAR Grand Innovator Badge!</p>
+            <div class="modal-score">Overall Score: 40 / 40 (100%)</div>
+            <div>
+                <button class="btn-next" style="margin: 0 auto;" onclick="returnToDashboard()">Return to
+                    Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO ELEMENT FOR VICTORY SONG -->
+    <audio id="victoryAudio" src="../audio/victory.mp3" preload="auto"></audio>
+
+    <script>
+        const quizDatabase = {
+            1: {
+                title: "Neural Architect",
+                tag: "AI & Logic",
+                image: "../images/badge-neural-architect.png",
+                desc: "Outstanding proficiency in AI concepts and logical reasoning.",
+                questions: [
+                    { q: "1. Artificial Intelligence (AI) allows computers to...", options: ["A. Learn from data and make decisions", "B. Execute fixed code without changes", "C. Perform mechanical cleaning tasks", "D. Store endless power without batteries"], correct: 0 },
+                    { q: "2. Which of these is an example of AI?", options: ["A. Voice Assistant (Siri/Google Assistant)", "B. Manual Typewriter", "C. Mechanical Pocket Watch", "D. Standard Calculator"], correct: 0 },
+                    { q: "3. AI improves itself mainly by...", options: ["A. Learning from data", "B. Increasing screen brightness", "C. Replacing hardware daily", "D. Decreasing processing speed"], correct: 0 },
+                    { q: "4. Which is NOT AI?", options: ["A. Washing Machine Timer", "B. Autonomous Self-Driving Car", "C. Facial Recognition Software", "D. AI Language Translator"], correct: 0 },
+                    { q: "5. What does logical reasoning help a computer do?", options: ["A. Make decisions correctly", "B. Overheat the motherboard", "C. Print paper faster", "D. Format the memory card"], correct: 0 },
+                    { q: "6. Which technology uses AI?", options: ["A. Netflix recommendations", "B. Standard LED Flashlight", "C. Solar Powered Desk Lamp", "D. Mechanical Door Key Lock"], correct: 0 },
+                    { q: "7. What is Machine Learning?", options: ["A. A way computers learn patterns from data", "B. Assembling robot joints mechanically", "C. Printing circuit boards in a factory", "D. Cleaning computer cooling fans"], correct: 0 },
+                    { q: "8. Which statement about AI is TRUE?", options: ["A. AI learns using data provided by humans", "B. AI has organic human feelings", "C. AI operates entirely without electricity", "D. AI never requires software updates"], correct: 0 }
+                ]
+            },
+            2: {
+                title: "Robo-Kinetics Specialist",
+                tag: "Robomath & Mechanics",
+                image: "../images/badge-robo-kinetics.png",
+                desc: "Mastery of gear ratios, kinematics, and robotics mathematics.",
+                questions: [
+                    { q: "1. A gear is mainly used to...", options: ["A. Transfer motion and force", "B. Store electric charge", "C. Measure ambient temperature", "D. Emit sound frequencies"], correct: 0 },
+                    { q: "2. If a large gear drives a small gear, the small gear usually...", options: ["A. Rotates faster", "B. Rotates slower", "C. Stops moving completely", "D. Reverses direction constantly"], correct: 0 },
+                    { q: "3. Which component detects obstacles?", options: ["A. Ultrasonic Sensor", "B. DC Motor", "C. AA Battery", "D. Rubber Wheel"], correct: 0 },
+                    { q: "4. Robots use motors to...", options: ["A. Produce movement", "B. Store digital files", "C. Cool down surrounding air", "D. Light up LED indicators"], correct: 0 },
+                    { q: "5. Which unit measures angle?", options: ["A. Degree", "B. Kilogram", "C. Liter", "D. Meter"], correct: 0 },
+                    { q: "6. A robot follows instructions from its...", options: ["A. Controller (Microcontroller)", "B. Outer Plastic Shell", "C. Rubber Tread", "D. Battery Connector"], correct: 0 },
+                    { q: "7. Higher torque means...", options: ["A. More turning force", "B. Less structural weight", "C. Faster wireless connection", "D. Higher battery voltage"], correct: 0 },
+                    { q: "8. Which part supplies power?", options: ["A. Battery", "B. Servo Motor", "C. Spur Gear", "D. Plastic Frame"], correct: 0 }
+                ]
+            },
+            3: {
+                title: "Electra-Drive Pioneer",
+                tag: "EV Technology",
+                image: "../images/badge-electra-drive.png",
+                desc: "Top scores in electric vehicle physics, batteries, and motor dynamics.",
+                questions: [
+                    { q: "1. EV stands for...", options: ["A. Electric Vehicle", "B. Engine Volume", "C. Energy Variable", "D. Electronic Valve"], correct: 0 },
+                    { q: "2. Electric cars use...", options: ["A. Electric motors", "B. Steam turbines", "C. Diesel piston engines", "D. Jet propulsion units"], correct: 0 },
+                    { q: "3. The battery stores...", options: ["A. Electrical energy", "B. Hydraulic fluid", "C. Pressurized oxygen", "D. Gasoline fuel"], correct: 0 },
+                    { q: "4. Regenerative braking helps...", options: ["A. Recharge the battery", "B. Cool down the tires", "C. Clean the windshield", "D. Increase exhaust speed"], correct: 0 },
+                    { q: "5. Electric vehicles produce...", options: ["A. Lower emissions", "B. Higher engine smoke", "C. Louder exhaust sound", "D. More toxic smog"], correct: 0 },
+                    { q: "6. Charging stations provide...", options: ["A. Electricity", "B. Diesel oil", "C. Compressed air", "D. Coolant fluid"], correct: 0 },
+                    { q: "7. Which is an advantage of EVs?", options: ["A. Cleaner environment", "B. Frequent oil changes", "C. Noisier street traffic", "D. High exhaust smoke"], correct: 0 },
+                    { q: "8. Electric motors convert electricity into...", options: ["A. Motion", "B. Chemical waste", "C. Diesel vapor", "D. Static friction"], correct: 0 }
+                ]
+            },
+            4: {
+                title: "Aero-Nav Flight Master",
+                tag: "Drone Systems",
+                image: "../images/badge-aero-nav.png",
+                desc: "Excellence in autonomous flight, LIDAR, and sensor navigation.",
+                questions: [
+                    { q: "1. A drone flies using...", options: ["A. Propellers", "B. Rubber tracks", "C. Steam pistons", "D. Steel wheels"], correct: 0 },
+                    { q: "2. GPS helps drones...", options: ["A. Find location", "B. Charge batteries wirelessly", "C. Record loud audio", "D. Spin propellers faster"], correct: 0 },
+                    { q: "3. A drone camera is mainly used for...", options: ["A. Taking photos/videos", "B. Measuring wind speed", "C. Generating rotor power", "D. Balancing flight height"], correct: 0 },
+                    { q: "4. What keeps a drone balanced?", options: ["A. Flight controller", "B. Plastic canopy", "C. Camera lens", "D. Memory card slot"], correct: 0 },
+                    { q: "5. Which sensor measures height?", options: ["A. Altitude sensor", "B. Color sensor", "C. Moisture sensor", "D. Light intensity sensor"], correct: 0 },
+                    { q: "6. Strong wind causes drones to...", options: ["A. Become harder to control", "B. Fly twice as fast automatically", "C. Charge faster in air", "D. Lock camera focus"], correct: 0 },
+                    { q: "7. What should be checked before flying?", options: ["A. Battery level", "B. Paint color", "C. Sticker placement", "D. Box packaging"], correct: 0 },
+                    { q: "8. Drones are commonly used for...", options: ["A. Aerial photography", "B. Underwater drilling", "C. Underground tunneling", "D. Paving asphalt roads"], correct: 0 }
+                ]
+            },
+            5: {
+                title: "Spatial CAD Creator",
+                tag: "3D Printing",
+                image: "../images/badge-spatial-cad.png",
+                desc: "Advanced understanding of 3D spatial geometry and design thinking.",
+                questions: [
+                    { q: "1. A 3D printer creates objects...", options: ["A. Layer by layer", "B. In a single instant mold", "C. By carving out solid wood", "D. By cutting metal sheets"], correct: 0 },
+                    { q: "2. CAD stands for...", options: ["A. Computer-Aided Design", "B. Control And Drive", "C. Central Automated Data", "D. Calculated Angle Diagram"], correct: 0 },
+                    { q: "3. What material is commonly used in 3D printing?", options: ["A. PLA Filament", "B. Liquid Gasoline", "C. Sheet Aluminum", "D. Dry Sand"], correct: 0 },
+                    { q: "4. Before printing, a model is designed in...", options: ["A. CAD Software", "B. Spreadsheet Software", "C. Audio Player App", "D. Antivirus Scanner"], correct: 0 },
+                    { q: "5. The printer nozzle does what?", options: ["A. Melts and deposits filament", "B. Scans 2D paper images", "C. Cools the room temperature", "D. Polishes metal surfaces"], correct: 0 },
+                    { q: "6. 3D printing is useful for...", options: ["A. Rapid prototyping", "B. Mass paper printing", "C. Long distance wireless audio", "D. Storing digital videos"], correct: 0 },
+                    { q: "7. Which file is commonly used for 3D models?", options: ["A. STL", "B. MP3", "C. TXT", "D. EXE"], correct: 0 },
+                    { q: "8. One advantage of 3D printing is...", options: ["A. Quickly creating custom designs", "B. Zero electrical power usage", "C. No need for digital files", "D. Infinite printing speed"], correct: 0 }
+                ]
+            }
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentSection = parseInt(urlParams.get('section')) || 1;
+
+        let currentQIndex = 0;
+        let userAnswers = {};
+
+        const secData = quizDatabase[currentSection];
+
+        function initQuiz() {
+            const savedData = JSON.parse(localStorage.getItem('quiz_user_answers')) || {};
+            userAnswers = savedData[currentSection] || {};
+
+            document.getElementById('secTitle').textContent = secData.title;
+            document.getElementById('secCategoryTag').textContent = secData.tag;
+            document.getElementById('sideCategoryTag').textContent = secData.tag;
+            document.getElementById('bcCategory').textContent = secData.tag;
+            document.getElementById('secDesc').textContent = secData.desc;
+            document.getElementById('secBadgeImg').src = secData.image;
+
+            const quizProgress = JSON.parse(localStorage.getItem('quiz_progress')) || {};
+            const curProg = quizProgress[currentSection] || {};
+            if (curProg.correct === 8) {
+                document.getElementById('secBadgeBox').classList.add('unlocked');
+            }
+
+            renderQuestion();
+            updateUI();
+        }
+
+        function renderQuestion() {
+            const q = secData.questions[currentQIndex];
+
+            document.getElementById('bcQuestion').textContent = `Question ${currentQIndex + 1} of 8`;
+            document.getElementById('topQCount').textContent = `Question ${currentQIndex + 1} of 8`;
+            document.getElementById('questionText').textContent = q.q;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const optDiv = document.createElement('div');
+                optDiv.className = `option-item ${userAnswers[currentQIndex] === idx ? 'selected' : ''}`;
+                optDiv.onclick = () => selectOption(idx);
+
+                optDiv.innerHTML = `
+                    <div class="radio-dot"></div>
+                    <span>${opt}</span>
+                `;
+                optionsContainer.appendChild(optDiv);
+            });
+
+            document.getElementById('prevBtn').disabled = currentQIndex === 0;
+            document.getElementById('nextBtnTop').disabled = currentQIndex === (secData.questions.length - 1);
+
+            const mainBtn = document.getElementById('mainActionBtn');
+            const skipBtn = document.getElementById('skipBtn');
+
+            if (currentQIndex === secData.questions.length - 1) {
+                mainBtn.className = "btn-submit-card";
+                mainBtn.innerHTML = 'SUBMIT SECTION <i class="fa-solid fa-paper-plane"></i>';
+                skipBtn.style.visibility = "hidden";
+            } else {
+                mainBtn.className = "btn-next";
+                mainBtn.innerHTML = 'NEXT QUESTION <i class="fa-solid fa-chevron-right"></i>';
+                skipBtn.style.visibility = "visible";
+            }
+        }
+
+        function selectOption(optIndex) {
+            userAnswers[currentQIndex] = optIndex;
+            saveProgress();
+            renderQuestion();
+            updateUI();
+        }
+
+        function skipQuestion() {
+            if (currentQIndex < secData.questions.length - 1) {
+                currentQIndex++;
+                renderQuestion();
+                updateUI();
+            }
+        }
+
+        function handleMainAction() {
+            if (currentQIndex === secData.questions.length - 1) {
+                submitSection();
+            } else {
+                navigateQuestion(1);
+            }
+        }
+
+        function navigateQuestion(direction) {
+            const target = currentQIndex + direction;
+            if (target >= 0 && target < secData.questions.length) {
+                currentQIndex = target;
+                renderQuestion();
+                updateUI();
+            }
+        }
+
+        function jumpToQuestion(index) {
+            currentQIndex = index;
+            renderQuestion();
+            updateUI();
+        }
+
+        function updateUI() {
+            const answeredCount = Object.keys(userAnswers).length;
+            const percent = Math.round((answeredCount / 8) * 100);
+
+            document.getElementById('secProgressBar').style.width = `${percent}%`;
+            document.getElementById('sideProgressBar').style.width = `${percent}%`;
+
+            document.getElementById('answeredSubtext').textContent = `${answeredCount} / 8 answered`;
+            document.getElementById('sideProgressRatio').textContent = `${answeredCount} / 8 (${percent}%)`;
+
+            document.getElementById('detAnswered').textContent = answeredCount;
+            document.getElementById('detRemaining').textContent = 8 - answeredCount;
+
+            const grid = document.getElementById('questionNavGrid');
+            grid.innerHTML = '';
+
+            for (let i = 0; i < 8; i++) {
+                const btn = document.createElement('button');
+                let statusClass = '';
+
+                if (i === currentQIndex) {
+                    statusClass = 'current';
+                } else if (userAnswers.hasOwnProperty(i)) {
+                    statusClass = 'answered';
+                }
+
+                btn.className = `nav-btn ${statusClass}`;
+                btn.textContent = i + 1;
+                btn.onclick = () => jumpToQuestion(i);
+                grid.appendChild(btn);
+            }
+        }
+
+        function saveProgress() {
+            const allSavedAnswers = JSON.parse(localStorage.getItem('quiz_user_answers')) || {};
+            allSavedAnswers[currentSection] = userAnswers;
+            localStorage.setItem('quiz_user_answers', JSON.stringify(allSavedAnswers));
+
+            let correctCount = 0;
+            Object.keys(userAnswers).forEach(qIdx => {
+                if (userAnswers[qIdx] === secData.questions[qIdx].correct) {
+                    correctCount++;
+                }
+            });
+
+            const quizProgress = JSON.parse(localStorage.getItem('quiz_progress')) || {};
+            quizProgress[currentSection] = {
+                answered: Object.keys(userAnswers).length,
+                correct: correctCount
+            };
+            localStorage.setItem('quiz_progress', JSON.stringify(quizProgress));
+        }
+
+        function submitSection() {
+            saveProgress();
+
+            let correctCount = 0;
+            Object.keys(userAnswers).forEach(qIdx => {
+                if (userAnswers[qIdx] === secData.questions[qIdx].correct) {
+                    correctCount++;
+                }
+            });
+
+            const totalQ = secData.questions.length;
+            const pct = Math.round((correctCount / totalQ) * 100);
+
+            const quizProgress = JSON.parse(localStorage.getItem('quiz_progress')) || {};
+            let totalOverallCorrect = 0;
+            for (let i = 1; i <= 5; i++) {
+                if (quizProgress[i] && quizProgress[i].correct) {
+                    totalOverallCorrect += quizProgress[i].correct;
+                }
+            }
+
+            const modal = document.getElementById('sectionModal');
+            const actionBtn = document.getElementById('modalActionBtn');
+            document.getElementById('modalScoreText').textContent = `Section Score: ${correctCount} / ${totalQ} (${pct}%)`;
+
+            if (pct === 100) {
+                document.getElementById('modalTitle').textContent = "Badge Unlocked!";
+                document.getElementById('modalTitle').style.color = "#10b981";
+                document.getElementById('modalBadgeImg').src = secData.image;
+                document.getElementById('modalBadgeImg').style.display = "block";
+                document.getElementById('modalMessage').textContent = `Awesome! You earned the ${secData.title} badge!`;
+
+                if (totalOverallCorrect === 40) {
+                    actionBtn.textContent = "CONTINUE";
+                    actionBtn.onclick = triggerGrandModal;
+                } else {
+                    actionBtn.textContent = "Return to Dashboard";
+                    actionBtn.onclick = returnToDashboard;
+                }
+            } else {
+                document.getElementById('modalTitle').textContent = "Oh-huh! You are so close";
+                document.getElementById('modalTitle').style.color = "#ef4444";
+                document.getElementById('modalBadgeImg').style.display = "none";
+                document.getElementById('modalMessage').textContent = "Score 100% in this section to unlock its official badge.";
+                actionBtn.textContent = "Return to Dashboard";
+                actionBtn.onclick = returnToDashboard;
+            }
+
+            modal.style.display = "flex";
+        }
+
+        function triggerGrandModal() {
+            document.getElementById('sectionModal').style.display = "none";
+            const grandModal = document.getElementById('grandModal');
+            grandModal.style.display = "flex";
+
+            const audio = document.getElementById('victoryAudio');
+            if (audio) {
+                audio.play().catch(e => console.log("Audio play blocked by browser policy"));
+            }
+        }
+
+        function returnToDashboard() {
+            window.location.href = 'assignment.html';
+        }
+
+        window.onload = initQuiz;
+    </script>
+</body>
+
+</html>

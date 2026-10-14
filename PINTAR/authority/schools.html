@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PINTAR - Schools</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- External Navigation Panel Styling -->
+    <link rel="stylesheet" href="../css/navbar.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 60px;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 40px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .navbar nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-block;
+            position: relative;
+            padding: 6px 0;
+            transition: opacity 0.2s;
+        }
+
+        .navbar nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .navbar .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logout {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #3b4ca6;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .page-title {
+            font-size: 36px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #000000;
+            margin-bottom: 30px;
+        }
+
+        /* White Panel Box Wrapper */
+        .content-panel {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        }
+
+        /* --- FILTERS TOOLBAR --- */
+        .toolbar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 16px 12px 45px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            color: #334155;
+        }
+
+        .filter-select {
+            padding: 12px 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #334155;
+            background-color: white;
+            min-width: 180px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .btn-export {
+            background-color: #273894;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        /* --- METRICS SUB-BAR --- */
+        .metrics-bar {
+            display: flex;
+            justify-content: space-between;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 16px;
+            padding: 15px 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .metric-item {
+            text-align: left;
+            position: relative;
+            flex: 1;
+        }
+
+        .metric-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 20px;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background-color: #e2e8f0;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-size: 26px;
+            font-weight: 800;
+            color: #273894;
+        }
+
+        /* Highlighted metric for Badges Earned */
+        .badge-metric-text {
+            color: #4f46e5;
+        }
+
+        /* --- UPDATED 8-COLUMN DATA TABLE GRID --- */
+        .table-header {
+            display: grid;
+            grid-template-columns: 50px 2fr 1.3fr 1.1fr 1.1fr 1.2fr 1.1fr 90px;
+            background-color: #dbeafe;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .table-header div:nth-child(5),
+        .table-header div:nth-child(6),
+        .table-header div:nth-child(7) {
+            text-align: center;
+        }
+
+        .table-header div:last-child {
+            text-align: right;
+        }
+
+        .school-row {
+            display: grid;
+            grid-template-columns: 50px 2fr 1.3fr 1.1fr 1.1fr 1.2fr 1.1fr 90px;
+            align-items: center;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 14px 20px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .school-row div:nth-child(5) {
+            text-align: center;
+            color: #334155;
+        }
+
+        /* Badges Column Styling */
+        .school-row div:nth-child(6) {
+            text-align: center;
+            color: #4f46e5;
+            font-weight: 700;
+        }
+
+        .school-row div:nth-child(7) {
+            text-align: center;
+            color: #273894;
+        }
+
+        .school-row div:last-child {
+            text-align: right;
+        }
+
+        /* Type Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .badge-smk {
+            background-color: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .badge-sk {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .badge-sjkt {
+            background-color: #ffedd5;
+            color: #c2410c;
+        }
+
+        .badge-sjkc {
+            background-color: #fce7f3;
+            color: #be185d;
+        }
+
+        /* Actions Button */
+        .btn-view {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-view:hover {
+            background-color: #bfdbfe;
+        }
+
+        /* --- FOOTER PAGINATION --- */
+        .pagination-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-page {
+            border: 1px solid #cbd5e1;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            transition: all 0.2s;
+        }
+
+        .btn-page:hover:not(:disabled) {
+            background-color: #f1f5f9;
+        }
+
+        .btn-page.active {
+            background-color: #273894;
+            color: white;
+            border-color: #273894;
+        }
+
+        .btn-page:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="../images/logo.png" alt="PINTAR Logo">
+        </div>
+        <nav>
+            <a href="dashboard.html">Home</a>
+            <a href="schools.html" class="active">Schools</a>
+            <a href="quizzes.html">Quizzes</a>
+            <a href="reports.html">Reports & Analytics</a>
+        </nav>
+        <div class="right-menu">
+            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="logout" id="logoutBtn" onclick="window.location.href='../index.html'">LOG OUT</button>
+            <div class="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>PINTAR</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN LAYOUT ================= -->
+    <main class="container">
+        <h1 class="page-title">Schools</h1>
+
+        <div class="content-panel">
+
+            <!-- Filters Toolbar -->
+            <section class="toolbar">
+                <div class="search-container">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Search Schools">
+                </div>
+                <select id="stateFilter" class="filter-select">
+                    <option value="">All States</option>
+                </select>
+                <select id="typeFilter" class="filter-select">
+                    <option value="">All School Types</option>
+                    <option value="SMK">SMK</option>
+                    <option value="SK">SK</option>
+                    <option value="SJK(Cina)">SJK(Cina)</option>
+                    <option value="SJKT">SJKT</option>
+                </select>
+                <button class="btn-export" id="exportBtn"><i class="fa-solid fa-download"></i> Export</button>
+            </section>
+
+            <!-- Updated Summary Breakdown Metric Bar -->
+            <section class="metrics-bar">
+                <div class="metric-item">
+                    <div class="metric-label">Total Schools</div>
+                    <div class="metric-value" id="metricTotalSchools">0</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">Total Students</div>
+                    <div class="metric-value" id="metricTotalStudents">0</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">Badges Earned</div>
+                    <div class="metric-value badge-metric-text" id="metricTotalBadges">0</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">SMK</div>
+                    <div class="metric-value" id="metricSMK">0</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">SJK(Cina)</div>
+                    <div class="metric-value" id="metricSJKC">0</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">SK</div>
+                    <div class="metric-value" id="metricSK">0</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">SJK(Tamil)</div>
+                    <div class="metric-value" id="metricSJKT">0</div>
+                </div>
+            </section>
+
+            <!-- Table Header (Includes Badges Earned) -->
+            <div id="tableHeader" class="table-header">
+                <div>#</div>
+                <div>School Name</div>
+                <div>State</div>
+                <div>School Type</div>
+                <div>Total Students</div>
+                <div>Badges Earned</div>
+                <div>Average Score</div>
+                <div>Action</div>
+            </div>
+
+            <!-- Container for Rows loaded dynamically -->
+            <div id="tableBody"></div>
+
+            <!-- Footer Pagination Controls -->
+            <footer class="pagination-footer">
+                <div id="paginationInfo">Loading pagination data...</div>
+                <div class="pagination-controls" id="paginationControls"></div>
+            </footer>
+
+        </div>
+    </main>
+
+    <!-- Render Engine Script -->
+    <script>
+        // HARDCODED DATABASE: Updated with student badge counts for each school
+        const hardcodedSchoolsData = [
+            { id: 1, name: "SMK Seri Bintang Utara", state: "Kuala Lumpur", type: "SMK", totalStudents: 1240, badgesEarned: 6200, averageScore: 89 },
+            { id: 2, name: "SMK Victoria Institution", state: "Kuala Lumpur", type: "SMK", totalStudents: 1100, badgesEarned: 5280, averageScore: 85 },
+            { id: 3, name: "SK Bukit Damansara", state: "Kuala Lumpur", type: "SK", totalStudents: 650, badgesEarned: 2730, averageScore: 78 },
+            { id: 4, name: "SJK(Cina) Kuen Cheng 1", state: "Kuala Lumpur", type: "SJK(Cina)", totalStudents: 1450, badgesEarned: 8410, averageScore: 92 },
+            { id: 5, name: "SJKT Fletcher", state: "Kuala Lumpur", type: "SJKT", totalStudents: 320, badgesEarned: 1120, averageScore: 74 },
+            { id: 6, name: "SMK Aminuddin Baki", state: "Kuala Lumpur", type: "SMK", totalStudents: 980, badgesEarned: 4800, averageScore: 88 },
+            { id: 7, name: "SK Convent Bukit Nanas", state: "Kuala Lumpur", type: "SK", totalStudents: 540, badgesEarned: 2430, averageScore: 81 },
+            { id: 8, name: "SJK(Cina) Lai Meng", state: "Kuala Lumpur", type: "SJK(Cina)", totalStudents: 1200, badgesEarned: 6600, averageScore: 90 },
+            { id: 9, name: "SJKT Vivekananda", state: "Kuala Lumpur", type: "SJKT", totalStudents: 410, badgesEarned: 1640, averageScore: 76 },
+            { id: 10, name: "SMK Methodist Boy's School", state: "Kuala Lumpur", type: "SMK", totalStudents: 1050, badgesEarned: 4725, averageScore: 83 },
+            { id: 11, name: "SMK Seafield", state: "Selangor", type: "SMK", totalStudents: 1540, badgesEarned: 7700, averageScore: 87 },
+            { id: 12, name: "SMK USJ 12", state: "Selangor", type: "SMK", totalStudents: 1380, badgesEarned: 6486, averageScore: 84 },
+            { id: 13, name: "SK Subang Jaya", state: "Selangor", type: "SK", totalStudents: 890, badgesEarned: 3560, averageScore: 75 },
+            { id: 14, name: "SJK(Cina) Lick Hung", state: "Selangor", type: "SJK(Cina)", totalStudents: 2100, badgesEarned: 12180, averageScore: 94 },
+            { id: 15, name: "SJKT Tun Sambanthan", state: "Selangor", type: "SJKT", totalStudents: 450, badgesEarned: 1800, averageScore: 72 },
+            { id: 16, name: "SMK Damansara Utama", state: "Selangor", type: "SMK", totalStudents: 1120, badgesEarned: 5600, averageScore: 86 },
+            { id: 17, name: "SK Sri Petaling", state: "Selangor", type: "SK", totalStudents: 720, badgesEarned: 3240, averageScore: 79 },
+            { id: 18, name: "SJK(Cina) Puay Chai", state: "Selangor", type: "SJK(Cina)", totalStudents: 1890, badgesEarned: 10395, averageScore: 91 },
+            { id: 19, name: "SJKT Seaport", state: "Selangor", type: "SJKT", totalStudents: 280, badgesEarned: 980, averageScore: 70 },
+            { id: 20, name: "SMK Sultan Abdul Samad", state: "Selangor", type: "SMK", totalStudents: 1250, badgesEarned: 5625, averageScore: 80 },
+            { id: 21, name: "SMK Tinggi Melaka", state: "Melaka", type: "SMK", totalStudents: 1020, badgesEarned: 4590, averageScore: 82 },
+            { id: 22, name: "SMJK Yok Bin", state: "Melaka", type: "SMK", totalStudents: 1150, badgesEarned: 5750, averageScore: 88 },
+            { id: 23, name: "SK Banda Hilir", state: "Melaka", type: "SK", totalStudents: 480, badgesEarned: 1920, averageScore: 74 },
+            { id: 24, name: "SJK(Cina) Pay Teck", state: "Melaka", type: "SJK(Cina)", totalStudents: 850, badgesEarned: 4250, averageScore: 87 },
+            { id: 25, name: "SJKT Melaka Kubu", state: "Melaka", type: "SJKT", totalStudents: 190, badgesEarned: 665, averageScore: 71 },
+            { id: 26, name: "SMK Infant Jesus Convent", state: "Melaka", type: "SMK", totalStudents: 950, badgesEarned: 4275, averageScore: 85 },
+            { id: 27, name: "SK Sacred Heart", state: "Melaka", type: "SK", totalStudents: 310, badgesEarned: 1240, averageScore: 73 },
+            { id: 28, name: "SJK(Cina) Ping Ming", state: "Melaka", type: "SJK(Cina)", totalStudents: 670, badgesEarned: 3350, averageScore: 86 },
+            { id: 29, name: "SJKT Kubu", state: "Melaka", type: "SJKT", totalStudents: 210, badgesEarned: 840, averageScore: 73 },
+            { id: 30, name: "SMK Gajah Berang", state: "Melaka", type: "SMK", totalStudents: 1100, averageScore: 81, badgesEarned: 4950 },
+            { id: 31, name: "SMK Sultan Ismail", state: "Johor", type: "SMK", totalStudents: 1420, badgesEarned: 6390, averageScore: 85 },
+            { id: 32, name: "SMK Maktab Sultan Abu Bakar", state: "Johor", type: "SMK", totalStudents: 1200, badgesEarned: 5400, averageScore: 84 },
+            { id: 33, name: "SK Temenggong Abdul Rahman", state: "Johor", type: "SK", totalStudents: 810, badgesEarned: 3240, averageScore: 76 },
+            { id: 34, name: "SJK(Cina) Foon Yew 1", state: "Johor", type: "SJK(Cina)", totalStudents: 2300, badgesEarned: 13340, averageScore: 93 },
+            { id: 35, name: "SJKT Yahya Awal", state: "Johor", type: "SJKT", totalStudents: 390, badgesEarned: 1365, averageScore: 72 },
+            { id: 36, name: "SMK Infant Jesus Convent Johor", state: "Johor", type: "SMK", totalStudents: 990, badgesEarned: 4455, averageScore: 86 },
+            { id: 37, name: "SK Nong Chik", state: "Johor", type: "SK", totalStudents: 520, badgesEarned: 2080, averageScore: 75 },
+            { id: 38, name: "SJK(Cina) Pei Hwa", state: "Johor", type: "SJK(Cina)", totalStudents: 1750, badgesEarned: 8750, averageScore: 89 },
+            { id: 39, name: "SJKT Kangkar Pulai", state: "Johor", type: "SJKT", totalStudents: 310, badgesEarned: 1240, averageScore: 74 },
+            { id: 40, name: "SMK Taman Molek", state: "Johor", type: "SMK", totalStudents: 1300, badgesEarned: 5200, averageScore: 79 },
+            { id: 41, name: "SMK Penang Free School", state: "Penang", type: "SMK", totalStudents: 1150, badgesEarned: 5750, averageScore: 89 },
+            { id: 42, name: "SMJK Chung Ling", state: "Penang", type: "SMK", totalStudents: 2100, badgesEarned: 12600, averageScore: 95 },
+            { id: 43, name: "SK Wellesley", state: "Penang", type: "SK", totalStudents: 430, badgesEarned: 1720, averageScore: 77 },
+            { id: 44, name: "SJK(Cina) Han Chiang", state: "Penang", type: "SJK(Cina)", totalStudents: 1320, badgesEarned: 7260, averageScore: 91 },
+            { id: 45, name: "SJKT Ramakrishna", state: "Penang", type: "SJKT", totalStudents: 340, badgesEarned: 1360, averageScore: 76 },
+            { id: 46, name: "SMK St. Xavier's Institution", state: "Penang", type: "SMK", totalStudents: 1080, badgesEarned: 4860, averageScore: 83 },
+            { id: 47, name: "SK Convent Green Lane", state: "Penang", type: "SK", totalStudents: 680, badgesEarned: 3060, averageScore: 81 },
+            { id: 48, name: "SJK(Cina) Union", state: "Penang", type: "SJK(Cina)", totalStudents: 1100, badgesEarned: 6050, averageScore: 90 },
+            { id: 49, name: "SJKT Azad", state: "Penang", type: "SJKT", totalStudents: 180, badgesEarned: 630, averageScore: 71 },
+            { id: 50, name: "SMK Methodist Girls School", state: "Penang", type: "SMK", totalStudents: 920, badgesEarned: 4140, averageScore: 84 },
+            { id: 51, name: "SMK Anderson", state: "Perak", type: "SMK", totalStudents: 1230, badgesEarned: 5535, averageScore: 83 },
+            { id: 52, name: "SMK St. Michael's Institution", state: "Perak", type: "SMK", totalStudents: 1350, badgesEarned: 6075, averageScore: 84 },
+            { id: 53, name: "SK Marian Convent", state: "Perak", type: "SK", totalStudents: 560, badgesEarned: 2240, averageScore: 78 },
+            { id: 54, name: "SJK(Cina) Yuk Choy", state: "Perak", type: "SJK(Cina)", totalStudents: 1600, badgesEarned: 8800, averageScore: 91 },
+            { id: 55, name: "SJKT Perak Sangeetha Sabha", state: "Perak", type: "SJKT", totalStudents: 290, badgesEarned: 1015, averageScore: 73 },
+            { id: 56, name: "SMJK Sam Tet", state: "Perak", type: "SMK", totalStudents: 1800, badgesEarned: 9900, averageScore: 92 },
+            { id: 57, name: "SK Cator Avenue", state: "Perak", type: "SK", totalStudents: 610, badgesEarned: 2440, averageScore: 74 },
+            { id: 58, name: "SJK(Cina) Ave Maria Convent", state: "Perak", type: "SJK(Cina)", totalStudents: 1550, badgesEarned: 8525, averageScore: 93 },
+            { id: 59, name: "SJKT Mahatma Gandhi", state: "Perak", type: "SJKT", totalStudents: 410, badgesEarned: 1640, averageScore: 75 },
+            { id: 60, name: "SMK Methodist (ACS) Ipoh", state: "Perak", type: "SMK", totalStudents: 1100, badgesEarned: 4950, averageScore: 82 },
+            { id: 61, name: "SMK Sultanah Asma", state: "Kedah", type: "SMK", totalStudents: 1040, badgesEarned: 5200, averageScore: 86 },
+            { id: 62, name: "SMK Keat Hwa", state: "Kedah", type: "SMK", totalStudents: 1600, badgesEarned: 8800, averageScore: 89 },
+            { id: 63, name: "SK Convent Alor Setar", state: "Kedah", type: "SK", totalStudents: 490, badgesEarned: 1960, averageScore: 77 },
+            { id: 64, name: "SJK(Cina) Keat Hwa H", state: "Kedah", type: "SJK(Cina)", totalStudents: 1120, badgesEarned: 6160, averageScore: 90 },
+            { id: 65, name: "SJKT Barathy", state: "Kedah", type: "SJKT", totalStudents: 270, badgesEarned: 945, averageScore: 72 },
+            { id: 66, name: "SMK Ibrahim", state: "Kedah", type: "SMK", totalStudents: 1200, badgesEarned: 6000, averageScore: 85 },
+            { id: 67, name: "SK Sultanah Asma", state: "Kedah", type: "SK", totalStudents: 530, badgesEarned: 2120, averageScore: 79 },
+            { id: 68, name: "SJK(Cina) Sin Min", state: "Kedah", type: "SJK(Cina)", totalStudents: 1450, badgesEarned: 7250, averageScore: 88 },
+            { id: 69, name: "SJKT Saraswathy", state: "Kedah", type: "SJKT", totalStudents: 310, badgesEarned: 1240, averageScore: 74 },
+            { id: 70, name: "SMK Chio Min", state: "Kedah", type: "SMK", totalStudents: 1300, badgesEarned: 5850, averageScore: 83 },
+            { id: 71, name: "SMK Sultan Abu Bakar", state: "Pahang", type: "SMK", totalStudents: 1180, badgesEarned: 5310, averageScore: 84 },
+            { id: 72, name: "SMK Abdul Rahman Talib", state: "Pahang", type: "SMK", totalStudents: 1050, badgesEarned: 4200, averageScore: 81 },
+            { id: 73, name: "SK Methodist Kuantan", state: "Pahang", type: "SK", totalStudents: 510, badgesEarned: 2040, averageScore: 75 },
+            { id: 74, name: "SJK(Cina) Pei Chai", state: "Pahang", type: "SJK(Cina)", totalStudents: 1250, badgesEarned: 6250, averageScore: 88 },
+            { id: 75, name: "SJKT Bandar Kuantan", state: "Pahang", type: "SJKT", totalStudents: 180, badgesEarned: 630, averageScore: 70 },
+            { id: 76, name: "SMK Tengku Afzan", state: "Pahang", type: "SMK", totalStudents: 920, badgesEarned: 3680, averageScore: 78 },
+            { id: 77, name: "SK St. Thomas", state: "Pahang", type: "SK", totalStudents: 460, badgesEarned: 1840, averageScore: 73 },
+            { id: 78, name: "SJK(Cina) Kuang Hwa", state: "Pahang", type: "SJK(Cina)", totalStudents: 980, badgesEarned: 4900, averageScore: 86 },
+            { id: 79, name: "SJKT Ladang Jerantut", state: "Pahang", type: "SJKT", totalStudents: 120, badgesEarned: 360, averageScore: 68 },
+            { id: 80, name: "SMK Jerantut", state: "Pahang", type: "SMK", totalStudents: 1100, badgesEarned: 4400, averageScore: 76 },
+            { id: 81, name: "SMK King George V", state: "Negeri Sembilan", type: "SMK", totalStudents: 1340, badgesEarned: 6700, averageScore: 87 },
+            { id: 82, name: "SMK St. Paul", state: "Negeri Sembilan", type: "SMK", totalStudents: 1150, badgesEarned: 5175, averageScore: 83 },
+            { id: 83, name: "SK Puteri", state: "Negeri Sembilan", type: "SK", totalStudents: 580, badgesEarned: 2320, averageScore: 79 },
+            { id: 84, name: "SJK(Cina) Chan Wa", state: "Negeri Sembilan", type: "SJK(Cina)", totalStudents: 1300, badgesEarned: 6500, averageScore: 89 },
+            { id: 85, name: "SJKT Lorong Java", state: "Negeri Sembilan", type: "SJKT", totalStudents: 360, badgesEarned: 1440, averageScore: 75 },
+            { id: 86, name: "SMK Convent Seremban", state: "Negeri Sembilan", type: "SMK", totalStudents: 940, badgesEarned: 4230, averageScore: 84 },
+            { id: 87, name: "SK St. Paul", state: "Negeri Sembilan", type: "SK", totalStudents: 490, badgesEarned: 1960, averageScore: 76 },
+            { id: 88, name: "SJK(Cina) Sino-English", state: "Negeri Sembilan", type: "SJK(Cina)", totalStudents: 850, badgesEarned: 4250, averageScore: 86 },
+            { id: 89, name: "SJKT Jawa", state: "Negeri Sembilan", type: "SJKT", totalStudents: 230, badgesEarned: 805, averageScore: 71 },
+            { id: 90, name: "SMK Tunku Ampuan Durah", state: "Negeri Sembilan", type: "SMK", totalStudents: 1050, badgesEarned: 4200, averageScore: 78 },
+            { id: 91, name: "SMK Sultan Sulaiman", state: "Terengganu", type: "SMK", totalStudents: 1250, badgesEarned: 6250, averageScore: 86 },
+            { id: 92, name: "SMK Chung Hwa Terengganu", state: "Terengganu", type: "SMK", totalStudents: 890, badgesEarned: 4450, averageScore: 84 },
+            { id: 93, name: "SK Sultan Sulaiman 1", state: "Terengganu", type: "SK", totalStudents: 620, badgesEarned: 2480, averageScore: 78 },
+            { id: 94, name: "SJK(Cina) Chung Hwa", state: "Terengganu", type: "SJK(Cina)", totalStudents: 750, badgesEarned: 4125, averageScore: 89 },
+            { id: 95, name: "SK Tengku Ampuan Mariam", state: "Terengganu", type: "SK", totalStudents: 410, badgesEarned: 1435, averageScore: 74 },
+            { id: 96, name: "SMK Tengku Bariah", state: "Terengganu", type: "SMK", totalStudents: 1020, badgesEarned: 4080, averageScore: 79 },
+            { id: 97, name: "SK Ladang", state: "Terengganu", type: "SK", totalStudents: 380, badgesEarned: 1330, averageScore: 71 },
+            { id: 98, name: "SJK(Cina) Sin Chone", state: "Terengganu", type: "SJK(Cina)", totalStudents: 450, badgesEarned: 2025, averageScore: 83 },
+            { id: 99, name: "SK Pusat Chukai", state: "Terengganu", type: "SK", totalStudents: 590, badgesEarned: 2360, averageScore: 76 },
+            { id: 100, name: "SMK Chukai", state: "Terengganu", type: "SMK", totalStudents: 1150, badgesEarned: 4600, averageScore: 80 },
+            { id: 101, name: "SMK Sabah College", state: "Sabah", type: "SMK", totalStudents: 1300, badgesEarned: 5850, averageScore: 82 },
+            { id: 102, name: "SMJK Tinggi Kota Kinabalu", state: "Sabah", type: "SMK", totalStudents: 1450, badgesEarned: 7250, averageScore: 87 },
+            { id: 103, name: "SK Sri Gaya", state: "Sabah", type: "SK", totalStudents: 780, badgesEarned: 3510, averageScore: 80 },
+            { id: 104, name: "SJK(Cina) Chung Hwa KK", state: "Sabah", type: "SJK(Cina)", totalStudents: 1950, badgesEarned: 10725, averageScore: 92 },
+            { id: 105, name: "SK Convent Likas", state: "Sabah", type: "SK", totalStudents: 640, badgesEarned: 2560, averageScore: 79 },
+            { id: 106, name: "SMK All Saints", state: "Sabah", type: "SMK", totalStudents: 1200, badgesEarned: 4800, averageScore: 81 },
+            { id: 107, name: "SK Sacred Heart KK", state: "Sabah", type: "SK", totalStudents: 510, badgesEarned: 1785, averageScore: 73 },
+            { id: 108, name: "SJK(Cina) Shan Tao", state: "Sabah", type: "SJK(Cina)", totalStudents: 1100, badgesEarned: 4950, averageScore: 85 },
+            { id: 109, name: "SK Stella Maris", state: "Sabah", type: "SK", totalStudents: 480, badgesEarned: 1920, averageScore: 76 },
+            { id: 110, name: "SMK Lok Yuk", state: "Sabah", type: "SMK", totalStudents: 980, badgesEarned: 3920, averageScore: 80 },
+            { id: 111, name: "SMK St. Joseph", state: "Sarawak", type: "SMK", totalStudents: 1280, badgesEarned: 5760, averageScore: 85 },
+            { id: 112, name: "SMK St. Thomas", state: "Sarawak", type: "SMK", totalStudents: 1190, badgesEarned: 5355, averageScore: 84 },
+            { id: 113, name: "SK St. Mary", state: "Sarawak", type: "SK", totalStudents: 540, badgesEarned: 2160, averageScore: 78 },
+            { id: 114, name: "SJK(Cina) Chung Hua No. 3", state: "Sarawak", type: "SJK(Cina)", totalStudents: 1650, badgesEarned: 8250, averageScore: 90 },
+            { id: 115, name: "SK St. Paul Kuching", state: "Sarawak", type: "SK", totalStudents: 420, badgesEarned: 1470, averageScore: 75 },
+            { id: 116, name: "SMK Green Road", state: "Sarawak", type: "SMK", totalStudents: 1510, badgesEarned: 7550, averageScore: 88 },
+            { id: 117, name: "SK St. Teresa", state: "Sarawak", type: "SK", totalStudents: 610, badgesEarned: 2745, averageScore: 81 },
+            { id: 118, name: "SJK(Cina) Chung Hua No. 5", state: "Sarawak", type: "SJK(Cina)", totalStudents: 1300, badgesEarned: 6500, averageScore: 89 },
+            { id: 119, name: "SK Satria Jaya", state: "Sarawak", type: "SK", totalStudents: 700, badgesEarned: 2800, averageScore: 77 },
+            { id: 120, name: "SMK Batu Lintang", state: "Sarawak", type: "SMK", totalStudents: 1400, badgesEarned: 7000, averageScore: 86 },
+            { id: 121, name: "SMK Sultan Ismail II", state: "Kelantan", type: "SMK", totalStudents: 1100, badgesEarned: 4950, averageScore: 83 },
+            { id: 122, name: "SMK Chung Hwa Kota Bharu", state: "Kelantan", type: "SMK", totalStudents: 1350, badgesEarned: 6750, averageScore: 88 },
+            { id: 123, name: "SK Zainab 1", state: "Kelantan", type: "SK", totalStudents: 680, badgesEarned: 3060, averageScore: 81 },
+            { id: 124, name: "SJK(Cina) Chung Hwa KB", state: "Kelantan", type: "SJK(Cina)", totalStudents: 1500, badgesEarned: 8250, averageScore: 91 },
+            { id: 125, name: "SK Islah", state: "Kelantan", type: "SK", totalStudents: 790, badgesEarned: 3160, averageScore: 79 },
+            { id: 126, name: "SMK Zainab 1", state: "Kelantan", type: "SMK", totalStudents: 980, badgesEarned: 4410, averageScore: 84 },
+            { id: 127, name: "SK Zainab 2", state: "Kelantan", type: "SK", totalStudents: 520, badgesEarned: 2080, averageScore: 76 },
+            { id: 128, name: "SJK(Cina) Chung Hext", state: "Kelantan", type: "SJK(Cina)", totalStudents: 950, badgesEarned: 4750, averageScore: 86 },
+            { id: 129, name: "SK Kubang Kerian 3", state: "Kelantan", type: "SK", totalStudents: 910, badgesEarned: 3640, averageScore: 78 },
+            { id: 130, name: "SMK Kubang Kerian", state: "Kelantan", type: "SMK", totalStudents: 1200, badgesEarned: 4800, averageScore: 80 }
+        ];
+
+        let currentPage = 1;
+        const rowsPerPage = 10;
+        let filteredSchools = [];
+
+        // Calculation helper including Badges Earned metric
+        function calculateMetrics(dataArray) {
+            const totalSchools = dataArray.length;
+            const totalStudents = dataArray.reduce((acc, curr) => acc + (Number(curr.totalStudents) || 0), 0);
+            const totalBadges = dataArray.reduce((acc, curr) => acc + (Number(curr.badgesEarned) || 0), 0);
+
+            const smkCount = dataArray.filter(s => s.type === "SMK").length;
+            const skCount = dataArray.filter(s => s.type === "SK").length;
+            const sjkcCount = dataArray.filter(s => s.type === "SJK(Cina)" || s.type === "SJKC").length;
+            const sjktCount = dataArray.filter(s => s.type === "SJKT" || s.type === "SJK(Tamil)").length;
+
+            document.getElementById('metricTotalSchools').textContent = totalSchools.toLocaleString();
+            document.getElementById('metricTotalStudents').textContent = totalStudents.toLocaleString();
+            document.getElementById('metricTotalBadges').textContent = totalBadges.toLocaleString();
+            document.getElementById('metricSMK').textContent = smkCount.toLocaleString();
+            document.getElementById('metricSK').textContent = skCount.toLocaleString();
+            document.getElementById('metricSJKC').textContent = sjkcCount.toLocaleString();
+            document.getElementById('metricSJKT').textContent = sjktCount.toLocaleString();
+        }
+
+        // Dynamic State Dropdown Builder
+        function initStateDropdown() {
+            const states = [...new Set(hardcodedSchoolsData.map(s => s.state))].sort();
+            const stateSelect = document.getElementById('stateFilter');
+            if (!stateSelect) return;
+
+            stateSelect.innerHTML = '<option value="">All States</option>';
+
+            states.forEach(state => {
+                const opt = document.createElement('option');
+                opt.value = state;
+                opt.textContent = state;
+                stateSelect.appendChild(opt);
+            });
+        }
+
+        // Processing filters
+        function filterData() {
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            const stateVal = document.getElementById('stateFilter').value;
+            const typeVal = document.getElementById('typeFilter').value;
+
+            filteredSchools = hardcodedSchoolsData.filter(school => {
+                const matchesSearch = school.name.toLowerCase().includes(searchVal);
+                const matchesState = !stateVal || school.state === stateVal;
+                const matchesType = !typeVal || school.type === typeVal;
+                return matchesSearch && matchesState && matchesType;
+            });
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        function getBadgeClass(type) {
+            switch (type) {
+                case 'SMK': return 'badge-smk';
+                case 'SK': return 'badge-sk';
+                case 'SJKT': return 'badge-sjkt';
+                case 'SJK(Cina)': return 'badge-sjkc';
+                default: return 'badge-smk';
+            }
+        }
+
+        // Render target page subset records
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            const startIdx = (currentPage - 1) * rowsPerPage;
+            const endIdx = Math.min(startIdx + rowsPerPage, filteredSchools.length);
+            const pageItems = filteredSchools.slice(startIdx, endIdx);
+
+            if (pageItems.length === 0) {
+                tbody.innerHTML = `<div style="text-align:center; padding: 40px; color:#64748b; font-weight:600;">No matching schools found.</div>`;
+                document.getElementById('paginationInfo').textContent = "Showing 0 to 0 of 0 entries";
+                document.getElementById('paginationControls').innerHTML = '';
+                return;
+            }
+
+            pageItems.forEach((school, index) => {
+                const row = document.createElement('div');
+                row.className = 'school-row';
+                row.innerHTML = `
+                    <div>${startIdx + index + 1}</div>
+                    <div>${school.name}</div>
+                    <div>${school.state}</div>
+                    <div><span class="badge ${getBadgeClass(school.type)}">${school.type}</span></div>
+                    <div>${school.totalStudents.toLocaleString()}</div>
+                    <div>${school.badgesEarned.toLocaleString()}</div>
+                    <div>${school.averageScore}%</div>
+                    <div><button class="btn-view" onclick="location.href='school-details.html?id=${school.id}'">View</button></div>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('paginationInfo').textContent = `Showing ${startIdx + 1} to ${endIdx} of ${filteredSchools.length} schools`;
+            renderPagination();
+        }
+
+        // Dynamic Pagination Button Component Render
+        function renderPagination() {
+            const controls = document.getElementById('paginationControls');
+            if (!controls) return;
+            controls.innerHTML = '';
+
+            const totalPages = Math.ceil(filteredSchools.length / rowsPerPage);
+            if (totalPages <= 1) return;
+
+            // Previous Button
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'btn-page';
+            prevBtn.textContent = 'Previous';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => { currentPage--; renderTable(); };
+            controls.appendChild(prevBtn);
+
+            let startPage = Math.max(1, currentPage - 1);
+            let endPage = Math.min(totalPages, startPage + 2);
+            if (endPage - startPage < 2) {
+                startPage = Math.max(1, endPage - 2);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                if (i >= 1 && i <= totalPages) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.className = `btn-page ${i === currentPage ? 'active' : ''}`;
+                    pageBtn.textContent = i;
+                    pageBtn.onclick = () => { currentPage = i; renderTable(); };
+                    controls.appendChild(pageBtn);
+                }
+            }
+
+            // Next Button
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'btn-page';
+            nextBtn.textContent = 'Next';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => { currentPage++; renderTable(); };
+            controls.appendChild(nextBtn);
+        }
+
+        // CSV Export includes Badges Earned column
+        function exportToExcel() {
+            if (filteredSchools.length === 0) {
+                alert("No filtered school data available to export!");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "ID,School Name,State,School Type,Total Students,Badges Earned,Average Score\n";
+
+            filteredSchools.forEach(school => {
+                const escapedName = `"${school.name.replace(/"/g, '""')}"`;
+                const row = [
+                    school.id,
+                    escapedName,
+                    school.state,
+                    school.type,
+                    school.totalStudents,
+                    school.badgesEarned,
+                    `${school.averageScore}%`
+                ].join(",");
+                csvContent += row + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "PINTAR_Schools_Export.csv");
+            document.body.appendChild(link);
+
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initial DOM Load Trigger
+        window.addEventListener('DOMContentLoaded', () => {
+            filteredSchools = [...hardcodedSchoolsData];
+            calculateMetrics(hardcodedSchoolsData);
+            initStateDropdown();
+            renderTable();
+
+            const searchInput = document.getElementById('searchInput');
+            const stateFilter = document.getElementById('stateFilter');
+            const typeFilter = document.getElementById('typeFilter');
+            const exportBtn = document.getElementById('exportBtn');
+
+            if (searchInput) searchInput.addEventListener('input', filterData);
+            if (stateFilter) stateFilter.addEventListener('change', filterData);
+            if (typeFilter) typeFilter.addEventListener('change', filterData);
+            if (exportBtn) exportBtn.addEventListener('click', exportToExcel);
+        });
+    </script>
+</body>
+
+</html>

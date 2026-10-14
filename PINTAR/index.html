@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PINTAR Login</title>
+
+    <link rel="stylesheet" href="css/login.css">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Styles strictly for the Parent Register Box popup -->
+    <style>
+        .register-banner {
+            display: none;
+            /* Hidden by default */
+            background-color: #fff0f5;
+            border: 1px solid #fcc2d7;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            align-items: center;
+            justify-content: space-between;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .register-banner.show {
+            display: flex;
+            /* Shown when Parents tab is active */
+        }
+
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .banner-icon {
+            width: 38px;
+            height: 38px;
+            background-color: #e91e63;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .banner-text h4 {
+            color: #1e293b;
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .banner-text p {
+            color: #64748b;
+            font-size: 11px;
+            margin: 2px 0 0 0;
+        }
+
+        .register-btn-link {
+            background-color: #e91e63;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            transition: opacity 0.2s ease;
+        }
+
+        .register-btn-link:hover {
+            opacity: 0.9;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LEFT SIDE -->
+        <div class="left-panel">
+            <img src="images/logo.png" class="logo" alt="PINTAR Logo">
+            <h2>
+                Where AI Inspires Every Young Mind
+                to Learn, Explore & Grow.
+            </h2>
+            <!-- Placed back into layout flow for absolute coordinate precision -->
+            <img src="images/login-illustration.png" class="illustration" alt="Illustration">
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-panel">
+
+            <h1>Welcome Back</h1>
+
+            <!-- ROLE BUTTONS -->
+            <div class="role-buttons">
+                <button class="role active" data-role="authority">
+                    PINTAR
+                </button>
+                <button class="role" data-role="school">
+                    School Management
+                </button>
+                <button class="role" data-role="parent">
+                    Parents
+                </button>
+            </div>
+
+            <!-- PARENT REGISTER BANNER (Pops up when Parents is clicked) -->
+            <div id="registerBanner" class="register-banner">
+                <div class="banner-left">
+                    <div class="banner-icon">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <div class="banner-text">
+                        <h4>New to PINTAR?</h4>
+                        <p>Create your parent account to view your child's learning progress.</p>
+                    </div>
+                </div>
+                <a href="register.html" class="register-btn-link">
+                    Register Now <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form id="loginForm">
+
+                <label>Email</label>
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="email" required>
+                </div>
+
+                <label>Password</label>
+                <div class="input-group">
+                    <i class="fa-solid fa-eye" id="togglePassword"></i>
+                    <input type="password" id="password" required>
+                </div>
+
+                <div class="forgot">
+                    <a href="#">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    Login
+                </button>
+
+                <p id="errorMessage"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="data/users.js"></script>
+    <script src="js/login.js"></script>
+
+    <!-- Script to trigger the popup box for 'Parents' -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const roleButtons = document.querySelectorAll('.role-buttons .role');
+            const registerBanner = document.getElementById('registerBanner');
+
+            roleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active tab state
+                    roleButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    // Show pink banner only when role is 'parent'
+                    const selectedRole = button.getAttribute('data-role');
+                    if (selectedRole === 'parent') {
+                        registerBanner.classList.add('show');
+                    } else {
+                        registerBanner.classList.remove('show');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

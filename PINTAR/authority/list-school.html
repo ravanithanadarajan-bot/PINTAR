@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadual Sekolah PINTAR STEM</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Google Fonts for Clean Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1e293b;
+            padding-bottom: 60px;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 40px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .navbar nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-block;
+            position: relative;
+            padding: 6px 0;
+            transition: opacity 0.2s;
+        }
+
+        .navbar nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .navbar .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logout {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #3b4ca6;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .hero-text h1 {
+            font-size: 38px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 6px;
+        }
+
+        .hero-text p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px 18px;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        .back-btn {
+            color: #273894;
+            background-color: #eff6ff;
+        }
+
+        .back-btn:hover {
+            background-color: #dbeafe;
+        }
+
+        .add-btn {
+            color: #ffffff;
+            background-color: #273894;
+        }
+
+        .add-btn:hover {
+            background-color: #1e2b73;
+        }
+
+        /* --- FILTER DROPDOWNS SECTION --- */
+        .filter-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 20px 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #03045e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e293b;
+            background-color: #f8fafc;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .filter-group select:focus {
+            border-color: #273894;
+            background-color: #ffffff;
+        }
+
+        .reset-filter-btn {
+            align-self: flex-end;
+            padding: 10px 18px;
+            border: none;
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            font-size: 13px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            height: 41px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .reset-filter-btn:hover {
+            background-color: #e2e8f0;
+            color: #0f172a;
+        }
+
+        /* --- DATA TABLE PANEL --- */
+        .panel {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            overflow-x: auto;
+        }
+
+        .table-header-title {
+            color: #03045e;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge-count {
+            font-size: 12px;
+            background: #eff6ff;
+            color: #273894;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .data-table th {
+            background-color: #273894;
+            color: #ffffff;
+            text-align: left;
+            padding: 14px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table th:nth-child(4),
+        .data-table th:nth-child(5) {
+            text-align: right;
+        }
+
+        .data-table th:last-child,
+        .data-table td:last-child {
+            text-align: center;
+        }
+
+        .data-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+            color: #0f172a;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+
+        .data-table td:nth-child(4),
+        .data-table td:nth-child(5) {
+            text-align: right;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Postponed Highlight styling matching screenshot */
+        .data-table tr.postponed td {
+            background-color: #ef4444 !important;
+            color: #ffffff !important;
+        }
+
+        /* Inline Input Elements for Table Row Editing */
+        .edit-input,
+        .edit-select {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1e293b;
+            background-color: #ffffff;
+        }
+
+        .btn-edit-action {
+            background-color: #f1f5f9;
+            color: #273894;
+            border: 1px solid #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .btn-edit-action:hover {
+            background-color: #273894;
+            color: #ffffff;
+        }
+
+        .btn-save-action {
+            background-color: #10b981;
+            color: #ffffff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .btn-save-action:hover {
+            background-color: #059669;
+        }
+
+        /* Table Footer / Summary Row */
+        .data-table tfoot tr td {
+            background-color: #f8fafc;
+            font-weight: 800;
+            font-size: 15px;
+            color: #03045e;
+            border-top: 2px solid #cbd5e1;
+            padding: 16px 18px;
+        }
+
+        .no-data {
+            text-align: center !important;
+            padding: 30px !important;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="../images/logo.png" alt="PINTAR Logo">
+        </div>
+        <nav>
+            <a href="dashboard.html" class="active">Home</a>
+            <a href="schools.html">Schools</a>
+            <a href="quizzes.html">Quizzes</a>
+            <a href="reports.html">Reports & Analytics</a>
+        </nav>
+        <div class="right-menu">
+            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="logout" id="logoutBtn">LOG OUT</button>
+            <div class="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>PINTAR</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="container">
+
+        <!-- Hero Header -->
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Jadual Sekolah PINTAR STEM</h1>
+                <p>Senarai sekolah, daerah, tarikh program, pendaftaran dan tajaan industri</p>
+            </div>
+            <div class="action-buttons">
+                <a href="add-school.html" class="btn-action add-btn">
+                    <i class="fa-solid fa-plus"></i> Add School
+                </a>
+                <a href="dashboard.html" class="btn-action back-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+                </a>
+            </div>
+        </section>
+
+        <!-- Filter Dropdowns Section -->
+        <section class="filter-card">
+            <div class="filter-group">
+                <label for="stateFilter"><i class="fa-solid fa-map-location-dot"></i> Negeri / State</label>
+                <select id="stateFilter">
+                    <option value="ALL">Semua Negeri (All States)</option>
+                    <option value="Johor">Johor</option>
+                    <option value="Kedah">Kedah</option>
+                    <option value="Kelantan">Kelantan</option>
+                    <option value="Melaka">Melaka</option>
+                    <option value="Negeri Sembilan">Negeri Sembilan</option>
+                    <option value="Pahang">Pahang</option>
+                    <option value="Pulau Pinang">Pulau Pinang</option>
+                    <option value="Perak">Perak</option>
+                    <option value="Perlis">Perlis</option>
+                    <option value="Sabah">Sabah</option>
+                    <option value="Sarawak">Sarawak</option>
+                    <option value="Selangor">Selangor</option>
+                    <option value="Terengganu">Terengganu</option>
+                    <option value="W.P. Kuala Lumpur">W.P. Kuala Lumpur</option>
+                    <option value="W.P. Labuan">W.P. Labuan</option>
+                    <option value="W.P. Putrajaya">W.P. Putrajaya</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="typeFilter"><i class="fa-solid fa-school"></i> Jenis Sekolah / School Type</label>
+                <select id="typeFilter">
+                    <option value="ALL">Semua Jenis (All Types)</option>
+                    <option value="SK">SK (Sekolah Kebangsaan)</option>
+                    <option value="SMK">SMK (Sekolah Menengah Kebangsaan)</option>
+                    <option value="SJKC">SJK(C)</option>
+                    <option value="SJKT">SJK(T)</option>
+                    <option value="SMA">SMA (Sekolah Menengah Agama)</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="dateSortFilter"><i class="fa-solid fa-calendar-days"></i> Susun Tarikh / Sort Date</label>
+                <select id="dateSortFilter">
+                    <option value="EARLIEST">Tarikh Awal (Earliest First)</option>
+                    <option value="LATEST">Tarikh Lewat (Latest First)</option>
+                </select>
+            </div>
+
+            <button class="reset-filter-btn" id="resetBtn">
+                <i class="fa-solid fa-rotate-left"></i> Reset Filter
+            </button>
+        </section>
+
+        <!-- Table Panel -->
+        <div class="panel">
+            <div class="table-header-title">
+                <span>Senarai Sekolah & Event</span>
+                <span class="badge-count" id="recordCount">0 Sekolah</span>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nama Sekolah</th>
+                        <th>Daerah</th>
+                        <th>Tarikh Event</th>
+                        <th>Pendaftaran</th>
+                        <th>Tajaan Industri (Asnaf)</th>
+                        <th>Operator</th>
+                        <th>Tindakan / Action</th>
+                    </tr>
+                </thead>
+                <tbody id="schoolTableBody">
+                    <!-- Dynamic JavaScript rows render here -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" style="text-align: right;">Jumlah Keseluruhan:</td>
+                        <td id="totalRegistration" style="text-align: right;">0</td>
+                        <td id="totalSponsor" style="text-align: right;">0</td>
+                        <td colspan="2"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </main>
+
+    <script>
+        // Unique ID assigned to each item for tracking updates
+        const schoolData = [
+            // PAHANG
+            { id: 1, name: "SMK CLIFFORD", district: "LIPIS", state: "Pahang", type: "SMK", date: "15/6/2026", count: 197, asnaf: 13, operator: "UMPSA", postponed: false },
+            { id: 2, name: "SMA KUALA LIPIS", district: "LIPIS", state: "Pahang", type: "SMA", date: "16/6/2026", count: 213, asnaf: 5, operator: "NextGen Explorers", postponed: false },
+            { id: 3, name: "SMK SETIA WANGSA", district: "LIPIS", state: "Pahang", type: "SMK", date: "18/6/2026", count: 73, asnaf: 9, operator: "NextGen Explorers", postponed: false },
+            { id: 4, name: "SK GAMBANG", district: "KUANTAN", state: "Pahang", type: "SK", date: "23/6/2026", count: 116, asnaf: 11, operator: "UMPSA", postponed: false },
+            { id: 5, name: "SK BALOK", district: "KUANTAN", state: "Pahang", type: "SK", date: "24/6/2026", count: 161, asnaf: 7, operator: "UMPSA", postponed: false },
+            { id: 6, name: "SMK GAMBANG", district: "KUANTAN", state: "Pahang", type: "SMK", date: "25/6/2026", count: 72, asnaf: 8, operator: "UMPSA", postponed: false },
+            { id: 7, name: "SK PAYA PULAI", district: "TEMERLOH", state: "Pahang", type: "SK", date: "30/6/2026", count: 206, asnaf: 12, operator: "NextGen Explorers", postponed: false },
+            { id: 8, name: "SMK AGAMA PAHANG", district: "MUADZAM SHAH", state: "Pahang", type: "SMA", date: "12/7/2026", count: 152, asnaf: 31, operator: "NextGen Explorers", postponed: false },
+            { id: 9, name: "SMK SULTAN AHMAD", district: "PEKAN", state: "Pahang", type: "SMK", date: "23/7/2026", count: 177, asnaf: 13, operator: "UMPSA", postponed: false },
+            { id: 10, name: "SK AIR PUTIH", district: "KUANTAN", state: "Pahang", type: "SK", date: "28/7/2026", count: 126, asnaf: 3, operator: "NextGen Explorers", postponed: false },
+
+            // TERENGGANU
+            { id: 11, name: "SK PUSAT KEMAMAN", district: "KEMAMAN", state: "Terengganu", type: "SK", date: "18/6/2026", count: 146, asnaf: 20, operator: "UMPSA", postponed: false },
+            { id: 12, name: "SK SULTAN ISMAIL", district: "KEMAMAN", state: "Terengganu", type: "SK", date: "20/6/2026", count: 165, asnaf: 15, operator: "UMPSA", postponed: false },
+            { id: 13, name: "SK GONG BADAK", district: "KUALA NERUS", state: "Terengganu", type: "SK", date: "22/6/2026", count: 152, asnaf: 10, operator: "NextGen Explorers", postponed: false },
+            { id: 14, name: "SK TENGKU AMPUAN MARIAM", district: "KUALA TERENGGANU", state: "Terengganu", type: "SK", date: "23/6/2026", count: 111, asnaf: 10, operator: "NextGen Explorers", postponed: false },
+            { id: 15, name: "SJKC CHUNG HWA WEI SIN", district: "KUALA TERENGGANU", state: "Terengganu", type: "SJKC", date: "24/6/2026", count: 133, asnaf: 7, operator: "NextGen Explorers", postponed: false },
+            { id: 16, name: "SMK CHUKAI (POSTPONED)", district: "CHUKAI", state: "Terengganu", type: "SMK", date: "30/6/2026", count: 0, asnaf: 0, operator: "UMPSA", postponed: true },
+            { id: 17, name: "SK IBOK", district: "CHUKAI", state: "Terengganu", type: "SK", date: "02/7/2026", count: 103, asnaf: 15, operator: "NextGen Explorers", postponed: false },
+            { id: 18, name: "SK BANDAR BAHARU", district: "KEMAMAN", state: "Terengganu", type: "SK", date: "15/7/2026", count: 103, asnaf: 15, operator: "UMPSA", postponed: false },
+            { id: 19, name: "SMK NASIRUDDIN SHAH", district: "BESUT", state: "Terengganu", type: "SMK", date: "20/7/2026", count: 132, asnaf: 26, operator: "NextGen Explorers", postponed: false },
+            { id: 20, name: "SMK KERTEH (POSTPONED)", district: "KERTEH", state: "Terengganu", type: "SMK", date: "21/7/2026", count: 20, asnaf: 0, operator: "UMPSA", postponed: true },
+
+            // JOHOR
+            { id: 21, name: "SMK SULTAN ISMAIL", district: "JOHOR BAHRU", state: "Johor", type: "SMK", date: "01/8/2026", count: 180, asnaf: 12, operator: "UMPSA", postponed: false },
+            { id: 22, name: "SK SRI TEBRAU", district: "JOHOR BAHRU", state: "Johor", type: "SK", date: "03/8/2026", count: 140, asnaf: 10, operator: "NextGen Explorers", postponed: false },
+            { id: 23, name: "SJKC FOON YEW 1", district: "JOHOR BAHRU", state: "Johor", type: "SJKC", date: "05/8/2026", count: 210, asnaf: 5, operator: "UMPSA", postponed: false },
+            { id: 24, name: "SJKT JALAN RAHMAT", district: "BATU PAHAT", state: "Johor", type: "SJKT", date: "07/8/2026", count: 95, asnaf: 8, operator: "NextGen Explorers", postponed: false },
+            { id: 25, name: "SMK HIGH SCHOOL MUAR", district: "MUAR", state: "Johor", type: "SMK", date: "09/8/2026", count: 160, asnaf: 14, operator: "UMPSA", postponed: false },
+            { id: 26, name: "SK CANOSSIAN CONVENT", district: "KLUANG", state: "Johor", type: "SK", date: "11/8/2026", count: 130, asnaf: 9, operator: "NextGen Explorers", postponed: false },
+            { id: 27, name: "SMA AT-TANWIR", district: "BATU PAHAT", state: "Johor", type: "SMA", date: "13/8/2026", count: 110, asnaf: 15, operator: "UMPSA", postponed: false },
+            { id: 28, name: "SMK BANDAR TENGGAROH", district: "MERSING", state: "Johor", type: "SMK", date: "15/8/2026", count: 85, asnaf: 11, operator: "NextGen Explorers", postponed: false },
+            { id: 29, name: "SK BANANG MEWAH", district: "BATU PAHAT", state: "Johor", type: "SK", date: "17/8/2026", count: 125, asnaf: 6, operator: "UMPSA", postponed: false },
+            { id: 30, name: "SJKC CHONG HWA", district: "KLUANG", state: "Johor", type: "SJKC", date: "19/8/2026", count: 175, asnaf: 4, operator: "NextGen Explorers", postponed: false },
+
+            // SELANGOR
+            { id: 31, name: "SMK SHAH ALAM", district: "PETALING", state: "Selangor", type: "SMK", date: "02/8/2026", count: 220, asnaf: 18, operator: "UMPSA", postponed: false },
+            { id: 32, name: "SK SUBANG JAYA", district: "PETALING", state: "Selangor", type: "SK", date: "04/8/2026", count: 190, asnaf: 12, operator: "NextGen Explorers", postponed: false },
+            { id: 33, name: "SJKC KONG HWA", district: "KLANG", state: "Selangor", type: "SJKC", date: "06/8/2026", count: 250, asnaf: 8, operator: "UMPSA", postponed: false },
+            { id: 34, name: "SJKT SIMPANG LIMA", district: "KLANG", state: "Selangor", type: "SJKT", date: "08/8/2026", count: 140, asnaf: 16, operator: "NextGen Explorers", postponed: false },
+            { id: 35, name: "SMK CONVENT KLANG", district: "KLANG", state: "Selangor", type: "SMK", date: "10/8/2026", count: 175, asnaf: 10, operator: "UMPSA", postponed: false },
+            { id: 36, name: "SK KAJANG UTAMA", district: "ULU LANGAT", state: "Selangor", type: "SK", date: "12/8/2026", count: 160, asnaf: 14, operator: "NextGen Explorers", postponed: false },
+            { id: 37, name: "SMA MAAHAD HAMIDIAH", district: "ULU LANGAT", state: "Selangor", type: "SMA", date: "14/8/2026", count: 130, asnaf: 20, operator: "UMPSA", postponed: false },
+            { id: 38, name: "SMK TELOK DATOK", district: "KUALA LANGAT", state: "Selangor", type: "SMK", date: "16/8/2026", count: 105, asnaf: 13, operator: "NextGen Explorers", postponed: false },
+            { id: 39, name: "SK RAWANG", district: "GOMBAK", state: "Selangor", type: "SK", date: "18/8/2026", count: 155, asnaf: 11, operator: "UMPSA", postponed: false },
+            { id: 40, name: "SJKC YUK CHAI", district: "PETALING", state: "Selangor", type: "SJKC", date: "20/8/2026", count: 230, asnaf: 5, operator: "NextGen Explorers", postponed: false },
+
+            // KEDAH
+            { id: 41, name: "SMK KEAT HWA", district: "KOTA SETAR", state: "Kedah", type: "SMK", date: "01/8/2026", count: 185, asnaf: 14, operator: "UMPSA", postponed: false },
+            { id: 42, name: "SK SULTANAH ASMA", district: "KOTA SETAR", state: "Kedah", type: "SK", date: "03/8/2026", count: 145, asnaf: 9, operator: "NextGen Explorers", postponed: false },
+            { id: 43, name: "SJKC KEAT HWA 1", district: "KOTA SETAR", state: "Kedah", type: "SJKC", date: "05/8/2026", count: 165, asnaf: 6, operator: "UMPSA", postponed: false },
+            { id: 44, name: "SJKT SARASWATHY", district: "KUALA MUDA", state: "Kedah", type: "SJKT", date: "07/8/2026", count: 88, asnaf: 12, operator: "NextGen Explorers", postponed: false },
+            { id: 45, name: "SMK IBRAHIM", district: "KUALA MUDA", state: "Kedah", type: "SMK", date: "09/8/2026", count: 195, asnaf: 11, operator: "UMPSA", postponed: false },
+            { id: 46, name: "SK BANDAR BARU", district: "KULIM", state: "Kedah", type: "SK", date: "11/8/2026", count: 120, asnaf: 15, operator: "NextGen Explorers", postponed: false },
+            { id: 47, name: "SMA MAHMUD", district: "KOTA SETAR", state: "Kedah", type: "SMA", date: "13/8/2026", count: 140, asnaf: 18, operator: "UMPSA", postponed: false },
+            { id: 48, name: "SMK TUNKU ANUM", district: "KUBANG PASU", state: "Kedah", type: "SMK", date: "15/8/2026", count: 110, asnaf: 10, operator: "NextGen Explorers", postponed: false },
+            { id: 49, name: "SK LANGKAWI", district: "LANGKAWI", state: "Kedah", type: "SK", date: "17/8/2026", count: 135, asnaf: 13, operator: "UMPSA", postponed: false },
+            { id: 50, name: "SJKC SIN MIN", district: "KUALA MUDA", state: "Kedah", type: "SJKC", date: "19/8/2026", count: 170, asnaf: 4, operator: "NextGen Explorers", postponed: false },
+
+            // KELANTAN
+            { id: 51, name: "SMK ISMAIL PETRA", district: "KOTA BHARU", state: "Kelantan", type: "SMK", date: "02/8/2026", count: 190, asnaf: 22, operator: "UMPSA", postponed: false },
+            { id: 52, name: "SK ZAINAB 1", district: "KOTA BHARU", state: "Kelantan", type: "SK", date: "04/8/2026", count: 150, asnaf: 18, operator: "NextGen Explorers", postponed: false },
+            { id: 53, name: "SJKC CHUNG HWA", district: "KOTA BHARU", state: "Kelantan", type: "SJKC", date: "06/8/2026", count: 180, asnaf: 7, operator: "UMPSA", postponed: false },
+            { id: 54, name: "SMA Niah", district: "PASIR MAS", state: "Kelantan", type: "SMA", date: "08/8/2026", count: 125, asnaf: 25, operator: "NextGen Explorers", postponed: false },
+            { id: 55, name: "SMK SULTAN YAHYA PETRA", district: "KUALA KRAI", state: "Kelantan", type: "SMK", date: "10/8/2026", count: 140, asnaf: 19, operator: "UMPSA", postponed: false },
+            { id: 56, name: "SK KUBANG KERIAN 1", district: "KOTA BHARU", state: "Kelantan", type: "SK", date: "12/8/2026", count: 165, asnaf: 15, operator: "NextGen Explorers", postponed: false },
+            { id: 57, name: "SMA AMIR INDERA PETRA", district: "BACHOK", state: "Kelantan", type: "SMA", date: "14/8/2026", count: 115, asnaf: 20, operator: "UMPSA", postponed: false },
+            { id: 58, name: "SMK TUMPAT", district: "TUMPAT", state: "Kelantan", type: "SMK", date: "16/8/2026", count: 130, asnaf: 17, operator: "NextGen Explorers", postponed: false },
+            { id: 59, name: "SK TANAH MERAH", district: "TANAH MERAH", state: "Kelantan", type: "SK", date: "18/8/2026", count: 140, asnaf: 16, operator: "UMPSA", postponed: false },
+            { id: 60, name: "SJKC CHUNG HWA MACHANG", district: "MACHANG", state: "Kelantan", type: "SJKC", date: "20/8/2026", count: 95, asnaf: 5, operator: "NextGen Explorers", postponed: false },
+
+            // MELAKA
+            { id: 61, name: "SMK HIGH SCHOOL MELAKA", district: "MELAKA TENGAH", state: "Melaka", type: "SMK", date: "01/8/2026", count: 175, asnaf: 10, operator: "UMPSA", postponed: false },
+            { id: 62, name: "SK CONVENT INFANT JESUS", district: "MELAKA TENGAH", state: "Melaka", type: "SK", date: "03/8/2026", count: 130, asnaf: 8, operator: "NextGen Explorers", postponed: false },
+            { id: 63, name: "SJKC PAY FONG 1", district: "MELAKA TENGAH", state: "Melaka", type: "SJKC", date: "05/8/2026", count: 190, asnaf: 6, operator: "UMPSA", postponed: false },
+            { id: 64, name: "SJKT KUBU", district: "MELAKA TENGAH", state: "Melaka", type: "SJKT", date: "07/8/2026", count: 75, asnaf: 9, operator: "NextGen Explorers", postponed: false },
+            { id: 65, name: "SMK ISAHA", district: "ALOR GAJAH", state: "Melaka", type: "SMK", date: "09/8/2026", count: 120, asnaf: 12, operator: "UMPSA", postponed: false },
+            { id: 66, name: "SK MASJID TANAH", district: "ALOR GAJAH", state: "Melaka", type: "SK", date: "11/8/2026", count: 110, asnaf: 11, operator: "NextGen Explorers", postponed: false },
+            { id: 67, name: "SMA JAIM SHARIF", district: "JASIN", state: "Melaka", type: "SMA", date: "13/8/2026", count: 90, asnaf: 14, operator: "UMPSA", postponed: false },
+            { id: 68, name: "SMK TUN MUTAHIR", district: "MELAKA TENGAH", state: "Melaka", type: "SMK", date: "15/8/2026", count: 145, asnaf: 13, operator: "NextGen Explorers", postponed: false },
+            { id: 69, name: "SK JASIN", district: "JASIN", state: "Melaka", type: "SK", date: "17/8/2026", count: 105, asnaf: 10, operator: "UMPSA", postponed: false },
+            { id: 70, name: "SJKC KATHOLIK", district: "MELAKA TENGAH", state: "Melaka", type: "SJKC", date: "19/8/2026", count: 160, asnaf: 3, operator: "NextGen Explorers", postponed: false },
+
+            // NEGERI SEMBILAN
+            { id: 71, name: "SMK KING GEORGE V", district: "SEREMBAN", state: "Negeri Sembilan", type: "SMK", date: "02/8/2026", count: 200, asnaf: 12, operator: "UMPSA", postponed: false },
+            { id: 72, name: "SK ST PAUL", district: "SEREMBAN", state: "Negeri Sembilan", type: "SK", date: "04/8/2026", count: 155, asnaf: 9, operator: "NextGen Explorers", postponed: false },
+            { id: 73, name: "SJKC CHAN WA", district: "SEREMBAN", state: "Negeri Sembilan", type: "SJKC", date: "06/8/2026", count: 210, asnaf: 5, operator: "UMPSA", postponed: false },
+            { id: 74, name: "SJKT LORONG JAVA", district: "SEREMBAN", state: "Negeri Sembilan", type: "SJKT", date: "08/8/2026", count: 115, asnaf: 14, operator: "NextGen Explorers", postponed: false },
+            { id: 75, name: "SMK PORT DICKSON", district: "PORT DICKSON", state: "Negeri Sembilan", type: "SMK", date: "10/8/2026", count: 135, asnaf: 11, operator: "UMPSA", postponed: false },
+            { id: 76, name: "SK KG BARU SI RUSA", district: "PORT DICKSON", state: "Negeri Sembilan", type: "SK", date: "12/8/2026", count: 98, asnaf: 8, operator: "NextGen Explorers", postponed: false },
+            { id: 77, name: "SMA DATO KLANA PETRA", district: "SEREMBAN", state: "Negeri Sembilan", type: "SMA", date: "14/8/2026", count: 120, asnaf: 17, operator: "UMPSA", postponed: false },
+            { id: 78, name: "SMK DATO UNDANG MUSA", district: "JELEBU", state: "Negeri Sembilan", type: "SMK", date: "16/8/2026", count: 90, asnaf: 10, operator: "NextGen Explorers", postponed: false },
+            { id: 79, name: "SK TUANKU JA'AFAR", district: "SEREMBAN", state: "Negeri Sembilan", type: "SK", date: "18/8/2026", count: 140, asnaf: 13, operator: "UMPSA", postponed: false },
+            { id: 80, name: "SJKC CHUNG HWA", district: "PORT DICKSON", state: "Negeri Sembilan", type: "SJKC", date: "20/8/2026", count: 130, asnaf: 4, operator: "NextGen Explorers", postponed: false },
+
+            // PULAU PINANG
+            { id: 81, name: "SMK PENANG FREE", district: "TIMUR LAUT", state: "Pulau Pinang", type: "SMK", date: "01/8/2026", count: 210, asnaf: 10, operator: "UMPSA", postponed: false },
+            { id: 82, name: "SK CONVENT LIGHT STREET", district: "TIMUR LAUT", state: "Pulau Pinang", type: "SK", date: "03/8/2026", count: 130, asnaf: 7, operator: "NextGen Explorers", postponed: false },
+            { id: 83, name: "SJKC HAN CHIANG", district: "TIMUR LAUT", state: "Pulau Pinang", type: "SJKC", date: "05/8/2026", count: 240, asnaf: 4, operator: "UMPSA", postponed: false },
+            { id: 84, name: "SJKT PERMATANG TINGGI", district: "SEBERANG PERAI TENGAH", state: "Pulau Pinang", type: "SJKT", date: "07/8/2026", count: 100, asnaf: 12, operator: "NextGen Explorers", postponed: false },
+            { id: 85, name: "SMK HIGH SCHOOL BUKIT MERTAJAM", district: "SEBERANG PERAI TENGAH", state: "Pulau Pinang", type: "SMK", date: "09/8/2026", count: 180, asnaf: 9, operator: "UMPSA", postponed: false },
+            { id: 86, name: "SK BAYAN LEPAS", district: "BARAT DAYA", state: "Pulau Pinang", type: "SK", date: "11/8/2026", count: 145, asnaf: 11, operator: "NextGen Explorers", postponed: false },
+            { id: 87, name: "SMA AL-MASHHOOR", district: "TIMUR LAUT", state: "Pulau Pinang", type: "SMA", date: "13/8/2026", count: 110, asnaf: 15, operator: "UMPSA", postponed: false },
+            { id: 88, name: "SMK NIBONG TEBAL", district: "SEBERANG PERAI SELATAN", state: "Pulau Pinang", type: "SMK", date: "15/8/2026", count: 125, asnaf: 13, operator: "NextGen Explorers", postponed: false },
+            { id: 89, name: "SK KEPALA BATAS", district: "SEBERANG PERAI UTARA", state: "Pulau Pinang", type: "SK", date: "17/8/2026", count: 150, asnaf: 14, operator: "UMPSA", postponed: false },
+            { id: 90, name: "SJKC KWANG HWA", district: "BARAT DAYA", state: "Pulau Pinang", type: "SJKC", date: "19/8/2026", count: 220, asnaf: 3, operator: "NextGen Explorers", postponed: false },
+
+            // PERAK
+            { id: 91, name: "SMK ST MICHAEL", district: "KINTA", state: "Perak", type: "SMK", date: "02/8/2026", count: 195, asnaf: 11, operator: "UMPSA", postponed: false },
+            { id: 92, name: "SK CONVENT IPOH", district: "KINTA", state: "Perak", type: "SK", date: "04/8/2026", count: 160, asnaf: 8, operator: "NextGen Explorers", postponed: false },
+            { id: 93, name: "SJKC SAM TET", district: "KINTA", state: "Perak", type: "SJKC", date: "06/8/2026", count: 230, asnaf: 5, operator: "UMPSA", postponed: false },
+            { id: 94, name: "SJKT PERAK SANGEETHA", district: "KINTA", state: "Perak", type: "SJKT", date: "08/8/2026", count: 90, asnaf: 13, operator: "NextGen Explorers", postponed: false },
+            { id: 95, name: "SMK KING EDWARD VII", district: "LARUT MATANG", state: "Perak", type: "SMK", date: "10/8/2026", count: 170, asnaf: 15, operator: "UMPSA", postponed: false },
+            { id: 96, name: "SK SERI MANJUNG", district: "MANJUNG", state: "Perak", type: "SK", date: "12/8/2026", count: 140, asnaf: 10, operator: "NextGen Explorers", postponed: false },
+            { id: 97, name: "SMA IZZUDDIN SHAH", district: "KINTA", state: "Perak", type: "SMA", date: "14/8/2026", count: 125, asnaf: 18, operator: "UMPSA", postponed: false },
+            { id: 98, name: "SMK TELUK INTAN", district: "HILIR PERAK", state: "Perak", type: "SMK", date: "16/8/2026", count: 115, asnaf: 12, operator: "NextGen Explorers", postponed: false },
+            { id: 99, name: "SK TAPAH", district: "BATANG PADANG", state: "Perak", type: "SK", date: "18/8/2026", count: 105, asnaf: 14, operator: "UMPSA", postponed: false },
+            { id: 100, name: "SJKC POI LAM", district: "KINTA", state: "Perak", type: "SJKC", date: "20/8/2026", count: 210, asnaf: 4, operator: "NextGen Explorers", postponed: false },
+
+            // PERLIS
+            { id: 101, name: "SMK DERMA", district: "KANGAR", state: "Perlis", type: "SMK", date: "01/8/2026", count: 160, asnaf: 12, operator: "UMPSA", postponed: false },
+            { id: 102, name: "SK SERI INDERA", district: "KANGAR", state: "Perlis", type: "SK", date: "03/8/2026", count: 130, asnaf: 10, operator: "NextGen Explorers", postponed: false },
+            { id: 103, name: "SJKC KHOON AIK", district: "KANGAR", state: "Perlis", type: "SJKC", date: "05/8/2026", count: 140, asnaf: 5, operator: "UMPSA", postponed: false },
+            { id: 104, name: "SMK SYED HASSAN", district: "KANGAR", state: "Perlis", type: "SMK", date: "07/8/2026", count: 120, asnaf: 14, operator: "NextGen Explorers", postponed: false },
+            { id: 105, name: "SK ARAU", district: "ARAU", state: "Perlis", type: "SK", date: "09/8/2026", count: 115, asnaf: 11, operator: "UMPSA", postponed: false },
+            { id: 106, name: "SMA AL-ATAS", district: "ARAU", state: "Perlis", type: "SMA", date: "11/8/2026", count: 100, asnaf: 16, operator: "NextGen Explorers", postponed: false },
+            { id: 107, name: "SMK DATO SHEIKH AHMAD", district: "KANGAR", state: "Perlis", type: "SMK", date: "13/8/2026", count: 135, asnaf: 13, operator: "UMPSA", postponed: false },
+            { id: 108, name: "SK KUALA PERLIS", district: "KANGAR", state: "Perlis", type: "SK", date: "15/8/2026", count: 110, asnaf: 15, operator: "NextGen Explorers", postponed: false },
+            { id: 109, name: "SJKC CHUNG HWA", district: "KANGAR", state: "Perlis", type: "SJKC", date: "17/8/2026", count: 125, asnaf: 4, operator: "UMPSA", postponed: false },
+            { id: 110, name: "SMK PADANG BESAR UTARA", district: "PADANG BESAR", state: "Perlis", type: "SMK", date: "19/8/2026", count: 95, asnaf: 18, operator: "NextGen Explorers", postponed: false },
+
+            // SABAH
+            { id: 111, name: "SMK ST MICHAEL PENAMPANG", district: "PENAMPANG", state: "Sabah", type: "SMK", date: "02/8/2026", count: 175, asnaf: 15, operator: "UMPSA", postponed: false },
+            { id: 112, name: "SK ALL SAINTS", district: "KOTA KINABALU", state: "Sabah", type: "SK", date: "04/8/2026", count: 140, asnaf: 12, operator: "NextGen Explorers", postponed: false },
+            { id: 113, name: "SJKC SHAN TAO", district: "KOTA KINABALU", state: "Sabah", type: "SJKC", date: "06/8/2026", count: 190, asnaf: 6, operator: "UMPSA", postponed: false },
+            { id: 114, name: "SMK TAWAU", district: "TAWAU", state: "Sabah", type: "SMK", date: "08/8/2026", count: 160, asnaf: 18, operator: "NextGen Explorers", postponed: false },
+            { id: 115, name: "SK SANDAKAN", district: "SANDAKAN", state: "Sabah", type: "SK", date: "10/8/2026", count: 130, asnaf: 20, operator: "UMPSA", postponed: false },
+            { id: 116, name: "SMA KOTA KINABALU", district: "KOTA KINABALU", state: "Sabah", type: "SMA", date: "12/8/2026", count: 110, asnaf: 22, operator: "NextGen Explorers", postponed: false },
+            { id: 117, name: "SMK AGAMA INANAM", district: "KOTA KINABALU", state: "Sabah", type: "SMA", date: "14/8/2026", count: 125, asnaf: 19, operator: "UMPSA", postponed: false },
+            { id: 118, name: "SK LAHAD DATU", district: "LAHAD DATU", state: "Sabah", type: "SK", date: "16/8/2026", count: 105, asnaf: 17, operator: "NextGen Explorers", postponed: false },
+            { id: 119, name: "SJKC CHUNG HWA TAWAU", district: "TAWAU", state: "Sabah", type: "SJKC", date: "18/8/2026", count: 165, asnaf: 5, operator: "UMPSA", postponed: false },
+            { id: 120, name: "SMK KENINGAU", district: "KENINGAU", state: "Sabah", type: "SMK", date: "20/8/2026", count: 120, asnaf: 16, operator: "NextGen Explorers", postponed: false },
+
+            // SARAWAK
+            { id: 121, name: "SMK ST JOSEPH KUCHING", district: "KUCHING", state: "Sarawak", type: "SMK", date: "01/8/2026", count: 205, asnaf: 13, operator: "UMPSA", postponed: false },
+            { id: 122, name: "SK ST TERESA", district: "KUCHING", state: "Sarawak", type: "SK", date: "03/8/2026", count: 150, asnaf: 10, operator: "NextGen Explorers", postponed: false },
+            { id: 123, name: "SJKC CHUNG HWA NO 1", district: "KUCHING", state: "Sarawak", type: "SJKC", date: "05/8/2026", count: 230, asnaf: 4, operator: "UMPSA", postponed: false },
+            { id: 124, name: "SMK MIRI", district: "MIRI", state: "Sarawak", type: "SMK", date: "07/8/2026", count: 170, asnaf: 14, operator: "NextGen Explorers", postponed: false },
+            { id: 125, name: "SK BINTULU", district: "BINTULU", state: "Sarawak", type: "SK", date: "09/8/2026", count: 135, asnaf: 16, operator: "UMPSA", postponed: false },
+            { id: 126, name: "SMK SIBU", district: "SIBU", state: "Sarawak", type: "SMK", date: "11/8/2026", count: 155, asnaf: 12, operator: "NextGen Explorers", postponed: false },
+            { id: 127, name: "SK METHODIST SIBU", district: "SIBU", state: "Sarawak", type: "SK", date: "13/8/2026", count: 120, asnaf: 9, operator: "NextGen Explorers", postponed: false },
+            { id: 128, name: "SMA TUN AHMAD ZAIDI", district: "KUCHING", state: "Sarawak", type: "SMA", date: "15/8/2026", count: 110, asnaf: 20, operator: "NextGen Explorers", postponed: false },
+            { id: 129, name: "SJKC BINTULU", district: "BINTULU", state: "Sarawak", type: "SJKC", date: "17/8/2026", count: 180, asnaf: 6, operator: "NextGen Explorers", postponed: false },
+            { id: 130, name: "SMK SAMARAHAN", district: "KOTA SAMARAHAN", state: "Sarawak", type: "SMK", date: "19/8/2026", count: 125, asnaf: 15, operator: "NextGen Explorers", postponed: false },
+
+            // W.P. KUALA LUMPUR
+            { id: 131, name: "SMK VICTORIA", district: "KUALA LUMPUR", state: "W.P. Kuala Lumpur", type: "SMK", date: "02/8/2026", count: 215, asnaf: 10, operator: "UMPSA", postponed: false },
+            { id: 132, name: "SK ST JOHN", district: "KUALA LUMPUR", state: "W.P. Kuala Lumpur", type: "SK", date: "04/8/2026", count: 160, asnaf: 8, operator: "NextGen Explorers", postponed: false },
+            { id: 133, name: "SJKC KWONG HON", district: "KUALA LUMPUR", state: "W.P. Kuala Lumpur", type: "SJKC", date: "06/8/2026", count: 200, asnaf: 5, operator: "UMPSA", postponed: false },
+            { id: 134, name: "SJKT VIVEKANANDA", district: "KUALA LUMPUR", state: "W.P. Kuala Lumpur", type: "SJKT", date: "08/8/2026", count: 120, asnaf: 15, operator: "NextGen Explorers", postponed: false },
+            { id: 135, name: "SMK CONVENT BUKIT NANAS", district: "KUALA LUMPUR", state: "W.P. Kuala Lumpur", type: "SMK", date: "10/8/2026", count: 180, asnaf: 9, operator: "UMPSA", postponed: false },
+            { id: 136, name: "SK BANGSAR", district: "KUALA LUMPUR", state: "W.P. Kuala Lumpur", type: "SK", date: "12/8/2026", count: 140, asnaf: 12, operator: "NextGen Explorers", postponed: false },
+            { id: 137, name: "SMA MAIWP", district: "KUALA LUMPUR", state: "W.P. Kuala Lumpur", type: "SMA", date: "14/8/2026", count: 130, asnaf: 22, operator: "UMPSA", postponed: false },
+            { id: 138, name: "SMK AMINUDDIN BAKI", district: "KUALA LUMPUR", state: "W.P. Kuala Lumpur", type: "SMK", date: "16/8/2026", count: 165, asnaf: 11, operator: "NextGen Explorers", postponed: false },
+            { id: 139, name: "SK SETAPAK", district: "KUALA LUMPUR", state: "W.P. Kuala Lumpur", type: "SK", date: "18/8/2026", count: 125, asnaf: 14, operator: "UMPSA", postponed: false },
+            { id: 140, name: "SJKC CHUNG HWA P.D.", district: "KUALA LUMPUR", state: "W.P. Kuala Lumpur", type: "SJKC", date: "20/8/2026", count: 220, asnaf: 3, operator: "NextGen Explorers", postponed: false },
+
+            // W.P. LABUAN
+            { id: 141, name: "SMK LABUAN", district: "LABUAN", state: "W.P. Labuan", type: "SMK", date: "01/8/2026", count: 150, asnaf: 12, operator: "UMPSA", postponed: false },
+            { id: 142, name: "SK PILINGAN", district: "LABUAN", state: "W.P. Labuan", type: "SK", date: "03/8/2026", count: 110, asnaf: 9, operator: "NextGen Explorers", postponed: false },
+            { id: 143, name: "SJKC CHI WEN", district: "LABUAN", state: "W.P. Labuan", type: "SJKC", date: "05/8/2026", count: 130, asnaf: 4, operator: "UMPSA", postponed: false },
+            { id: 144, name: "SMK ST ANNE", district: "LABUAN", state: "W.P. Labuan", type: "SMK", date: "07/8/2026", count: 125, asnaf: 10, operator: "NextGen Explorers", postponed: false },
+            { id: 145, name: "SK ANJUNG BATU", district: "LABUAN", state: "W.P. Labuan", type: "SK", date: "09/8/2026", count: 95, asnaf: 13, operator: "UMPSA", postponed: false },
+            { id: 146, name: "SMK LAJAU", district: "LABUAN", state: "W.P. Labuan", type: "SMK", date: "11/8/2026", count: 115, asnaf: 11, operator: "NextGen Explorers", postponed: false },
+            { id: 147, name: "SK PEKAN LABUAN", district: "LABUAN", state: "W.P. Labuan", type: "SK", date: "13/8/2026", count: 120, asnaf: 8, operator: "UMPSA", postponed: false },
+            { id: 148, name: "SMA LABUAN", district: "LABUAN", state: "W.P. Labuan", type: "SMA", date: "15/8/2026", count: 85, asnaf: 15, operator: "NextGen Explorers", postponed: false },
+            { id: 149, name: "SK SUNGAI LADA", district: "LABUAN", state: "W.P. Labuan", type: "SK", date: "17/8/2026", count: 100, asnaf: 10, operator: "UMPSA", postponed: false },
+            { id: 150, name: "SMK RANAU LABUAN", district: "LABUAN", state: "W.P. Labuan", type: "SMK", date: "19/8/2026", count: 105, asnaf: 12, operator: "NextGen Explorers", postponed: false },
+
+            // W.P. PUTRAJAYA
+            { id: 151, name: "SMK PUTRAJAYA PRESINT 8(1)", district: "PUTRAJAYA", state: "W.P. Putrajaya", type: "SMK", date: "02/8/2026", count: 180, asnaf: 8, operator: "UMPSA", postponed: false },
+            { id: 152, name: "SK PUTRAJAYA PRESINT 9(1)", district: "PUTRAJAYA", state: "W.P. Putrajaya", type: "SK", date: "04/8/2026", count: 150, asnaf: 6, operator: "NextGen Explorers", postponed: false },
+            { id: 153, name: "SMK PUTRAJAYA PRESINT 11(1)", district: "PUTRAJAYA", state: "W.P. Putrajaya", type: "SMK", date: "06/8/2026", count: 165, asnaf: 9, operator: "UMPSA", postponed: false },
+            { id: 154, name: "SK PUTRAJAYA PRESINT 16(1)", district: "PUTRAJAYA", state: "W.P. Putrajaya", type: "SK", date: "08/8/2026", count: 135, asnaf: 7, operator: "NextGen Explorers", postponed: false },
+            { id: 155, name: "SMK PUTRAJAYA PRESINT 14(1)", district: "PUTRAJAYA", state: "W.P. Putrajaya", type: "SMK", date: "10/8/2026", count: 155, asnaf: 10, operator: "UMPSA", postponed: false },
+            { id: 156, name: "SK PUTRAJAYA PRESINT 18(1)", district: "PUTRAJAYA", state: "W.P. Putrajaya", type: "SK", date: "12/8/2026", count: 125, asnaf: 5, operator: "NextGen Explorers", postponed: false },
+            { id: 157, name: "SMA PUTRAJAYA", district: "PUTRAJAYA", state: "W.P. Putrajaya", type: "SMA", date: "14/8/2026", count: 110, asnaf: 14, operator: "UMPSA", postponed: false },
+            { id: 158, name: "SMK PUTRAJAYA PRESINT 5(1)", district: "PUTRAJAYA", state: "W.P. Putrajaya", type: "SMK", date: "16/8/2026", count: 140, asnaf: 7, operator: "NextGen Explorers", postponed: false },
+            { id: 159, name: "SK PUTRAJAYA PRESINT 11(2)", district: "PUTRAJAYA", state: "W.P. Putrajaya", type: "SK", date: "18/8/2026", count: 130, asnaf: 6, operator: "UMPSA", postponed: false },
+            { id: 160, name: "SJKC PUTRAJAYA", district: "PUTRAJAYA", state: "W.P. Putrajaya", type: "SJKC", date: "20/8/2026", count: 160, asnaf: 2, operator: "NextGen Explorers", postponed: false }
+        ];
+
+        const availableOperators = ["UMPSA", "NextGen Explorers"];
+        let editingRowId = null;
+
+        const stateFilter = document.getElementById('stateFilter');
+        const typeFilter = document.getElementById('typeFilter');
+        const dateSortFilter = document.getElementById('dateSortFilter');
+        const resetBtn = document.getElementById('resetBtn');
+        const tableBody = document.getElementById('schoolTableBody');
+        const totalRegistrationEl = document.getElementById('totalRegistration');
+        const totalSponsorEl = document.getElementById('totalSponsor');
+        const recordCountEl = document.getElementById('recordCount');
+
+        // Helper function to parse DD/MM/YYYY dates
+        function parseDate(dateStr) {
+            const parts = dateStr.split('/');
+            return new Date(parts[2], parts[1] - 1, parts[0]);
+        }
+
+        // Helper function to format DD/MM/YYYY to YYYY-MM-DD for date inputs
+        function formatDateToISO(dateStr) {
+            const parts = dateStr.split('/');
+            const day = parts[0].padStart(2, '0');
+            const month = parts[1].padStart(2, '0');
+            const year = parts[2];
+            return `${year}-${month}-${day}`;
+        }
+
+        // Helper function to format YYYY-MM-DD to DD/MM/YYYY
+        function formatDateToDisplay(isoDateStr) {
+            const parts = isoDateStr.split('-');
+            return `${parseInt(parts[2])}/${parseInt(parts[1])}/${parts[0]}`;
+        }
+
+        // Function to render filtered table
+        function renderTable() {
+            const selectedState = stateFilter.value;
+            const selectedType = typeFilter.value;
+            const selectedSort = dateSortFilter.value;
+
+            // Filter logic
+            let filteredData = schoolData.filter(item => {
+                const matchesState = (selectedState === 'ALL' || item.state === selectedState);
+                const matchesType = (selectedType === 'ALL' || item.type === selectedType);
+                return matchesState && matchesType;
+            });
+
+            // Date Sorting logic
+            filteredData.sort((a, b) => {
+                const dateA = parseDate(a.date);
+                const dateB = parseDate(b.date);
+                return selectedSort === 'EARLIEST' ? dateA - dateB : dateB - dateA;
+            });
+
+            tableBody.innerHTML = '';
+
+            let sumRegistration = 0;
+            let sumSponsor = 0;
+
+            if (filteredData.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="7" class="no-data">Tiada rekod sekolah dijumpai.</td></tr>`;
+            } else {
+                filteredData.forEach(item => {
+                    sumRegistration += item.count;
+                    sumSponsor += item.asnaf;
+
+                    const tr = document.createElement('tr');
+                    if (item.postponed) {
+                        tr.classList.add('postponed');
+                    }
+
+                    const displayDate = item.postponed ? 'POSTPONED' : item.date;
+
+                    if (editingRowId === item.id) {
+                        // Render inline edit row
+                        const isoDate = formatDateToISO(item.date);
+                        const operatorOptions = availableOperators.map(op =>
+                            `<option value="${op}" ${op === item.operator ? 'selected' : ''}>${op}</option>`
+                        ).join('');
+
+                        tr.innerHTML = `
+                            <td><input type="text" class="edit-input" id="editName_${item.id}" value="${item.name}"></td>
+                            <td>${item.district}</td>
+                            <td><input type="date" class="edit-input" id="editDate_${item.id}" value="${isoDate}"></td>
+                            <td>${item.count.toLocaleString()}</td>
+                            <td>${item.asnaf.toLocaleString()}</td>
+                            <td>
+                                <select class="edit-select" id="editOperator_${item.id}">
+                                    ${operatorOptions}
+                                </select>
+                            </td>
+                            <td>
+                                <button class="btn-save-action" onclick="saveRow(${item.id})"><i class="fa-solid fa-check"></i> Save</button>
+                            </td>
+                        `;
+                    } else {
+                        // Render standard display row
+                        tr.innerHTML = `
+                            <td>${item.name}</td>
+                            <td>${item.district}</td>
+                            <td>${displayDate}</td>
+                            <td>${item.count.toLocaleString()}</td>
+                            <td>${item.asnaf.toLocaleString()}</td>
+                            <td>${item.operator}</td>
+                            <td>
+                                <button class="btn-edit-action" onclick="editRow(${item.id})"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                            </td>
+                        `;
+                    }
+
+                    tableBody.appendChild(tr);
+                });
+            }
+
+            // Update bottom totals
+            totalRegistrationEl.textContent = sumRegistration.toLocaleString();
+            totalSponsorEl.textContent = sumSponsor.toLocaleString();
+            recordCountEl.textContent = `${filteredData.length} Sekolah`;
+        }
+
+        // Inline Row Edit Toggle Functions
+        window.editRow = function (id) {
+            editingRowId = id;
+            renderTable();
+        };
+
+        window.saveRow = function (id) {
+            const nameInput = document.getElementById(`editName_${id}`).value.trim();
+            const dateInput = document.getElementById(`editDate_${id}`).value;
+            const operatorInput = document.getElementById(`editOperator_${id}`).value;
+
+            const targetItem = schoolData.find(item => item.id === id);
+            if (targetItem) {
+                if (nameInput) targetItem.name = nameInput;
+                if (dateInput) targetItem.date = formatDateToDisplay(dateInput);
+                if (operatorInput) targetItem.operator = operatorInput;
+            }
+
+            editingRowId = null;
+            renderTable();
+        };
+
+        // Event listeners
+        stateFilter.addEventListener('change', renderTable);
+        typeFilter.addEventListener('change', renderTable);
+        dateSortFilter.addEventListener('change', renderTable);
+
+        resetBtn.addEventListener('click', () => {
+            stateFilter.value = 'ALL';
+            typeFilter.value = 'ALL';
+            dateSortFilter.value = 'EARLIEST';
+            editingRowId = null;
+            renderTable();
+        });
+
+        // Initial table load
+        renderTable();
+    </script>
+</body>
+
+</html>

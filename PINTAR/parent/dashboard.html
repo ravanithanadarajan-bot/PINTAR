@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PINTAR - Parent Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 60px;
+        }
+
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding-bottom: 5px;
+        }
+
+        .navbar nav a.active {
+            color: white;
+            border-bottom: 3px solid white;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .navbar .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .navbar .logout {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 15px;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        .welcome-heading {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            color: #000;
+        }
+
+        .student-info-bar {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 20px 30px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.2fr;
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            margin-bottom: 30px;
+        }
+
+        .info-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-group:not(:last-child) {
+            border-right: 1px solid #e2e8f0;
+            padding-right: 15px;
+        }
+
+        .info-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #273894;
+        }
+
+        /* --- EARNED BADGES SECTION STYLES --- */
+        .badges-section-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
+        }
+
+        .badges-section-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #273894;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badges-row-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+        }
+
+        .badge-item-card {
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            border-radius: 14px;
+            padding: 18px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .badge-item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            background: #ffffff;
+        }
+
+        .badge-img-wrapper {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .badge-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge-item-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.3;
+        }
+
+        /* --- PERFORMANCE OVERVIEW SECTION --- */
+        .section-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #273894;
+            margin-bottom: 25px;
+        }
+
+        .cards-grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .sub-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sub-card-header {
+            margin-bottom: 20px;
+        }
+
+        .sub-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #273894;
+        }
+
+        .sub-card-subtitle {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .sub-card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .comp-list {
+            width: 100%;
+        }
+
+        .comp-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .comp-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .comp-label-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #334155;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background-color: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .spider-web-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .chart-center-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .score-stack {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .score-tile {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            border-radius: 12px;
+            padding: 12px 18px;
+            width: 150px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+        }
+
+        .score-tile.alt {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2);
+        }
+
+        .score-tile.green {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+        }
+
+        .tile-lbl {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 2px;
+        }
+
+        .tile-val {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .see-report-link {
+            display: block;
+            text-align: right;
+            color: #273894;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        .assignment-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .assign-left h3 {
+            font-size: 18px;
+            color: #273894;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .assign-left p {
+            font-size: 15px;
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        .graphic-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .shapes-img {
+            width: 240px;
+            height: auto;
+        }
+
+        .details-right {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-left: auto;
+            text-align: left;
+            padding-right: 60px;
+        }
+
+        .detail-item h4 {
+            font-size: 16px;
+            color: #273894;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .detail-item p {
+            font-size: 14px;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .btn-start {
+            background: linear-gradient(90deg, #4f46e5, #a855f7);
+            color: white;
+            border: none;
+            padding: 14px 60px;
+            font-size: 22px;
+            font-weight: 800;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        @media (max-width: 1200px) {
+            .cards-grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .badges-row-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .badges-row-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <img src="../images/logo.png" alt="PINTAR Logo">
+        </div>
+        <nav>
+            <a href="dashboard.html" class="active">Home</a>
+            <a href="report.html">Report</a>
+            <a href="assignment.html">Quest</a>
+        </nav>
+        <div class="right-menu">
+            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="logout" id="logoutBtn" onclick="window.location.href='../index.html'">LOG OUT</button>
+            <div class="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>Rava</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="welcome-heading">Hi, Rava</h1>
+
+        <!-- ================= STUDENT INFO BAR ================= -->
+        <div class="student-info-bar">
+            <div class="info-group">
+                <span class="info-label">Full Name</span>
+                <span class="info-value">RAVANITHASIRI A/P NADARAJAN</span>
+            </div>
+            <div class="info-group">
+                <span class="info-label">School Name</span>
+                <span class="info-value">SMK Pekan</span>
+            </div>
+            <div class="info-group">
+                <span class="info-label">Class Name</span>
+                <span class="info-value">1 Alpha</span>
+            </div>
+            <div class="info-group" style="border: none;">
+                <span class="info-label">NO ID PINTAR STEM</span>
+                <span class="info-value">K15</span>
+            </div>
+        </div>
+
+        <!-- ================= EARNED BADGES SECTION ================= -->
+        <div class="badges-section-card">
+            <h2 class="badges-section-title">
+                <i class="fa-solid fa-award" style="color: #6366f1;"></i> Earned Badges
+            </h2>
+            <div class="badges-row-grid">
+
+                <div class="badge-item-card">
+                    <div class="badge-img-wrapper">
+                        <img src="../images/badge-neural-architect.png" alt="Neural Architect Badge">
+                    </div>
+                    <span class="badge-item-name">Neural Architect</span>
+                </div>
+
+                <div class="badge-item-card">
+                    <div class="badge-img-wrapper">
+                        <img src="../images/badge-robo-kinetics.png" alt="Robo-Kinetics Specialist Badge">
+                    </div>
+                    <span class="badge-item-name">Robo-Kinetics Specialist</span>
+                </div>
+
+                <div class="badge-item-card">
+                    <div class="badge-img-wrapper">
+                        <img src="../images/badge-electra-drive.png" alt="Electra-Drive Pioneer Badge">
+                    </div>
+                    <span class="badge-item-name">Electra-Drive Pioneer</span>
+                </div>
+
+                <div class="badge-item-card">
+                    <div class="badge-img-wrapper">
+                        <img src="../images/badge-aero-nav.png" alt="Aero-Nav Flight Master Badge">
+                    </div>
+                    <span class="badge-item-name">Aero-Nav Flight Master</span>
+                </div>
+
+                <div class="badge-item-card">
+                    <div class="badge-img-wrapper">
+                        <img src="../images/badge-spatial-cad.png" alt="Spatial CAD Creator Badge">
+                    </div>
+                    <span class="badge-item-name">Spatial CAD Creator</span>
+                </div>
+
+                <div class="badge-item-card">
+                    <div class="badge-img-wrapper" style="border-color: #10b981;">
+                        <img src="../images/badge-pintar-master.png" alt="PINTAR Master Badge">
+                    </div>
+                    <span class="badge-item-name" style="color: #059669;">PINTAR Master</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= PERFORMANCE OVERVIEW CONTAINER ================= -->
+        <div class="section-card">
+            <h2 class="section-title">Performance Overview</h2>
+
+            <div class="cards-grid-layout">
+                <!-- SUB CARD 1: COGNITIVE PERFORMANCE OVERVIEW -->
+                <div class="sub-card">
+                    <div class="sub-card-header">
+                        <div class="sub-card-title">Cognitive Performance Overview</div>
+                        <div class="sub-card-subtitle">Based on quest score</div>
+                    </div>
+                    <div class="sub-card-content">
+                        <!-- Bars List Up Top -->
+                        <div class="comp-list">
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #c084fc;"></span> AI & Problem Solving</div>
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 85%; background-color: #c084fc;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #6366f1;"></span> Think Like A Creator</div>
+                                    <span>70%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 70%; background-color: #6366f1;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #f97316;"></span> Intentional Vibe Coding</div>
+                                    <span>40%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 40%; background-color: #f97316;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #3b82f6;"></span> Future with Purpose</div>
+                                    <span>80%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 80%; background-color: #3b82f6;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #ec4899;"></span> Digital Street Smart</div>
+                                    <span>65%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 65%; background-color: #ec4899;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Score Tiles in the middle -->
+                        <div class="chart-center-wrapper">
+                            <div class="score-stack">
+                                <div class="score-tile">
+                                    <div class="tile-lbl">Quest Score</div>
+                                    <div class="tile-val">86%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Spider Web Chart at the bottom, bigger with exact labels -->
+                        <div class="spider-web-block">
+                            <div id="assignmentRadarContainer"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB CARD 2: PROGRAM PERFORMANCE OVERVIEW -->
+                <div class="sub-card">
+                    <div class="sub-card-header">
+                        <div class="sub-card-title">Program Performance Overview</div>
+                        <div class="sub-card-subtitle">Based on Facilitator marks on class</div>
+                    </div>
+                    <div class="sub-card-content">
+                        <!-- Bars List Up Top -->
+                        <div class="comp-list">
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #10b981;"></span> Skill</div>
+                                    <span>80%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 80%; background-color: #10b981;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #06b6d4;"></span> Critic</div>
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 85%; background-color: #06b6d4;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #8b5cf6;"></span> Leadership</div>
+                                    <span>90%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 90%; background-color: #8b5cf6;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #f59e0b;"></span> Communication</div>
+                                    <span>75%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 75%; background-color: #f59e0b;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #ef4444;"></span> Group</div>
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 85%; background-color: #ef4444;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Score Tiles in the middle -->
+                        <div class="chart-center-wrapper">
+                            <div class="score-stack">
+                                <div class="score-tile green">
+                                    <div class="tile-lbl">Class Rating</div>
+                                    <div class="tile-val">83%</div>
+                                </div>
+                                <div class="score-tile alt">
+                                    <div class="tile-lbl">Modules</div>
+                                    <div class="tile-val">5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Spider Web Chart at the bottom, bigger with exact labels -->
+                        <div class="spider-web-block">
+                            <div id="facilitatorRadarContainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="report.html" class="see-report-link">See Report</a>
+        </div>
+
+        <!-- ================= RECENTLY ASSIGNED ================= -->
+        <div class="section-card">
+            <h2 class="section-title">Recently Assigned</h2>
+            <div class="assignment-box">
+                <div class="assign-left">
+                    <p style="color: #4f46e5; font-size: 18px; font-weight: 600; margin-bottom: 15px;">Be a part of
+                        Malaysia's digital future and expand your creative mind!</p>
+                    <div class="graphic-container">
+                        <svg class="shapes-img" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="100,10 60,100 140,100" fill="#f472b6" opacity="0.85" />
+                            <polygon points="100,10 100,100 140,100" fill="#ec4899" />
+                            <rect x="20" y="70" width="70" height="70" rx="10" fill="#3b82f6" />
+                            <circle cx="120" cy="110" r="30" fill="url(#sphereGrad)" />
+                            <defs>
+                                <radialGradient id="sphereGrad" cx="30%" cy="30%" r="70%">
+                                    <stop offset="0%" stop-color="#fffbeb" />
+                                    <stop offset="40%" stop-color="#fbbf24" />
+                                    <stop offset="100%" stop-color="#d97706" />
+                                </radialGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+                <div class="details-right">
+                    <div class="detail-item">
+                        <h4>Class Name</h4>
+                        <p>Secondary (13-16)</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Assigned on</h4>
+                        <p>Jul 12, 2026 5:57PM</p>
+                    </div>
+                    <a href="assignment.html" class="btn-start">START</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function createRadarChart(containerId, labels, values, color, fillColor) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const width = 340, height = 300, cx = width / 2, cy = 135, radius = 85;
+            const totalAxes = values.length;
+            const angleStep = (Math.PI * 2) / totalAxes;
+
+            let rings = "";
+            for (let l = 1; l <= 4; l++) {
+                let r = (radius / 4) * l;
+                let pts = [];
+                for (let i = 0; i < totalAxes; i++) {
+                    let a = i * angleStep - Math.PI / 2;
+                    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
+                }
+                rings += `<polygon points="${pts.join(' ')}" fill="none" stroke="#e2e8f0" stroke-width="1"/>`;
+            }
+
+            let spokes = "";
+            let textLabels = "";
+            for (let i = 0; i < totalAxes; i++) {
+                let a = i * angleStep - Math.PI / 2;
+                let xEnd = cx + radius * Math.cos(a);
+                let yEnd = cy + radius * Math.sin(a);
+                spokes += `<line x1="${cx}" y1="${cy}" x2="${xEnd}" y2="${yEnd}" stroke="#e2e8f0" stroke-width="1"/>`;
+
+                let labelRadius = radius + 22;
+                let lx = cx + labelRadius * Math.cos(a);
+                let ly = cy + labelRadius * Math.sin(a);
+                let anchor = "middle";
+                if (Math.cos(a) > 0.3) anchor = "start";
+                else if (Math.cos(a) < -0.3) anchor = "end";
+
+                textLabels += `<text x="${lx}" y="${ly}" font-size="10" font-weight="600" fill="#334155" text-anchor="${anchor}" dominant-baseline="central">${labels[i]}</text>`;
+            }
+
+            let polyPts = [];
+            values.forEach((v, i) => {
+                let r = (radius * v) / 100;
+                let a = i * angleStep - Math.PI / 2;
+                polyPts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
+            });
+
+            container.innerHTML = `
+                <svg width="${width}" height="${height}" style="overflow: visible;">
+                    ${rings}
+                    ${spokes}
+                    <polygon points="${polyPts.join(' ')}" fill="${fillColor}" stroke="${color}" stroke-width="2"/>
+                    ${textLabels}
+                </svg>
+            `;
+        }
+
+        function drawDashboardRadar() {
+            const cognitiveLabels = [
+                "AI & Problem Solving",
+                "Think Like A Creator",
+                "Intentional Vibe Coding",
+                "Future with Purpose",
+                "Digital Street Smart"
+            ];
+            createRadarChart('assignmentRadarContainer', cognitiveLabels, [85, 70, 40, 80, 65], '#6366f1', 'rgba(99, 102, 241, 0.15)');
+
+            const programLabels = [
+                "Skill",
+                "Critic",
+                "Leadership",
+                "Communication",
+                "Group"
+            ];
+            createRadarChart('facilitatorRadarContainer', programLabels, [80, 85, 90, 75, 85], '#10b981', 'rgba(16, 185, 129, 0.15)');
+        }
+
+        function clearSessionAndExit() {
+            sessionStorage.removeItem('assignment_completed');
+            window.location.href = 'dashboard.html';
+        }
+
+        window.onload = drawDashboardRadar;
+    </script>
+</body>
+
+</html>

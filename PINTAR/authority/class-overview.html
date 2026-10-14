@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PINTAR - Class Overview</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 60px;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 40px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .navbar nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-block;
+            position: relative;
+            padding: 6px 0;
+            transition: opacity 0.2s;
+        }
+
+        .navbar nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .navbar .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logout {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #3b4ca6;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .class-info h1 {
+            font-size: 38px;
+            font-weight: 800;
+            color: #000000;
+            text-transform: uppercase;
+        }
+
+        .class-info p {
+            font-size: 24px;
+            font-weight: 700;
+            color: #475569;
+            margin-top: 4px;
+        }
+
+        .stats-panel {
+            display: flex;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 18px 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+            min-width: 650px;
+        }
+
+        .stat-box {
+            flex: 1;
+            padding: 0 15px;
+            position: relative;
+        }
+
+        .stat-box:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background-color: #cbd5e1;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 34px;
+            font-weight: 800;
+            color: #273894;
+        }
+
+        /* --- SIX BADGES FEATURE CARD --- */
+        .six-badges-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .six-badges-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .six-badges-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .six-badges-title i {
+            color: #eab308;
+            font-size: 20px;
+        }
+
+        .btn-toggle-dropdown {
+            background-color: #f1f5f9;
+            color: #273894;
+            border: 1px solid #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-toggle-dropdown:hover {
+            background-color: #e2e8f0;
+        }
+
+        .students-dropdown-list {
+            display: none;
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid #f1f5f9;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .students-dropdown-list.show {
+            display: grid;
+        }
+
+        .student-badge-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .student-badge-item:hover {
+            background-color: #dbeafe;
+            border-color: #2563eb;
+            color: #1d4ed8;
+        }
+
+        /* White Panel Box Wrapper */
+        .content-panel {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        }
+
+        /* --- FILTERS TOOLBAR --- */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 350px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 16px 12px 45px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            color: #334155;
+        }
+
+        .filter-select {
+            padding: 12px 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #334155;
+            background-color: white;
+            min-width: 200px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .btn-export {
+            background-color: #273894;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        /* --- SEPARATE CARD-ROW DATA GRID --- */
+        .table-header {
+            display: grid;
+            grid-template-columns: 60px 2fr 1.2fr 1.2fr 180px;
+            background-color: #dbeafe;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .table-header div:nth-child(3),
+        .table-header div:nth-child(4) {
+            text-align: center;
+        }
+
+        .table-header div:last-child {
+            text-align: right;
+            padding-right: 40px;
+        }
+
+        .student-row {
+            display: grid;
+            grid-template-columns: 60px 2fr 1.2fr 1.2fr 180px;
+            align-items: center;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 14px 20px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #000000;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .student-row:hover {
+            background-color: #f1f5f9;
+            border-color: #2563eb;
+        }
+
+        .student-row div:nth-child(2) {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .student-row div:nth-child(3),
+        .student-row div:nth-child(4) {
+            text-align: center;
+            color: #334155;
+        }
+
+        .student-row div:last-child {
+            text-align: right;
+        }
+
+        /* Performance Badges */
+        .perf-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            width: 150px;
+        }
+
+        .badge-excellent {
+            background-color: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .badge-good {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
+        .badge-average {
+            background-color: #fef9c3;
+            color: #a16207;
+            border: 1px solid #fef08a;
+        }
+
+        .badge-improvement {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+
+        /* --- FOOTER PAGINATION --- */
+        .pagination-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-page {
+            border: 1px solid #cbd5e1;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            transition: all 0.2s;
+        }
+
+        .btn-page:hover:not(:disabled) {
+            background-color: #f1f5f9;
+        }
+
+        .btn-page.active {
+            background-color: #273894;
+            color: white;
+            border-color: #273894;
+        }
+
+        .btn-page:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="../images/logo.png" alt="PINTAR Logo">
+        </div>
+        <nav>
+            <a href="dashboard.html">Home</a>
+            <a href="schools.html" class="active">Schools</a>
+            <a href="quizzes.html">Quizzes</a>
+            <a href="reports.html">Reports & Analytics</a>
+        </nav>
+        <div class="right-menu">
+            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="logout" id="logoutBtn" onclick="window.location.href='../index.html'">LOG OUT</button>
+            <div class="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>PINTAR</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN LAYOUT ================= -->
+    <main class="container">
+        <a href="javascript:history.back()" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back</a>
+
+        <div class="header-section">
+            <div class="class-info">
+                <h1 id="classNameView">Year 1 ALPHA</h1>
+                <p>28 Students</p>
+            </div>
+            <div class="stats-panel">
+                <div class="stat-box">
+                    <div class="stat-label">Average Score</div>
+                    <div class="stat-value">76%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Quizzes Completed</div>
+                    <div class="stat-value">1</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Top Score</div>
+                    <div class="stat-value">98%</div>
+                </div>
+                <!-- ADDED BADGES EARNED CARD -->
+                <div class="stat-box">
+                    <div class="stat-label">Badges Earned</div>
+                    <div class="stat-value">42</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADDED CARD FOR STUDENTS WHO GOT SIX BADGES -->
+        <div class="six-badges-card">
+            <div class="six-badges-header">
+                <div class="six-badges-title">
+                    <i class="fa-solid fa-award"></i>
+                    <span>Students Who Earned 6 Badges (5 Students)</span>
+                </div>
+                <button class="btn-toggle-dropdown" onclick="toggleSixBadgesDropdown()">
+                    <span>View Students</span>
+                    <i class="fa-solid fa-chevron-down" id="dropdownIcon"></i>
+                </button>
+            </div>
+            <div class="students-dropdown-list" id="sixBadgesList">
+                <!-- Javascript will populate 5 students here -->
+            </div>
+        </div>
+
+        <div class="content-panel">
+            <!-- Filters Toolbar -->
+            <section class="toolbar">
+                <div class="search-container">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Search students...">
+                </div>
+                <select class="filter-select">
+                    <option>Sort by Name (A-Z)</option>
+                </select>
+                <button class="btn-export" id="exportBtn"><i class="fa-solid fa-download"></i> Export</button>
+            </section>
+
+            <!-- Grid Header -->
+            <div class="table-header">
+                <div>#</div>
+                <div>Student Name</div>
+                <div>Average Score</div>
+                <div>Quizzes Completed</div>
+                <div>Performance</div>
+            </div>
+
+            <!-- Container for Rows loaded via dynamic JS array -->
+            <div id="tableBody"></div>
+
+            <!-- Footer Pagination Controls -->
+            <footer class="pagination-footer">
+                <div id="paginationInfo">Loading pagination data...</div>
+                <div class="pagination-controls" id="paginationControls"></div>
+            </footer>
+        </div>
+    </main>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const className = urlParams.get('class') || 'Year 1 Alpha';
+        document.getElementById('classNameView').textContent = className;
+
+        // Exactly 28 unique Malaysian students setup
+        const defaultStudents = [
+            { id: "stud_1", name: "Aisyah Binti Ahmad", score: 92, quizCount: 1, badges: 6 },
+            { id: "stud_2", name: "Amrul Hakim Bin Zainal", score: 96, quizCount: 1, badges: 6 },
+            { id: "stud_3", name: "Chiew Li Wen", score: 85, quizCount: 1, badges: 4 },
+            { id: "stud_4", name: "Daniel Wong Jia Sheng", score: 80, quizCount: 1, badges: 3 },
+            { id: "stud_5", name: "Farah Nabila Binti Rosli", score: 75, quizCount: 1, badges: 3 },
+            { id: "stud_6", name: "Gabriel Lim Wei Jie", score: 70, quizCount: 1, badges: 2 },
+            { id: "stud_7", name: "Kavitha A/P Subramaniam", score: 45, quizCount: 1, badges: 1 },
+            { id: "stud_8", name: "Harith Bin Yusof", score: 40, quizCount: 1, badges: 1 },
+            { id: "stud_9", name: "Lim Yi Xuan", score: 46, quizCount: 1, badges: 1 },
+            { id: "stud_10", name: "Sharvin Raj A/L Kumar", score: 45, quizCount: 1, badges: 1 },
+            { id: "stud_11", name: "Muhammad Ali Bin Osman", score: 98, quizCount: 1, badges: 6 },
+            { id: "stud_12", name: "Nurul Izzah Binti Mansor", score: 88, quizCount: 1, badges: 5 },
+            { id: "stud_13", name: "Tan Wei Meng", score: 79, quizCount: 1, badges: 3 },
+            { id: "stud_14", name: "Siti Aminah Binti Zakaria", score: 62, quizCount: 1, badges: 2 },
+            { id: "stud_15", name: "Logeshwaran A/L Balan", score: 50, quizCount: 1, badges: 1 },
+            { id: "stud_16", name: "Aditi Sharma", score: 91, quizCount: 1, badges: 6 },
+            { id: "stud_17", name: "Brandon Lee Vance", score: 83, quizCount: 1, badges: 4 },
+            { id: "stud_18", name: "Christina Yong Suet Li", score: 77, quizCount: 1, badges: 3 },
+            { id: "stud_19", name: "Dhinesh Kumar A/L Morgan", score: 68, quizCount: 1, badges: 2 },
+            { id: "stud_20", name: "Evelyn Ng Mei Kee", score: 94, quizCount: 1, badges: 6 },
+            { id: "stud_21", name: "Fazli Bin Abdul Rahman", score: 81, quizCount: 1, badges: 4 },
+            { id: "stud_22", name: "Goh Jia Hao", score: 73, quizCount: 1, badges: 2 },
+            { id: "stud_23", name: "Hana Binti Mohd Noor", score: 60, quizCount: 1, badges: 2 },
+            { id: "stud_24", name: "Imran Khan Bin Zafar", score: 55, quizCount: 1, badges: 1 },
+            { id: "stud_25", name: "Jason Fernandez", score: 87, quizCount: 1, badges: 5 },
+            { id: "stud_26", name: "Khairul Anwar Bin Azmi", score: 42, quizCount: 1, badges: 1 },
+            { id: "stud_27", name: "Lee Kah Chun", score: 90, quizCount: 1, badges: 5 },
+            { id: "stud_28", name: "Meera A/P Rajendran", score: 66, quizCount: 1, badges: 2 }
+        ];
+
+        localStorage.setItem('pintar_students', JSON.stringify(defaultStudents));
+
+        let currentFilteredData = [];
+        let currentPage = 1;
+        const rowsPerPage = 10;
+
+        function getPerformanceText(score) {
+            if (score >= 90) return "Excellent";
+            if (score >= 80) return "Good";
+            if (score >= 60) return "Average";
+            return "Need Improvement";
+        }
+
+        function initData() {
+            currentFilteredData = JSON.parse(localStorage.getItem('pintar_students'));
+            renderTable();
+            renderSixBadgesDropdown();
+        }
+
+        // Populates the 5 students with 6 badges into the dropdown list
+        function renderSixBadgesDropdown() {
+            const listContainer = document.getElementById('sixBadgesList');
+            const topBadgeStudents = defaultStudents.filter(s => s.badges === 6).slice(0, 5);
+
+            listContainer.innerHTML = '';
+            topBadgeStudents.forEach(student => {
+                const item = document.createElement('div');
+                item.className = 'student-badge-item';
+                item.onclick = () => { window.location.href = `student-report.html?id=${student.id}`; };
+                item.innerHTML = `
+                    <span>${student.name}</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        // Handles Toggling of Dropdown Menu
+        function toggleSixBadgesDropdown() {
+            const dropdown = document.getElementById('sixBadgesList');
+            const icon = document.getElementById('dropdownIcon');
+            dropdown.classList.toggle('show');
+
+            if (dropdown.classList.contains('show')) {
+                icon.className = 'fa-solid fa-chevron-up';
+            } else {
+                icon.className = 'fa-solid fa-chevron-down';
+            }
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            const totalRecords = currentFilteredData.length;
+            const totalPages = Math.ceil(totalRecords / rowsPerPage) || 1;
+
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIdx = (currentPage - 1) * rowsPerPage;
+            const endIdx = Math.min(startIdx + rowsPerPage, totalRecords);
+            const pageItems = currentFilteredData.slice(startIdx, endIdx);
+
+            if (pageItems.length === 0) {
+                tbody.innerHTML = `<div style="text-align:center; padding: 40px; color:#64748b; font-weight:600;">No matching students found.</div>`;
+                document.getElementById('paginationInfo').textContent = "Showing 0 to 0 of 0 students";
+                document.getElementById('paginationControls').innerHTML = '';
+                return;
+            }
+
+            pageItems.forEach((student, index) => {
+                let badgeTxt = "Need Improvement", badgeCls = "badge-improvement";
+                if (student.score >= 90) { badgeTxt = "Excellent"; badgeCls = "badge-excellent"; }
+                else if (student.score >= 80) { badgeTxt = "Good"; badgeCls = "badge-good"; }
+                else if (student.score >= 60) { badgeTxt = "Average"; badgeCls = "badge-average"; }
+
+                const row = document.createElement('div');
+                row.className = 'student-row';
+                row.onclick = () => { window.location.href = `student-report.html?id=${student.id}`; };
+                row.innerHTML = `
+                    <div>${startIdx + index + 1}</div>
+                    <div>${student.name}</div>
+                    <div>${student.score}%</div>
+                    <div>${student.quizCount}</div>
+                    <div><span class="perf-badge ${badgeCls}">${badgeTxt}</span></div>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('paginationInfo').textContent = `Showing ${startIdx + 1} to ${endIdx} of ${totalRecords} students`;
+            renderPagination(totalPages);
+        }
+
+        function renderPagination(totalPages) {
+            const controls = document.getElementById('paginationControls');
+            if (!controls) return;
+            controls.innerHTML = '';
+
+            if (totalPages <= 1) return;
+
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'btn-page';
+            prevBtn.textContent = 'Previous';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => { currentPage--; renderTable(); };
+            controls.appendChild(prevBtn);
+
+            let startPage = Math.max(1, currentPage - 1);
+            let endPage = Math.min(totalPages, startPage + 2);
+            if (endPage - startPage < 2) {
+                startPage = Math.max(1, endPage - 2);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                if (i >= 1 && i <= totalPages) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.className = `btn-page ${i === currentPage ? 'active' : ''}`;
+                    pageBtn.textContent = i;
+                    pageBtn.onclick = () => { currentPage = i; renderTable(); };
+                    controls.appendChild(pageBtn);
+                }
+            }
+
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'btn-page';
+            nextBtn.textContent = 'Next';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => { currentPage++; renderTable(); };
+            controls.appendChild(nextBtn);
+        }
+
+        function exportToExcel() {
+            if (currentFilteredData.length === 0) {
+                alert("No filtered student data available to export!");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Student ID,Student Name,Average Score,Quizzes Completed,Performance\n";
+
+            currentFilteredData.forEach(student => {
+                const escapedName = `"${student.name.replace(/"/g, '""')}"`;
+                const perfText = getPerformanceText(student.score);
+                const row = [
+                    student.id,
+                    escapedName,
+                    `${student.score}%`,
+                    student.quizCount,
+                    perfText
+                ].join(",");
+                csvContent += row + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+
+            const formattedClassName = className.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            link.setAttribute("download", `pintar_students_${formattedClassName}.csv`);
+            document.body.appendChild(link);
+
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function (e) {
+            const query = e.target.value.toLowerCase().trim();
+            const allData = JSON.parse(localStorage.getItem('pintar_students'));
+
+            currentFilteredData = allData.filter(student =>
+                student.name.toLowerCase().includes(query)
+            );
+
+            currentPage = 1;
+            renderTable();
+        });
+
+        document.getElementById('exportBtn').addEventListener('click', exportToExcel);
+
+        window.onload = initData;
+    </script>
+</body>
+<script src="js/navbar.js"></script>
+
+</html>

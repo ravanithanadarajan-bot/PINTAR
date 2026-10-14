@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PINTAR - Student Management Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 60px;
+        }
+
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            font-size: 36px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 40px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .navbar nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 6px 0;
+            position: relative;
+            opacity: 0.8;
+        }
+
+        .navbar nav a.active {
+            opacity: 1;
+            font-weight: 700;
+            border-bottom: 3px solid white;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        .top-row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .welcome-header {
+            font-size: 38px;
+            font-weight: 800;
+            color: #000000;
+            margin-bottom: 5px;
+            margin-top: 10px;
+        }
+
+        .school-subtitle {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            text-transform: uppercase;
+        }
+
+        .btn-download {
+            background-color: #273894;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .btn-download:hover {
+            background-color: #1e2a70;
+        }
+
+        .kpi-row-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .kpi-card {
+            background: white;
+            border: 2px solid #6366f1;
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.01);
+        }
+
+        .kpi-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .kpi-main-val {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        /* --- DUAL DYNAMIC PERFORMANCE CARDS --- */
+        .section-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #273894;
+            margin-bottom: 25px;
+        }
+
+        .cards-grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .sub-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sub-card-header {
+            margin-bottom: 20px;
+        }
+
+        .sub-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #273894;
+        }
+
+        .sub-card-subtitle {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .sub-card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .comp-list {
+            width: 100%;
+        }
+
+        .comp-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .comp-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .comp-label-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #334155;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background-color: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .spider-web-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .chart-center-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .score-stack {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .score-tile {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            border-radius: 12px;
+            padding: 12px 18px;
+            width: 150px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+        }
+
+        .score-tile.alt {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2);
+        }
+
+        .score-tile.green {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+        }
+
+        .tile-lbl {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 2px;
+        }
+
+        .tile-val {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .skill-track {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .stem-panel-container {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 35px;
+        }
+
+        .stem-row-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .stem-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .stem-label-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .stem-score {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e293b;
+            margin: 5px 0;
+        }
+
+        .insight-banner {
+            background-color: #cbd5e1;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            border: 1px solid #94a3b8;
+        }
+
+        .insight-banner i {
+            font-size: 32px;
+            color: #273894;
+        }
+
+        .insight-text h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .insight-text p {
+            font-size: 13px;
+            color: #475569;
+            font-weight: 500;
+            margin-top: 3px;
+        }
+
+        .top-students-card {
+            margin-bottom: 35px;
+        }
+
+        .top-students-header {
+            display: grid;
+            grid-template-columns: 80px 2fr 1fr 120px;
+            padding: 12px 20px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #475569;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .top-students-row {
+            display: grid;
+            grid-template-columns: 80px 2fr 1fr 120px;
+            padding: 16px 20px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-top: 10px;
+            align-items: center;
+            font-weight: 600;
+            font-size: 14px;
+            transition: transform 0.2s;
+        }
+
+        .top-students-row:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .top-students-row i {
+            font-size: 20px;
+            color: #273894;
+        }
+
+        .score-pill {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            text-align: center;
+            font-size: 13px;
+            display: inline-block;
+            width: 70px;
+        }
+
+        @media (max-width: 1200px) {
+            .cards-grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo"><img src="../images/logo.png" alt="PINTAR Logo"></div>
+        <nav>
+            <a href="dashboard.html" class="active">Home</a>
+            <a href="classes.html">Year</a>
+        </nav>
+        <div class="right-menu">
+            <button style="background:none; border:none; color:white; font-size:18px; cursor:pointer;"><i
+                    class="fa-regular fa-bell"></i></button>
+            <button style="background:none; border:none; color:white; font-size:13px; font-weight:600; cursor:pointer;"
+                onclick="window.location.href='../index.html'">LOG OUT</button>
+            <div class="profile"><i class="fa-solid fa-circle-user"></i>&nbsp;&nbsp;<span>SMK PEKAN</span></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="top-row-header">
+            <div>
+                <h1 class="welcome-header">Welcome back, Admin</h1>
+                <p class="school-subtitle">SMK PEKAN</p>
+            </div>
+            <button class="btn-download" onclick="window.print()">Download Report</button>
+        </div>
+
+        <div class="kpi-row-grid">
+            <div class="kpi-card"><span class="kpi-label">Total Students</span><span class="kpi-main-val">234</span>
+            </div>
+
+            <div class="kpi-card"><span class="kpi-label">Average Score</span><span class="kpi-main-val">85%</span>
+            </div>
+        </div>
+
+        <!-- ================= PERFORMANCE OVERVIEW WITH SPIDER WEBS ================= -->
+        <div class="section-card">
+            <h2 class="section-title">Performance Overview</h2>
+
+            <div class="cards-grid-layout">
+                <!-- SUB CARD 1: ASSIGNMENT OVERVIEW -->
+                <div class="sub-card">
+                    <div class="sub-card-header">
+                        <div class="sub-card-title">Cognitive Performance Overview</div>
+                        <div class="sub-card-subtitle">Based on quest score</div>
+                    </div>
+                    <div class="sub-card-content">
+                        <div class="comp-list">
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #c084fc;"></span> AI & Problem Solving</div>
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 85%; background-color: #c084fc;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #6366f1;"></span> Think Like A Creator</div>
+                                    <span>70%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 70%; background-color: #6366f1;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #f97316;"></span> Intentional Vibe Coding</div>
+                                    <span>40%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 40%; background-color: #f97316;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #3b82f6;"></span> Future with Purpose</div>
+                                    <span>80%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 80%; background-color: #3b82f6;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #ec4899;"></span> Digital Street Smart</div>
+                                    <span>65%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 65%; background-color: #ec4899;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-center-wrapper">
+                            <div class="score-stack">
+                                <div class="score-tile">
+                                    <div class="tile-lbl">Avg Score</div>
+                                    <div class="tile-val">86%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="spider-web-block">
+                            <div id="schoolAssignmentRadar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB CARD 2: FACILITATOR MARKS OVERVIEW -->
+                <div class="sub-card">
+                    <div class="sub-card-header">
+                        <div class="sub-card-title">Program Performance Overview</div>
+                        <div class="sub-card-subtitle">Based on Facilitator marks on class</div>
+                    </div>
+                    <div class="sub-card-content">
+                        <div class="comp-list">
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #10b981;"></span> Critic / Evaluation</div>
+                                    <span>80%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 80%; background-color: #10b981;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #06b6d4;"></span> Communication</div>
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 85%; background-color: #06b6d4;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #8b5cf6;"></span> Leadership</div>
+                                    <span>90%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 90%; background-color: #8b5cf6;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #f59e0b;"></span> Group Skill</div>
+                                    <span>75%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 75%; background-color: #f59e0b;"></div>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-item-header">
+                                    <div class="comp-label-left"><span class="dot"
+                                            style="background-color: #ef4444;"></span> Technical Performance</div>
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 85%; background-color: #ef4444;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-center-wrapper">
+                            <div class="score-stack">
+                                <div class="score-tile green">
+                                    <div class="tile-lbl">Class Rating</div>
+                                    <div class="tile-val">83%</div>
+                                </div>
+                                <div class="score-tile alt">
+                                    <div class="tile-lbl">Sessions</div>
+                                    <div class="tile-val">5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="spider-web-block">
+                            <div id="schoolFacilitatorRadar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= STEM INTEREST DISTRIBUTION (4 ITEMS) ================= -->
+        <div class="stem-panel-container">
+            <h2 class="section-title">STEM Interest Distribution</h2>
+            <div class="stem-row-flex">
+                <div class="stem-item">
+                    <div class="stem-label-group"><i class="fa-solid fa-gear"
+                            style="color:#6366f1;"></i><span>Engineering</span></div>
+                    <div class="stem-score">35%</div>
+                    <div class="skill-track">
+                        <div class="skill-fill" style="width:35%; background:#6366f1;"></div>
+                    </div>
+                </div>
+                <div class="stem-item">
+                    <div class="stem-label-group"><i class="fa-solid fa-desktop"
+                            style="color:#f97316;"></i><span>Technology</span></div>
+                    <div class="stem-score">30%</div>
+                    <div class="skill-track">
+                        <div class="skill-fill" style="width:30%; background:#f97316;"></div>
+                    </div>
+                </div>
+                <div class="stem-item">
+                    <div class="stem-label-group"><i class="fa-solid fa-flask"
+                            style="color:#2563eb;"></i><span>Science</span></div>
+                    <div class="stem-score">20%</div>
+                    <div class="skill-track">
+                        <div class="skill-fill" style="width:20%; background:#2563eb;"></div>
+                    </div>
+                </div>
+                <div class="stem-item">
+                    <div class="stem-label-group"><i class="fa-solid fa-calculator"
+                            style="color:#06b6d4;"></i><span>Mathematics</span></div>
+                    <div class="stem-score">15%</div>
+                    <div class="skill-track">
+                        <div class="skill-fill" style="width:15%; background:#06b6d4;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TOP THREE STUDENTS LEADERBOARD ================= -->
+        <div class="section-card top-students-card">
+            <h2 class="section-title" style="color:#0000ff; font-size:22px;">Top Three Students</h2>
+            <div class="top-students-header">
+                <div>Rank</div>
+                <div>Student Name</div>
+                <div>Class Name</div>
+                <div style="text-align:right; padding-right:15px;">Score</div>
+            </div>
+            <div class="top-students-row">
+                <div><i class="fa-solid fa-trophy" style="color: #f59e0b;"></i></div>
+                <div>Ravanithasiri A/P Nadarajan</div>
+                <div>1 Alpha</div>
+                <div style="text-align:right;"><span class="score-pill"
+                        style="background:#dcfce7; color:#15803d;">98%</span></div>
+            </div>
+            <div class="top-students-row">
+                <div><i class="fa-solid fa-medal" style="color: #94a3b8;"></i></div>
+                <div>Ahmad Ziqri Bin Farhan</div>
+                <div>1 Beta</div>
+                <div style="text-align:right;"><span class="score-pill"
+                        style="background:#dcfce7; color:#15803d;">95%</span></div>
+            </div>
+            <div class="top-students-row">
+                <div><i class="fa-solid fa-award" style="color: #b45309;"></i></div>
+                <div>Nurul Ain Bt. Abdullah</div>
+                <div>2 Alpha</div>
+                <div style="text-align:right;"><span class="score-pill"
+                        style="background:#dcfce7; color:#15803d;">92%</span></div>
+            </div>
+        </div>
+
+
+    </main>
+
+    <script>
+        function createRadarChart(containerId, labels, values, color, fillColor) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const width = 340, height = 300, cx = width / 2, cy = 135, radius = 85;
+            const totalAxes = values.length;
+            const angleStep = (Math.PI * 2) / totalAxes;
+
+            let rings = "";
+            for (let l = 1; l <= 4; l++) {
+                let r = (radius / 4) * l;
+                let pts = [];
+                for (let i = 0; i < totalAxes; i++) {
+                    let a = i * angleStep - Math.PI / 2;
+                    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
+                }
+                rings += `<polygon points="${pts.join(' ')}" fill="none" stroke="#e2e8f0" stroke-width="1"/>`;
+            }
+
+            let spokes = "";
+            let textLabels = "";
+            for (let i = 0; i < totalAxes; i++) {
+                let a = i * angleStep - Math.PI / 2;
+                let xEnd = cx + radius * Math.cos(a);
+                let yEnd = cy + radius * Math.sin(a);
+                spokes += `<line x1="${cx}" y1="${cy}" x2="${xEnd}" y2="${yEnd}" stroke="#e2e8f0" stroke-width="1"/>`;
+
+                let labelRadius = radius + 22;
+                let lx = cx + labelRadius * Math.cos(a);
+                let ly = cy + labelRadius * Math.sin(a);
+                let anchor = "middle";
+                if (Math.cos(a) > 0.3) anchor = "start";
+                else if (Math.cos(a) < -0.3) anchor = "end";
+
+                textLabels += `<text x="${lx}" y="${ly}" font-size="10" font-weight="600" fill="#334155" text-anchor="${anchor}" dominant-baseline="central">${labels[i]}</text>`;
+            }
+
+            let polyPts = [];
+            values.forEach((v, i) => {
+                let r = (radius * v) / 100;
+                let a = i * angleStep - Math.PI / 2;
+                polyPts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
+            });
+
+            container.innerHTML = `
+                <svg width="${width}" height="${height}" style="overflow: visible;">
+                    ${rings}
+                    ${spokes}
+                    <polygon points="${polyPts.join(' ')}" fill="${fillColor}" stroke="${color}" stroke-width="2"/>
+                    ${textLabels}
+                </svg>
+            `;
+        }
+
+        function drawSchoolRadars() {
+            const assignmentLabels = [
+                "AI & Problem Solving",
+                "Think Like A Creator",
+                "Intentional Vibe Coding",
+                "Future with Purpose",
+                "Digital Street Smart"
+            ];
+            createRadarChart('schoolAssignmentRadar', assignmentLabels, [85, 70, 40, 80, 65], '#6366f1', 'rgba(99, 102, 241, 0.15)');
+
+            const facilitatorLabels = [
+                "Critic / Evaluation",
+                "Communication",
+                "Leadership",
+                "Group Skill",
+                "Technical Performance"
+            ];
+            createRadarChart('schoolFacilitatorRadar', facilitatorLabels, [80, 85, 90, 75, 85], '#10b981', 'rgba(16, 185, 129, 0.15)');
+        }
+
+        window.onload = drawSchoolRadars;
+    </script>
+</body>
+
+</html>

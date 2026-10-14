@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PINTAR - Assignments</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 60px;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding-bottom: 5px;
+        }
+
+        .navbar nav a.active {
+            color: white;
+            border-bottom: 3px solid white;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .navbar .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .navbar .logout {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 15px;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTAINER --- */
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .page-desc {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        /* --- OVERALL PROGRESS CARD --- */
+        .overall-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .overall-info h3 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .overall-info p {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .overall-stat {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 24px;
+            font-weight: 800;
+            color: #4f46e5;
+        }
+
+        .stat-lbl {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        /* --- MODULE LIST LAYOUT --- */
+        .modules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .module-item {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .module-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        /* --- BLACK & WHITE BADGE LOGIC --- */
+        .badge-img-wrapper {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #f1f5f9;
+            border: 2px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .badge-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            opacity: 0.55;
+            transition: all 0.3s ease;
+        }
+
+        .badge-img-wrapper.unlocked {
+            border-color: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-img-wrapper.unlocked .badge-img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .mod-details {
+            max-width: 450px;
+        }
+
+        .mod-tag {
+            font-size: 11px;
+            font-weight: 700;
+            color: #4338ca;
+            background: #e0e7ff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .mod-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .mod-desc {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .item-progress {
+            width: 180px;
+            flex-shrink: 0;
+        }
+
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        .bar-bg {
+            background: #f1f5f9;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            background: #4f46e5;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .btn-start {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .btn-start:hover {
+            background: #4338ca;
+        }
+
+        /* --- GRAND INNOVATOR CARD --- */
+        .grand-card {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .grand-info h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .grand-info p {
+            font-size: 13px;
+            color: #c7d2fe;
+            max-width: 600px;
+        }
+
+        .grand-badge-box {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed #818cf8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .grand-badge-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            opacity: 0.5;
+        }
+
+        .grand-badge-box.unlocked img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        /* --- RESTART TESTING BUTTON --- */
+        .reset-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .btn-reset {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-reset:hover {
+            background-color: #dc2626;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <img src="../images/logo.png" alt="PINTAR Logo">
+        </div>
+        <nav>
+            <a href="dashboard.html">Home</a>
+            <a href="report.html">Report</a>
+            <a href="assignment.html" class="active">Quest</a>
+        </nav>
+        <div class="right-menu">
+            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="logout" onclick="window.location.href='../index.html'">LOG OUT</button>
+            <div class="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>Rava</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <div class="page-header">
+            <h1 class="page-title">Learning Modules & Quizzes</h1>
+            <p class="page-desc">Complete all 5 modules with a score of 8/8 to unlock color badges and the Grand
+                Innovator Award!</p>
+        </div>
+
+        <div class="overall-card">
+            <div class="overall-info">
+                <h3>Overall Mastery Progress</h3>
+                <p>Track your score performance across all 5 sections.</p>
+            </div>
+            <div class="overall-stat">
+                <div class="stat-box">
+                    <div class="stat-val" id="totalScoreText">0 / 40</div>
+                    <div class="stat-lbl">Questions Passed</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" id="badgesCountText">0 / 5</div>
+                    <div class="stat-lbl">Badges Earned</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modules-list" id="modulesList">
+            <!-- Dynamic Modules Rendered Here -->
+        </div>
+
+        <!-- Grand Innovator Special Banner -->
+        <div class="grand-card">
+            <div class="grand-info">
+                <h2>PINTAR Grand Innovator Award</h2>
+                <p>Achieve a perfect 100% score (8/8) in all 5 assignment sections to unlock the ultimate Master
+                    Certification & Badge!</p>
+            </div>
+            <div class="grand-badge-box" id="grandBadgeBox">
+                <img src="../images/badge-pintar-master.png" alt="Grand Innovator Badge">
+            </div>
+        </div>
+
+        <!-- Testing Restart Button Area -->
+        <div class="reset-container">
+            <button class="btn-reset" onclick="resetAllProgress()">
+                <i class="fa-solid fa-rotate-left"></i> RESET ALL PROGRESS (TESTING)
+            </button>
+        </div>
+
+    </main>
+
+    <script>
+        const modules = [
+            { id: 1, title: "Neural Architect", tag: "AI & Logic", image: "../images/badge-neural-architect.png", desc: "Outstanding proficiency in AI concepts and logical reasoning." },
+            { id: 2, title: "Robo-Kinetics Specialist", tag: "Robomath & Mechanics", image: "../images/badge-robo-kinetics.png", desc: "Mastery of gear ratios, kinematics, and robotics mathematics." },
+            { id: 3, title: "Electra-Drive Pioneer", tag: "EV Technology", image: "../images/badge-electra-drive.png", desc: "Top scores in electric vehicle physics, batteries, and motor dynamics." },
+            { id: 4, title: "Aero-Nav Flight Master", tag: "Drone Systems", image: "../images/badge-aero-nav.png", desc: "Excellence in autonomous flight, LIDAR, and sensor navigation." },
+            { id: 5, title: "Spatial CAD Creator", tag: "3D Printing", image: "../images/badge-spatial-cad.png", desc: "Advanced understanding of 3D spatial geometry and design thinking." }
+        ];
+
+        function loadDashboard() {
+            const quizProgress = JSON.parse(localStorage.getItem('quiz_progress')) || {};
+            const list = document.getElementById('modulesList');
+            list.innerHTML = '';
+
+            let totalCorrect = 0;
+            let badgesEarned = 0;
+
+            modules.forEach(mod => {
+                const prog = quizProgress[mod.id] || { answered: 0, correct: 0 };
+                const correctCount = prog.correct || 0;
+                totalCorrect += correctCount;
+
+                const isUnlocked = correctCount === 8;
+                if (isUnlocked) badgesEarned++;
+
+                const percent = Math.round((correctCount / 8) * 100);
+
+                const item = document.createElement('div');
+                item.className = 'module-item';
+                item.innerHTML = `
+                    <div class="item-left">
+                        <div class="badge-img-wrapper ${isUnlocked ? 'unlocked' : ''}">
+                            <img class="badge-img" src="${mod.image}" alt="${mod.title}">
+                        </div>
+                        <div class="mod-details">
+                            <span class="mod-tag">${mod.tag}</span>
+                            <h3 class="mod-title">${mod.title}</h3>
+                            <p class="mod-desc">${mod.desc}</p>
+                        </div>
+                    </div>
+                    <div class="item-progress">
+                        <div class="progress-row">
+                            <span>Score: ${correctCount}/8</span>
+                            <span>${percent}%</span>
+                        </div>
+                        <div class="bar-bg">
+                            <div class="bar-fill" style="width: ${percent}%;"></div>
+                        </div>
+                    </div>
+                    <a href="questions.html?section=${mod.id}" class="btn-start">
+                        ${prog.answered > 0 ? 'RETRY MODULE' : 'START MODULE'}
+                    </a>
+                `;
+                list.appendChild(item);
+            });
+
+            document.getElementById('totalScoreText').textContent = `${totalCorrect} / 40`;
+            document.getElementById('badgesCountText').textContent = `${badgesEarned} / 5`;
+
+            const grandBox = document.getElementById('grandBadgeBox');
+            if (badgesEarned === 5) {
+                grandBox.classList.add('unlocked');
+            } else {
+                grandBox.classList.remove('unlocked');
+            }
+        }
+
+        function resetAllProgress() {
+            if (confirm("Are you sure you want to reset all test progress? This will clear all scores and badges.")) {
+                localStorage.removeItem('quiz_progress');
+                localStorage.removeItem('quiz_user_answers');
+                loadDashboard();
+            }
+        }
+
+        window.onload = loadDashboard;
+    </script>
+</body>
+
+</html>

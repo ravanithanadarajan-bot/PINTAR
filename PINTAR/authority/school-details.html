@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PINTAR - School Details</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 60px;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 40px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .navbar nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-block;
+            position: relative;
+            padding: 6px 0;
+            transition: opacity 0.2s;
+        }
+
+        .navbar nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .navbar .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logout {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #3b4ca6;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        /* --- BACK BUTTON --- */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #1d4ed8;
+        }
+
+        /* --- HEADER AREA --- */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 35px;
+            gap: 20px;
+        }
+
+        .school-info h1 {
+            font-size: 38px;
+            font-weight: 800;
+            color: #000000;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        .school-info p {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000000;
+            margin-top: 4px;
+        }
+
+        /* --- TOP STATS PANEL --- */
+        .stats-panel {
+            display: flex;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 18px 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+            min-width: 680px;
+        }
+
+        .stat-box {
+            flex: 1;
+            padding: 0 15px;
+            position: relative;
+        }
+
+        .stat-box:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background-color: #cbd5e1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 30px;
+            font-weight: 800;
+            color: #273894;
+        }
+
+        /* --- SUB TABS --- */
+        .tab-menu {
+            display: flex;
+            gap: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+
+        .tab-link {
+            font-size: 14px;
+            font-weight: 700;
+            color: #64748b;
+            text-decoration: none;
+            cursor: pointer;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .tab-link.active {
+            color: #2563eb;
+        }
+
+        .tab-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #2563eb;
+        }
+
+        /* --- TAB CONTENT PANELS --- */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ================= TAB 1: PERFORMANCE VIEWS ================= */
+        .three-column-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .panel-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .legend-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+
+        .legend-color-box {
+            width: 16px;
+            height: 10px;
+            background-color: #2563eb;
+            border-radius: 2px;
+        }
+
+        .radar-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .score-table th {
+            background-color: #dbeafe;
+            color: #1e3a8a;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .score-table th:first-child {
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+        }
+
+        .score-table th:last-child {
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+            text-align: right;
+        }
+
+        .score-table td {
+            padding: 15px 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e293b;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .score-table td:last-child {
+            text-align: right;
+        }
+
+        .progress-line-container {
+            width: 80px;
+            height: 4px;
+            background-color: #e2e8f0;
+            border-radius: 10px;
+            display: inline-block;
+            vertical-align: middle;
+            overflow: hidden;
+        }
+
+        .progress-line {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .line-green {
+            background-color: #22c55e;
+        }
+
+        .line-orange {
+            background-color: #ef4444;
+        }
+
+        .line-yellow {
+            background-color: #eab308;
+        }
+
+        .skill-item {
+            margin-bottom: 18px;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .skill-bar-bg {
+            width: 100%;
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            border-radius: 20px;
+        }
+
+        .bar-problem {
+            background-color: #c084fc;
+        }
+
+        .bar-critical {
+            background-color: #ff8a65;
+        }
+
+        .bar-creative {
+            background-color: #4a148c;
+        }
+
+        .bar-comm {
+            background-color: #81c784;
+        }
+
+        .bar-logical {
+            background-color: #f06292;
+        }
+
+        /* --- SCHOOL BADGES PANEL STYLES --- */
+        .badge-panel {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            margin-bottom: 30px;
+        }
+
+        .badge-panel-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 4px;
+        }
+
+        .badge-panel-subtitle {
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .badge-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .badge-metric-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .badge-mini-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #cbd5e1;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .badge-mini-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge-metric-info {
+            flex: 1;
+        }
+
+        .badge-metric-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .badge-progress-bar {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .badge-progress-fill {
+            height: 100%;
+            background: #4f46e5;
+            border-radius: 10px;
+        }
+
+        .badge-metric-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        /* --- STEM PANEL --- */
+        .stem-panel {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .stem-panel-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 25px;
+        }
+
+        .stem-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .stem-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .stem-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .stem-icon {
+            font-size: 28px;
+        }
+
+        .icon-eng {
+            color: #a855f7;
+        }
+
+        .icon-tech {
+            color: #ff8a65;
+        }
+
+        .icon-sci {
+            color: #3b82f6;
+        }
+
+        .icon-math {
+            color: #06b6d4;
+        }
+
+        .icon-env {
+            color: #15803d;
+        }
+
+        .stem-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .stem-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-left: 40px;
+            margin-bottom: 12px;
+        }
+
+        .stem-bar-bg {
+            width: 100%;
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .stem-bar-fill {
+            height: 100%;
+            border-radius: 20px;
+        }
+
+        .stem-fill-eng {
+            background-color: #a855f7;
+        }
+
+        .stem-fill-tech {
+            background-color: #ff8a65;
+        }
+
+        .stem-fill-sci {
+            background-color: #3b82f6;
+        }
+
+        .stem-fill-math {
+            background-color: #06b6d4;
+        }
+
+        .stem-fill-env {
+            background-color: #15803d;
+        }
+
+        /* ================= TAB 2: CLASSES VIEWS ================= */
+        .class-section-block {
+            margin-bottom: 25px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .class-block-header {
+            background-color: #273894;
+            color: white;
+            padding: 14px 24px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .classes-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .classes-table th {
+            background-color: #dbeafe;
+            color: #1e293b;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 14px 24px;
+            text-align: left;
+            border-bottom: 1px solid #cbd5e1;
+        }
+
+        .classes-table td {
+            padding: 16px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            background: white;
+            transition: all 0.2s ease;
+        }
+
+        .classes-table tr:not(:last-child) td {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .classes-table th:nth-child(3),
+        .classes-table td:nth-child(3),
+        .classes-table th:nth-child(4),
+        .classes-table td:nth-child(4),
+        .classes-table th:nth-child(5),
+        .classes-table td:nth-child(5) {
+            text-align: center;
+        }
+
+        .classes-table tbody tr {
+            border-bottom: 8px solid #f8fafc;
+        }
+
+        .classes-table tbody tr.row-card-style {
+            cursor: pointer;
+        }
+
+        .classes-table tbody tr.row-card-style:hover td {
+            background-color: #f1f5f9 !important;
+            color: #2563eb !important;
+        }
+
+        /* ================= TAB 3: QUIZZES VIEWS ================= */
+        .quiz-container-title-bar {
+            background-color: #273894;
+            color: white;
+            padding: 16px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .quiz-card {
+            background: #dbeafe;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            padding: 20px 40px;
+            position: relative;
+            overflow: visible;
+            max-width: 850px;
+            min-height: 140px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .shapes-graphic-wrapper {
+            position: relative;
+            width: 130px;
+            height: 110px;
+            margin-right: 40px;
+            flex-shrink: 0;
+        }
+
+        .shape-cube {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 75px;
+            height: 65px;
+            background: linear-gradient(135deg, #4f46e5, #3b82f6);
+            border-radius: 8px;
+            transform: perspective(200px) rotateY(-15deg);
+            box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.15);
+            z-index: 2;
+        }
+
+        .shape-pyramid {
+            position: absolute;
+            top: -15px;
+            left: 25px;
+            width: 0;
+            height: 0;
+            border-left: 45px solid transparent;
+            border-right: 45px solid transparent;
+            border-bottom: 80px solid #f472b6;
+            filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.15));
+            z-index: 1;
+        }
+
+        .shape-sphere {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 65px;
+            height: 65px;
+            background: radial-gradient(circle at 30% 30%, #ffdf7e, #f59e0b);
+            border-radius: 50%;
+            box-shadow: 5px 8px 15px rgba(0, 0, 0, 0.2);
+            z-index: 3;
+        }
+
+        .quiz-info-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .quiz-info-content .lesson-tag {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .quiz-info-content .quiz-main-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #000000;
+            line-height: 1.2;
+        }
+
+        .quiz-info-content .assessment-sub {
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="../images/logo.png" alt="PINTAR Logo">
+        </div>
+        <nav>
+            <a href="dashboard.html">Home</a>
+            <a href="schools.html" class="active">Schools</a>
+            <a href="quizzes.html">Quizzes</a>
+            <a href="reports.html">Reports & Analytics</a>
+        </nav>
+        <div class="right-menu">
+            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="logout" id="logoutBtn" onclick="window.location.href='../index.html'">LOG OUT</button>
+            <div class="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>PINTAR</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="container">
+        <!-- Back Navigation Link -->
+        <a href="schools.html" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Schools
+        </a>
+
+        <!-- Dynamic Header Area -->
+        <header class="header-section">
+            <div class="school-info">
+                <h1 id="schoolName">Loading...</h1>
+                <p id="schoolState">-</p>
+            </div>
+
+            <!-- Dynamic KPI Stats -->
+            <section class="stats-panel">
+                <div class="stat-box">
+                    <div class="stat-label">Total Students</div>
+                    <div class="stat-value" id="kpiStudents">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Average Score</div>
+                    <div class="stat-value" id="kpiAvgScore">0%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Badges Earned</div>
+                    <div class="stat-value" id="kpiBadges" style="color: #6366f1;">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Quizzes Completed</div>
+                    <div class="stat-value" id="kpiQuizzes">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Top Score</div>
+                    <div class="stat-value" id="kpiTopScore">0%</div>
+                </div>
+            </section>
+        </header>
+
+        <!-- Dynamic Tab Panel Navigation Links -->
+        <nav class="tab-menu">
+            <span class="tab-link active" onclick="switchSubTab(event, 'performanceTab')">Performance</span>
+            <span class="tab-link" onclick="switchSubTab(event, 'classesTab')">Classes</span>
+            <span class="tab-link" onclick="switchSubTab(event, 'quizzesTab')">Quizzes</span>
+        </nav>
+
+        <!-- ================= TAB CONTENT 1: PERFORMANCE ================= -->
+        <div id="performanceTab" class="tab-content active">
+            <div class="three-column-grid">
+                <!-- Card 1: Radar Chart Representation -->
+                <section class="panel-card">
+                    <h2 class="panel-title">Overall Performance Overview</h2>
+                    <div class="legend-indicator">
+                        <div class="legend-color-box"></div>
+                        <span>Standard Performance</span>
+                    </div>
+                    <div class="radar-container" id="radarContainer"></div>
+                </section>
+
+                <!-- Card 2: Score Breakdown Table -->
+                <section class="panel-card">
+                    <h2 class="panel-title">Score Distribution by Year</h2>
+                    <table class="score-table">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>Average Score</th>
+                                <th style="text-align: right;">Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="distributionTableBody"></tbody>
+                    </table>
+                </section>
+
+                <!-- Card 3: Cognitive Skill Level Status -->
+                <section class="panel-card">
+                    <h2 class="panel-title">Cognitive Skill Performance</h2>
+                    <div id="cognitiveSkillsContainer"></div>
+                </section>
+            </div>
+
+            <!-- SCHOOL BADGES BREAKDOWN PANEL -->
+            <section class="badge-panel">
+                <h2 class="badge-panel-title">School Badge Completion & Awards</h2>
+                <div class="badge-panel-subtitle">Total student badges unlocked for this school across all 6 categories
+                </div>
+
+                <div class="badge-metrics-grid" id="schoolBadgesGrid">
+                    <!-- Dynamic badges injected via Javascript -->
+                </div>
+            </section>
+
+            <!-- STEM Area Row -->
+            <section class="stem-panel">
+                <h2 class="stem-panel-title">STEM Interest Distribution</h2>
+                <div class="stem-grid" id="stemGridContainer"></div>
+            </section>
+        </div>
+
+        <!-- ================= TAB CONTENT 2: CLASSES ================= -->
+        <div id="classesTab" class="tab-content">
+            <!-- Dynamic Classes injected here year by year -->
+            <div id="classesListContainer"></div>
+        </div>
+
+        <!-- ================= TAB CONTENT 3: QUIZZES ================= -->
+        <div id="quizzesTab" class="tab-content">
+            <div class="quiz-container-title-bar">Quizzes Assigned</div>
+
+            <!-- Quiz Graphic Card Asset Row Container -->
+            <div class="quiz-card">
+                <div class="shapes-graphic-wrapper">
+                    <div class="shape-pyramid"></div>
+                    <div class="shape-cube"></div>
+                    <div class="shape-sphere"></div>
+                </div>
+                <div class="quiz-info-content">
+                    <div class="lesson-tag">Lesson 1</div>
+                    <div class="quiz-main-title">Student's Digital Skills</div>
+                    <div class="assessment-sub">Assessment 1</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Orchestration Control Logic Script -->
+    <script>
+        const schoolsDatabase = [
+            { id: 1, name: "SMK Seri Bintang Utara", state: "Kuala Lumpur", totalStudents: 1240, averageScore: 89, totalBadges: 4850 },
+            { id: 2, name: "SMK Victoria Institution", state: "Kuala Lumpur", totalStudents: 1100, averageScore: 85, totalBadges: 4210 },
+            { id: 3, name: "SK Bukit Damansara", state: "Kuala Lumpur", totalStudents: 650, averageScore: 78, totalBadges: 2300 },
+            { id: 4, name: "SJK(Cina) Kuen Cheng 1", state: "Kuala Lumpur", totalStudents: 1450, averageScore: 92, totalBadges: 5900 },
+            { id: 5, name: "SJKT Fletcher", state: "Kuala Lumpur", totalStudents: 320, averageScore: 74, totalBadges: 1120 },
+            { id: 11, name: "SMK Seafield", state: "Selangor", totalStudents: 1540, averageScore: 87, totalBadges: 5600 },
+            { id: 12, name: "SMK USJ 12", state: "Selangor", totalStudents: 1380, averageScore: 84, totalBadges: 4950 }
+        ];
+
+        const fallbackDetails = {
+            stemDistribution: [
+                { label: "Engineering", value: 32, icon: "fa-solid fa-gears", class: "icon-eng", fillClass: "stem-fill-eng" },
+                { label: "Technology", value: 25, icon: "fa-solid fa-desktop", class: "icon-tech", fillClass: "stem-fill-tech" },
+                { label: "Science", value: 20, icon: "fa-solid fa-flask", class: "icon-sci", fillClass: "stem-fill-sci" },
+                { label: "Mathematics", value: 15, icon: "fa-solid fa-calculator", class: "icon-math", fillClass: "stem-fill-math" },
+                { label: "Environment", value: 8, icon: "fa-solid fa-leaf", class: "icon-env", fillClass: "stem-fill-env" }
+            ]
+        };
+
+        function switchSubTab(event, tabId) {
+            document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function getSchoolIdFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return parseInt(params.get('id'), 10) || 1;
+        }
+
+        function drawRadarChart(containerId, data) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const width = 300, height = 260, cx = width / 2, cy = height / 2, radius = 90;
+            const skills = [
+                { label: "Problem Solving", key: "problemSolving" },
+                { label: "Critical Thinking", key: "criticalThinking" },
+                { label: "Creativity", key: "creativity" },
+                { label: "Computational Thinking", key: "computationalThinking" },
+                { label: "Communication", key: "communication" },
+                { label: "Logical Reasoning", key: "logicalReasoning" }
+            ];
+
+            const totalAxes = skills.length;
+            const angleStep = (Math.PI * 2) / totalAxes;
+
+            let webSvg = "";
+            for (let level = 1; level <= 5; level++) {
+                const r = (radius / 5) * level;
+                let ringPoints = [];
+                for (let i = 0; i < totalAxes; i++) {
+                    const angle = i * angleStep - Math.PI / 2;
+                    ringPoints.push(`${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`);
+                }
+                webSvg += `<polygon points="${ringPoints.join(' ')}" fill="none" stroke="#e2e8f0" stroke-width="1"/>`;
+            }
+
+            let spokesAndLabels = "";
+            skills.forEach((skill, i) => {
+                const angle = i * angleStep - Math.PI / 2;
+                const outerX = cx + radius * Math.cos(angle);
+                const outerY = cy + radius * Math.sin(angle);
+
+                spokesAndLabels += `<line x1="${cx}" y1="${cy}" x2="${outerX}" y2="${outerY}" stroke="#e2e8f0" stroke-width="1"/>`;
+
+                let textAnchor = "middle", dy = "0.35em";
+                let labelX = cx + (radius + 24) * Math.cos(angle);
+                let labelY = cy + (radius + 15) * Math.sin(angle);
+
+                if (Math.cos(angle) > 0.1) textAnchor = "start";
+                else if (Math.cos(angle) < -0.1) textAnchor = "end";
+                if (Math.sin(angle) > 0.8) dy = "1em";
+                else if (Math.sin(angle) < -0.8) dy = "-0.2em";
+
+                spokesAndLabels += `<text x="${labelX}" y="${labelY}" text-anchor="${textAnchor}" dy="${dy}" fill="#64748b" font-size="10" font-weight="600">${skill.label}</text>`;
+            });
+
+            let performancePoints = [];
+            skills.forEach((skill, i) => {
+                const val = data[skill.key] || 50;
+                const r = (radius * val) / 100;
+                const angle = i * angleStep - Math.PI / 2;
+                performancePoints.push(`${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`);
+            });
+
+            const finalSvgMarkup = `
+                <svg width="${width}" height="${height}" style="overflow: visible;">
+                    ${webSvg}
+                    ${spokesAndLabels}
+                    <polygon points="${performancePoints.join(' ')}" fill="rgba(37, 99, 235, 0.08)" stroke="#2563eb" stroke-width="2"/>
+                    ${performancePoints.map(pt => `<circle cx="${pt.split(',')[0]}" cy="${pt.split(',')[1]}" r="3" fill="#2563eb"/>`).join('')}
+                </svg>
+            `;
+            container.innerHTML = finalSvgMarkup;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const schoolId = getSchoolIdFromURL();
+            let selectedSchool = schoolsDatabase.find(s => s.id === schoolId);
+
+            if (!selectedSchool) {
+                selectedSchool = { id: 999, name: "SMK SERI JAYA", state: "Pahang", totalStudents: 504, averageScore: 86, totalBadges: 2150 };
+            }
+
+            const scale = (selectedSchool.averageScore / 100);
+
+            document.getElementById('schoolName').textContent = selectedSchool.name;
+            document.getElementById('schoolState').textContent = selectedSchool.state;
+            document.getElementById('kpiStudents').textContent = selectedSchool.totalStudents.toLocaleString();
+            document.getElementById('kpiAvgScore').textContent = selectedSchool.averageScore + "%";
+            document.getElementById('kpiBadges').textContent = selectedSchool.totalBadges.toLocaleString();
+            document.getElementById('kpiQuizzes').textContent = selectedSchool.id === 999 ? "11" : "14";
+            document.getElementById('kpiTopScore').textContent = selectedSchool.id === 999 ? "100%" : "92%";
+
+            const dynamicRadarData = {
+                problemSolving: Math.round(75 * scale), criticalThinking: Math.round(82 * scale),
+                creativity: Math.round(68 * scale), computationalThinking: Math.round(70 * scale),
+                communication: Math.round(65 * scale), logicalReasoning: Math.round(80 * scale)
+            };
+            drawRadarChart("radarContainer", dynamicRadarData);
+
+            const dynamicYearlyTable = [
+                { year: "Year 1", score: Math.min(100, Math.round(85 * scale)) },
+                { year: "Year 2", score: Math.min(100, Math.round(45 * scale)) },
+                { year: "Year 3", score: Math.min(100, Math.round(65 * scale)) },
+                { year: "Year 4", score: Math.min(100, Math.round(90 * scale)) },
+                { year: "Year 5", score: Math.min(100, Math.round(90 * scale)) },
+                { year: "Year 6", score: Math.min(100, Math.round(90 * scale)) }
+            ];
+
+            const tbody = document.getElementById('distributionTableBody');
+            tbody.innerHTML = '';
+            dynamicYearlyTable.forEach(row => {
+                let colorClass = "line-green";
+                if (row.score < 50) colorClass = "line-orange";
+                else if (row.score < 75) colorClass = "line-yellow";
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${row.year}</td>
+                        <td>${row.score}%</td>
+                        <td style="text-align: right;">
+                            <div class="progress-line-container"><div class="progress-line ${colorClass}" style="width: ${row.score}%;"></div></div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            const dynamicSkills = [
+                { name: "Problem Solving", score: Math.min(100, Math.round(67 * scale)), class: "bar-problem" },
+                { name: "Critical Thinking", score: Math.min(100, Math.round(85 * scale)), class: "bar-critical" },
+                { name: "Creativity", score: Math.min(100, Math.round(75 * scale)), class: "bar-creative" },
+                { name: "Communication", score: Math.min(100, Math.round(43 * scale)), class: "bar-comm" },
+                { name: "Logical Reasoning", score: Math.min(100, Math.round(70 * scale)), class: "bar-logical" }
+            ];
+            const skillContainer = document.getElementById('cognitiveSkillsContainer');
+            skillContainer.innerHTML = '';
+            dynamicSkills.forEach(skill => {
+                skillContainer.innerHTML += `
+                    <div class="skill-item">
+                        <div class="skill-header"><span>${skill.name}</span><span>${skill.score}%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill ${skill.class}" style="width: ${skill.score}%;"></div></div>
+                    </div>
+                `;
+            });
+
+            /* RENDER SCHOOL BADGES GRID */
+            const badgesData = [
+                { title: "Neural Architect", image: "../images/badge-neural-architect.png", percentage: Math.min(100, Math.round(82 * scale)), color: "#6366f1" },
+                { title: "Robo-Kinetics", image: "../images/badge-robo-kinetics.png", percentage: Math.min(100, Math.round(75 * scale)), color: "#06b6d4" },
+                { title: "Electra-Drive", image: "../images/badge-electra-drive.png", percentage: Math.min(100, Math.round(68 * scale)), color: "#f59e0b" },
+                { title: "Aero-Nav Master", image: "../images/badge-aero-nav.png", percentage: Math.min(100, Math.round(59 * scale)), color: "#ec4899" },
+                { title: "Spatial CAD", image: "../images/badge-spatial-cad.png", percentage: Math.min(100, Math.round(64 * scale)), color: "#8b5cf6" },
+                { title: "PINTAR Master", image: "../images/badge-pintar-master.png", percentage: Math.min(100, Math.round(52 * scale)), color: "#10b981", isMaster: true }
+            ];
+
+            const schoolBadgesGrid = document.getElementById('schoolBadgesGrid');
+            schoolBadgesGrid.innerHTML = '';
+            badgesData.forEach(badge => {
+                const awardedCount = Math.round((selectedSchool.totalStudents * badge.percentage) / 100);
+                const borderStyle = badge.isMaster ? 'border-color: #10b981; background: #f0fdf4;' : '';
+                const titleStyle = badge.isMaster ? 'color: #047857;' : '';
+                const statStyle = badge.isMaster ? 'color: #047857;' : '';
+
+                schoolBadgesGrid.innerHTML += `
+                    <div class="badge-metric-card" style="${borderStyle}">
+                        <div class="badge-mini-thumb" style="${badge.isMaster ? 'border-color: #10b981;' : ''}">
+                            <img src="${badge.image}" alt="${badge.title}">
+                        </div>
+                        <div class="badge-metric-info">
+                            <div class="badge-metric-title" style="${titleStyle}">${badge.title}</div>
+                            <div class="badge-progress-bar">
+                                <div class="badge-progress-fill" style="width: ${badge.percentage}%; background: ${badge.color};"></div>
+                            </div>
+                            <div class="badge-metric-stats">
+                                <span style="${statStyle}">${awardedCount} awarded</span>
+                                <span style="${statStyle}">${badge.percentage}%</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const stemGrid = document.getElementById('stemGridContainer');
+            stemGrid.innerHTML = '';
+            fallbackDetails.stemDistribution.forEach(item => {
+                stemGrid.innerHTML += `
+                    <div class="stem-item">
+                        <div class="stem-header"><i class="${item.icon} stem-icon ${item.class}"></i><span class="stem-label">${item.label}</span></div>
+                        <div class="stem-value">${item.value}%</div>
+                        <div class="stem-bar-bg"><div class="stem-bar-fill ${item.fillClass}" style="width: ${item.value}%;"></div></div>
+                    </div>
+                `;
+            });
+
+            const classesContainer = document.getElementById('classesListContainer');
+            classesContainer.innerHTML = '';
+
+            for (let yearNum = 1; yearNum <= 6; yearNum++) {
+                const sectionBlock = document.createElement('div');
+                sectionBlock.className = 'class-section-block';
+
+                sectionBlock.innerHTML = `
+                    <div class="class-block-header">Year ${yearNum} Classes (3)</div>
+                    <table class="classes-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">#</th>
+                                <th>Classes Name</th>
+                                <th style="width: 180px;">Total Students</th>
+                                <th style="width: 180px;">Average Score</th>
+                                <th style="width: 180px;">Quizzes Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="row-card-style" onclick="window.location.href='class-overview.html?class=' + encodeURIComponent('Year ${yearNum} ALPHA')">
+                                <td>1</td>
+                                <td style="color: #2563eb; font-weight: 700;">Alpha</td>
+                                <td>32</td>
+                                <td style="color: #10b981;">100%</td>
+                                <td>12</td>
+                            </tr>
+                            <tr class="row-card-style" onclick="window.location.href='class-overview.html?class=' + encodeURIComponent('Year ${yearNum} BETA')">
+                                <td>2</td>
+                                <td style="color: #2563eb; font-weight: 700;">Beta</td>
+                                <td>23</td>
+                                <td style="color: #10b981;">95%</td>
+                                <td>10</td>
+                            </tr>
+                            <tr class="row-card-style" onclick="window.location.href='class-overview.html?class=' + encodeURIComponent('Year ${yearNum} CHARLIE')">
+                                <td>3</td>
+                                <td style="color: #2563eb; font-weight: 700;">Charlie</td>
+                                <td>29</td>
+                                <td style="color: #10b981;">90%</td>
+                                <td>11</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+                classesContainer.appendChild(sectionBlock);
+            }
+        });
+    </script>
+    <script src="js/navbar.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PINTAR - Edit Student Performance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 80px;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            background-color: #273894;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+        }
+
+        .navbar .logo {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 40px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .navbar nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-block;
+            position: relative;
+            padding: 6px 0;
+            transition: opacity 0.2s;
+        }
+
+        .navbar nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+        }
+
+        .navbar .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .navbar .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logout {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #3b4ca6;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .main-edit-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .card-section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 30px;
+        }
+
+        .input-split-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field-group label {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .number-input-wrapper {
+            position: relative;
+            display: flex;
+            width: 100%;
+        }
+
+        .num-input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #334155;
+            outline: none;
+        }
+
+        .section-divider-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+
+        .module-row-edit {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .text-module-lbl {
+            padding: 14px 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            background: #ffffff;
+            color: #334155;
+        }
+
+        .btn-add-module {
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .footer-save-center {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .btn-submit-save {
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 14px 60px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Updated for Logo Image Support */
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo img {
+            height: 38px;
+            /* Perfectly bounds and scales your logo image inside the header */
+            width: auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="../images/logo.png" alt="PINTAR Logo">
+        </div>
+        <nav>
+            <a href="dashboard.html">Home</a>
+            <a href="schools.html" class="active">Schools</a>
+            <a href="quizzes.html">Quizzes</a>
+            <a href="reports.html">Reports & Analytics</a>
+        </nav>
+        <div class="right-menu">
+            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="logout" id="logoutBtn" onclick="window.location.href='../index.html'">LOG OUT</button>
+            <div class="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>PINTAR</span>
+            </div>
+        </div>
+    </header>
+
+
+
+    <main class="container">
+        <a href="javascript:history.back()" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back</a>
+
+        <div class="main-edit-card">
+            <!-- Overall Performance Block Details -->
+            <h2 class="card-section-title">Performance Overview</h2>
+            <div class="input-split-row">
+                <div class="field-group">
+                    <label>E-Assessment Overall Performance (%)</label>
+                    <input type="number" id="inputEAssessment" class="num-input" min="0" max="100">
+                </div>
+                <div class="field-group">
+                    <label>PALS Overall Performance (%)</label>
+                    <input type="number" id="inputPALS" class="num-input" min="0" max="100">
+                </div>
+            </div>
+
+            <!-- Learning Module Block Rows Container -->
+            <h2 class="section-divider-title">Managed Learning Modules</h2>
+            <div id="editableModulesList">
+                <!-- Injected Rows -->
+            </div>
+
+            <button class="btn-add-module" onclick="addNewModuleRow()"><i class="fa-solid fa-plus"></i> Add
+                Module</button>
+
+            <div class="footer-save-center">
+                <button class="btn-submit-save" onclick="saveChanges()">Save and Publish Changes</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const studentId = urlParams.get('id');
+
+        function loadEditableRoster() {
+            const students = JSON.parse(localStorage.getItem('pintar_students')) || [];
+            const currentStudent = students.find(s => s.id === studentId);
+
+            let eAssessmentAvg = localStorage.getItem(`eassessment_${studentId}`) || (currentStudent ? currentStudent.score : 85);
+            let palsAvg = localStorage.getItem(`pals_${studentId}`) || 90;
+
+            document.getElementById('inputEAssessment').value = eAssessmentAvg;
+            document.getElementById('inputPALS').value = palsAvg;
+
+            let modules = JSON.parse(localStorage.getItem(`modules_${studentId}`)) || [];
+            const mListContainer = document.getElementById('editableModulesList');
+            mListContainer.innerHTML = '';
+
+            modules.forEach((m, idx) => {
+                mListContainer.innerHTML += `
+                    <div class="module-row-edit" data-index="${idx}">
+                        <div class="text-module-lbl">${m.name}</div>
+                        <input type="number" class="num-input module-score-input" value="${m.score}" min="0" max="100">
+                    </div>
+                `;
+            });
+        }
+
+        function addNewModuleRow() {
+            const mListContainer = document.getElementById('editableModulesList');
+            const nextIdx = mListContainer.children.length;
+            const newRow = document.createElement('div');
+            newRow.className = 'module-row-edit';
+            newRow.setAttribute('data-index', nextIdx);
+            newRow.innerHTML = `
+                <input type="text" class="text-module-lbl" placeholder="Enter New Module Topic Name..." style="outline:none;">
+                <input type="number" class="num-input module-score-input" value="0" min="0" max="100">
+            `;
+            mListContainer.appendChild(newRow);
+        }
+
+        function saveChanges() {
+            const eAssessmentVal = parseInt(document.getElementById('inputEAssessment').value) || 0;
+            const palsVal = parseInt(document.getElementById('inputPALS').value) || 0;
+
+            localStorage.setItem(`eassessment_${studentId}`, eAssessmentVal);
+            localStorage.setItem(`pals_${studentId}`, palsVal);
+
+            // Update main dashboard score list
+            const students = JSON.parse(localStorage.getItem('pintar_students')) || [];
+            const studentIdx = students.findIndex(s => s.id === studentId);
+            if (studentIdx !== -1) {
+                students[studentIdx].score = eAssessmentVal;
+                localStorage.setItem('pintar_students', JSON.stringify(students));
+            }
+
+            // Save custom modifications inside standard learning components array items
+            const rows = document.querySelectorAll('#editableModulesList .module-row-edit');
+            let updatedModules = [];
+            const colors = ["#c084fc", "#6366f1", "#f97316", "#3b82f6", "#ec4899", "#81c784"];
+
+            rows.forEach((row, i) => {
+                let nameInput = row.querySelector('div.text-module-lbl');
+                let name = nameInput ? nameInput.textContent : row.querySelector('input[type="text"]').value;
+                let score = parseInt(row.querySelector('.module-score-input').value) || 0;
+                let color = colors[i % colors.length];
+
+                if (name.trim() !== "") {
+                    updatedModules.push({ name, score, color });
+                }
+            });
+
+            localStorage.setItem(`modules_${studentId}`, JSON.stringify(updatedModules));
+
+            // Redirect smoothly back to the updated individual student overview report
+            window.location.href = `student-report.html?id=${studentId}`;
+        }
+
+        window.onload = loadEditableRoster;
+    </script>
+    <script src="js/navbar.js"></script>
+</body>
+
+</html>
